@@ -7,8 +7,16 @@
 
 ### Terminal
 ```
+# Clone este repositório
 git clone -b dev https://github.com/lbbergamo/FIFO-Server.git
+
+# Navegue até ele
+$ cd FIFO-Server
+
+# Instale todas as dependências
 npm install
+
+# Inicie a aplicação
 npm start
 ```
 
