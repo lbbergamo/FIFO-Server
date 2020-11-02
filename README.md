@@ -1,4 +1,3 @@
-# Projeto - FIFO Server
 ## :computer: Instalação
 ### Requisitos
 - Banco de dados MySql 
