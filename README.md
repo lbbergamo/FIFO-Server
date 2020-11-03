@@ -4,7 +4,7 @@
 
 ```bash
 # Clone este repositório
-$ git clone 
+$ git clone -b git@github.com:lbbergamo/FIFO-Server.git
 
 # Navegue até ele e instale todas as dependências
 $ yarn
