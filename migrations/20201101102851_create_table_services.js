@@ -7,8 +7,8 @@ exports.up = function(knex) {
         table.string('cover',1000)
         table.string('notes')
         table.string('status')
-        table.integer('categories_id').references('id')
-            .inTable('categories').notNull().unsigned()
+        table.integer('category_id').references('id')
+            .inTable('category').notNull().unsigned()
     })
 };
 
