@@ -4,7 +4,7 @@
 
 ```bash
 # Clone este repositório
-$ git clone -b git@github.com:lbbergamo/FIFO-Server.git
+$ git clone https://github.com/lbbergamo/FIFO-Server
 
 # Navegue até ele e instale todas as dependências
 $ yarn
@@ -22,6 +22,27 @@ DATABASE_NAME=
 DATABASE_USER=
 DATABASE_PASSWORD=
 ```
+
+3. No arquivo knexfile.ts altere também as variáveis de conexão caso seja necessário
+```
+import path from 'path'
+
+module.exports = {
+  client: 'mysql2',
+  connection: {
+    host: SEU_HOST,
+    database: NOME_DO_BANCO,
+    user: SEU_USER,
+    password: SUA_SENHA'
+  },
+  migrations: {
+    directory: path.resolve(__dirname, 'src', 'database', 'migrations')
+  },
+  useNullAsDefault: true
+}
+```
+
+*Vou ver como eu posso automizar isso depois :)*
 
 ## :memo: Scripts
 ```bash
@@ -43,4 +64,3 @@ $ yarn knex:migrate
 # Remove todas as tabelas do banco de dados
 $ yarn knex:rollback 
 ```
-
