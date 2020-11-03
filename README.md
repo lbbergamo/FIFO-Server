@@ -64,4 +64,3 @@ $ yarn knex:migrate
 # Remove todas as tabelas do banco de dados
 $ yarn knex:rollback 
 ```
-
