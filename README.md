@@ -1,44 +1,46 @@
+# FIFO - SERVER
+
 ## :computer: Instalação
-### Requisitos
-- Banco de dados MySql 
-- NodeJs (versão superior a 12)
-- Tabela no banco de dados chamada fifoserver
 
-### Terminal
-```
+```bash
 # Clone este repositório
-git clone -b dev https://github.com/lbbergamo/FIFO-Server.git
+$ git clone 
 
-# Navegue até ele
-$ cd FIFO-Server
+# Navegue até ele e instale todas as dependências
+$ yarn
 
-# Instale todas as dependências
-npm install
-
-# Inicie a aplicação
-npm start
+# Inicie o modo de desenvolvimento
+$ yarn dev
 ```
 
-### Banco de dados
-Para realizar para realizar a configura do database,acesse o arquivo
+#### :scream_cat:  Importante
+1. Crie na raiz do projeto o arquivo .env
+2. Digite o valor das variáveis de acordo com o seu banco de dados MySQL
 ```
-src/database/knexfile.js
+HOST_MYSQL=
+DATABASE_NAME=
+DATABASE_USER=
+DATABASE_PASSWORD=
 ```
-Faça as seguintes alterações 
+
+## :memo: Scripts
+```bash
+# Inicia a aplicação em modo de desenvolvimento
+$ yarn dev
+
+# Compila o Typescript para Javascript, deixando a aplicação pronta para produção
+$ yarn build
+
+# Inicie a aplicação em modo de produção
+$ yarn start
+
+# Roda os arquivos de testes
+$ yarn test
+
+# Cria todas as tabelas do banco de dados
+$ yarn knex:migrate
+
+# Remove todas as tabelas do banco de dados
+$ yarn knex:rollback 
 ```
-module.exports = {
-    client : 'mysql',
-    connection : {
-        database : 'NOME_da_DB',
-        user : 'NOME_do_USUARIO',
-        password : 'SENHA_do_USUARIO'
-    },
-    pool : {
-        min: 2,
-        max : 10
-    },
-    migrations : {
-        tableName : 'knex_migrations'
-    }
-}
-```
+
