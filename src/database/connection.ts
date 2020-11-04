@@ -4,10 +4,10 @@ import knex from 'knex'
 const db = knex({
   client: 'mysql2',
   connection: {
-    host: process.env.HOST_MYSQL,
-    database: process.env.DATABASE_NAME,
-    user: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASSWORD
+    host: '127.0.0.1',
+    database: 'fifo-server',
+    user: 'root',
+    password: ''
   },
   migrations: {
     directory: path.resolve(__dirname, 'src', 'database', 'migrations')
