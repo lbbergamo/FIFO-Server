@@ -1,4 +1,3 @@
-
 class Helpers {
   static existsOrError (value, msg) {
     if (!value) throw msg

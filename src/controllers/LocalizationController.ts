@@ -1,14 +1,9 @@
-/* eslint-disable no-unused-vars */
 import Localization from '@models/Localization'
 import Helpers from 'src/helpers'
-import { Request, Response } from 'express'
+import { Request, Response } from "express"
 import db from '../database/connection'
 
 class LocalizationController {
-  async index (req: Request, res: Response): Promise<Response> {
-    return res.status(200).json({ message: '' })
-  }
-
   async save (req: Request, res: Response): Promise<Response> {
     const localization = new Localization(req.body)
 
