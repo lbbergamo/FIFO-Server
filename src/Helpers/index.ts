@@ -1,5 +1,5 @@
 
-class Validation {
+class Helpers {
   static existsOrError (value, msg) {
     if (!value) throw msg
     if (Array.isArray(value) && value.length === 0) throw msg
@@ -27,4 +27,4 @@ class Validation {
   }
 }
 
-export default Validation
+export default Helpers

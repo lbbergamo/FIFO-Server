@@ -1,21 +1,20 @@
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable no-unused-vars */
 import Localization from '@models/Localization'
-import Validation from '@models/Validation'
-// eslint-disable-next-line no-unused-vars
+import Helpers from 'src/Helpers'
 import { Request, Response } from 'express'
-// eslint-disable-next-line no-unused-vars
 import db from '../database/connection'
 
 class LocalizationController {
   async index (req: Request, res: Response): Promise<Response> {
-    return res.status(200).json({ message: 'First route ta cehgando aqui' })
+    return res.status(200).json({ message: '' })
   }
 
   async save (req: Request, res: Response): Promise<Response> {
     const localization = new Localization(req.body)
+
     try {
-      Validation.existsOrError(localization.name, 'Nome da localização não informado')
-      Validation.existsOrError(localization.description, 'Descrição não informado')
+      Helpers.existsOrError(localization.name, 'Nome da localização não informado')
+      Helpers.existsOrError(localization.description, 'Descrição não informado')
     } catch (msg) {
       return res.status(400).send(msg)
     }
@@ -29,7 +28,7 @@ class LocalizationController {
           .select('id', 'name', 'cover', 'description', 'notes')
           .where({ id: localization })
           .first()
-          .then(localization => res.json(localization).send())
+          .then(localization => res.json(localization).status(201).send())
       })
       .catch(err => res.status(500).send(err))
   }
@@ -61,7 +60,7 @@ class LocalizationController {
       .catch(err => res.status(500).send(err))
   }
 
-  async delete (req: Request, res: Response) : Promise<Response> {
+  async delete (req: Request, res: Response): Promise<Response> {
     if (req.body.id == null) return res.status(401).send({ message: 'Falta o id' })
     return db('localization')
       .where({
