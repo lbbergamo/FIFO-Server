@@ -12,5 +12,6 @@ routes.get('/localization', localizationController.get)
 routes.post('/localization', localizationController.save)
 routes.put('/localization', localizationController.update)
 routes.get('/localization/:id', localizationController.find)
+routes.delete('/localization', localizationController.delete)
 
 export default routes

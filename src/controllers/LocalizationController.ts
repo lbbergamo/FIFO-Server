@@ -60,5 +60,16 @@ class LocalizationController {
       .then(localization => res.status(200).send())
       .catch(err => res.status(500).send(err))
   }
+
+  async delete (req: Request, res: Response) : Promise<Response> {
+    if (req.body.id == null) return res.status(401).send({ message: 'Falta o id' })
+    return db('localization')
+      .where({
+        id: req.body.id
+      })
+      .del()
+      .then(localization => res.status(200).send())
+      .catch(err => res.status(500).send(err))
+  }
 }
 export default LocalizationController
