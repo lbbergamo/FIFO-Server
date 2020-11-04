@@ -19,7 +19,7 @@ class LocalizationController {
     } catch (msg) {
       return res.status(400).send(msg)
     }
-    if (localization.id) {
+    if (req.body.id) {
       return res.status(401).send({ message: 'Utilize o update' })
     }
     return db('localization')
