@@ -12,8 +12,7 @@ class LocalizationController {
   }
 
   async save (req: Request, res: Response): Promise<Response> {
-    const localization = req.body
-    if (req.params.id) localization.id = req.body.id
+    const localization = new Localization(req.body)
     try {
       Validation.existsOrError(localization.name, 'Nome da localização não informado')
       Validation.existsOrError(localization.description, 'Descrição não informado')
@@ -21,18 +20,17 @@ class LocalizationController {
       return res.status(400).send(msg)
     }
     if (localization.id) {
-      // db('localization')
-      //   .update(localization)
-      //   .where({
-      //     id: localization.id
-      //   })
-      //   .then(_ => res.status(200).send())
-      //   .catch(err => res.status(500).send(err))
       return res.status(401).send({ message: 'Utilize o update' })
     }
     return db('localization')
       .insert(localization)
-      .then(localization => res.status(201).json(localization).send())
+      .then(localization => {
+        return db('localization')
+          .select('id', 'name', 'cover', 'description', 'notes')
+          .where({ id: localization })
+          .first()
+          .then(localization => res.json(localization).send())
+      })
       .catch(err => res.status(500).send(err))
   }
 
@@ -53,29 +51,14 @@ class LocalizationController {
   }
 
   async update (req: Request, res: Response): Promise<Response> {
-    const localization = req.body
-    if (req.params.id) localization.id = req.body.id
-    try {
-      Validation.existsOrError(localization.name, 'Nome da localização não informado')
-      Validation.existsOrError(localization.description, 'Descrição não informado')
-    } catch (msg) {
-      return res.status(400).send(msg)
-    }
-
-    if (localization.id != null) {
-      try {
-        return db('localization')
-          .update(localization)
-          .where({
-            id: localization.id
-          })
-          .then(localization => res.status(200).send())
-          .catch(err => res.status(500).send(err))
-      } catch (msg) {
-
-      }
-    }
-    return res.status(500).send({ message: 'Id não informado!' })
+    const localization = new Localization(req.body)
+    return db('localization')
+      .update(localization)
+      .where({
+        id: req.body.id
+      })
+      .then(localization => res.status(200).send())
+      .catch(err => res.status(500).send(err))
   }
 }
 export default LocalizationController

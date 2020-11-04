@@ -5,11 +5,11 @@ class Localization {
   public cover: string
   public notes: string
 
-  constructor (name: string, description: string, cover: string, notes: string) {
-    this.name = name
-    this.description = description
-    this.cover = cover
-    this.notes = notes
+  constructor (localization: any) {
+    this.name = localization.name
+    this.description = localization.description
+    this.cover = localization.cover
+    this.notes = localization.notes
     return this
   }
 }
