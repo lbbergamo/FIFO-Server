@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import Knex from 'knex'
 
 export async function up (knex: Knex) {
@@ -30,7 +29,7 @@ export async function up (knex: Knex) {
       .onDelete('CASCADE')
 
     table
-      .date('entry_queue')
+      .timestamp('entry_queue')
       .notNullable()
       .defaultTo(knex.fn.now())
 
