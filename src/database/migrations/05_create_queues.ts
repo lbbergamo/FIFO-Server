@@ -30,12 +30,12 @@ export async function up (knex: Knex) {
       .onDelete('CASCADE')
 
     table
-      .date('entry_queue')
+      .timestamp('entry_queue')
       .notNullable()
       .defaultTo(knex.fn.now())
 
     table
-      .date('entry_service')
+      .timestamp('entry_service')
 
     table
       .string('status')

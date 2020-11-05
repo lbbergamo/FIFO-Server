@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
 import Localization from '@models/Localization'
 import Helpers from 'src/helpers'
-import { Request, Response } from "express"
+import { Request, Response } from 'express'
 import db from '../database/connection'
 
 class LocalizationController {
