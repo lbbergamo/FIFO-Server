@@ -1,3 +1,4 @@
+import CategoryController from '@controllers/CategoryController'
 import LocalizationController from '@controllers/LocalizationController'
 import express from 'express'
 
@@ -13,5 +14,13 @@ routes.post('/localization', localizationController.save)
 routes.put('/localization', localizationController.update)
 routes.get('/localization/:id', localizationController.find)
 routes.delete('/localization', localizationController.delete)
+
+/** Category */
+const categoryController = new CategoryController()
+routes.post('/category', categoryController.save)
+routes.get('/category', categoryController.get)
+routes.get('/category/:id', categoryController.find)
+routes.put('/category', categoryController.update)
+routes.delete('/category', categoryController.delete)
 
 export default routes
