@@ -14,35 +14,15 @@ $ yarn dev
 ```
 
 #### :scream_cat:  Importante
-1. Crie na raiz do projeto o arquivo .env
+1. Entre no arquivo src/config/database-config.ts
+
 2. Digite o valor das variáveis de acordo com o seu banco de dados MySQL
 ```
-HOST_MYSQL=
-DATABASE_NAME=
-DATABASE_USER=
-DATABASE_PASSWORD=
+const HOST_MYSQL = 'localhost'
+const DATABASE_NAME = 'fifo-server'
+const DATABASE_USER = 'root'
+const DATABASE_PASSWORD = 'root'
 ```
-
-3. No arquivo knexfile.ts altere também as variáveis de conexão caso seja necessário
-```
-import path from 'path'
-
-module.exports = {
-  client: 'mysql2',
-  connection: {
-    host: SEU_HOST,
-    database: NOME_DO_BANCO,
-    user: SEU_USER,
-    password: SUA_SENHA'
-  },
-  migrations: {
-    directory: path.resolve(__dirname, 'src', 'database', 'migrations')
-  },
-  useNullAsDefault: true
-}
-```
-
-*Vou ver como eu posso automizar isso depois :)*
 
 ## :memo: Scripts
 ```bash
