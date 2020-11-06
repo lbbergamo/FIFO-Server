@@ -1,5 +1,6 @@
 import CategoryController from '@controllers/CategoryController'
 import LocalizationController from '@controllers/LocalizationController'
+import ServiceController from '@controllers/ServiceController'
 import express from 'express'
 
 const routes = express.Router()
@@ -22,5 +23,13 @@ routes.get('/category', categoryController.get)
 routes.get('/category/:id', categoryController.find)
 routes.put('/category', categoryController.update)
 routes.delete('/category', categoryController.delete)
+
+/** Service */
+const serviceController = new ServiceController()
+routes.post('/service', serviceController.save)
+routes.get('/service', serviceController.get)
+routes.get('/service/:id', serviceController.find)
+routes.put('/service', serviceController.update)
+routes.delete('/service', serviceController.delete)
 
 export default routes

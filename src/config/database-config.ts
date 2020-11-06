@@ -1,6 +1,6 @@
 const HOST_MYSQL = 'localhost'
-const DATABASE_NAME = 'fifo-server'
+const DATABASE_NAME = 'fifoserver'
 const DATABASE_USER = 'root'
-const DATABASE_PASSWORD = ''
+const DATABASE_PASSWORD = '123456'
 
 export { HOST_MYSQL, DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD }
