@@ -1,7 +1,7 @@
 import Category from '@models/Category'
 import { Request, Response } from 'express'
-import db from 'src/database/connection'
-import Helpers from 'src/helpers'
+import db from '@database/connection'
+import Helpers from '@helpers/index'
 class CategoryController {
   async save (req: Request, res: Response): Promise<Response> {
     const category = new Category(req.body)
