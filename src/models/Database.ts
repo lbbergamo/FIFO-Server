@@ -18,16 +18,39 @@ class Database implements IDatabase {
     this.constructor(entity, secure, requiredFields)
   }
 
-  public find () {
+  protected find (name: string, columns: string, RequiredFields: Array<String> = this.RequiredFields, count: boolean = false): Promise<any> {
+    return db(this.Entity)
+      .select(RequiredFields)
+      .where({ columns: name })
+      .then(object => { return object })
+      .catch(err => { return err })
+  }
+
+  protected query () {
 
   }
 
-  public save () {
+  protected save () {
 
   }
 
-  public update () {
+  protected update () {
 
+  }
+
+  protected get (): Promise<any> {
+    return db(this.Entity)
+      .select(this.RequiredFields)
+      .then(object => { return object })
+      .catch(err => { return err })
+  }
+
+  protected delete (id: number): Promise<any> {
+    return db(this.Entity)
+      .where({ id: id })
+      .del()
+      .then(object => { return object })
+      .catch(err => { return err })
   }
 }
 
