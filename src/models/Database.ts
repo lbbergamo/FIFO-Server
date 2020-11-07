@@ -23,6 +23,10 @@ abstract class Database {
       .catch(err => { return err })
   }
 
+  /**
+   * Get
+   * @return object||Array
+   */
   async get (): Promise<any> {
     const data = await db(this.db.Entity)
       .select(this.db.RequiredFields)
@@ -33,7 +37,7 @@ abstract class Database {
 
   /**
    * Delete id
-   * @param id number
+   * @param id : number
    * @return resultado
    */
   async delete (id: number): Promise<any> {
@@ -76,6 +80,7 @@ abstract class Database {
   /**
    * Save DB
    * @param returnData
+   * @return result
    */
   async save (returnData: boolean = true): Promise<any> {
     let result = null
@@ -98,14 +103,15 @@ abstract class Database {
   }
 
   /**
-   * *********
-   * Helpers *
-   * *********
+   * *************
+   * ** Helpers **
+   * *************
    */
 
   /**
    * requiredFields
    * @param requiredFields
+   * @return void
    */
   public requiredFields (requiredFields: Array<string>): void {
     this.db.RequiredFields = requiredFields
@@ -113,16 +119,18 @@ abstract class Database {
 
   /**
    * @return Error Status
+   *  @return boolean
    */
-  private fail () {
+  private fail (): boolean {
     return this.error.status
   }
 
   /**
    * SetError
-   * @param error
+   * @param error : any
+   * @return void
    */
-  private setError (error) {
+  private setError (error: any): void {
     this.error.status = true
     this.error.info = error
   }
