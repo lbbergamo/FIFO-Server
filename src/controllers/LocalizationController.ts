@@ -5,34 +5,24 @@ import db from '@database/connection'
 
 class LocalizationController {
   async save (req: Request, res: Response): Promise<Response> {
-    const localization = new Localization(req.body)
-
     try {
-      Helpers.existsOrError(localization.name, 'Nome da localização não informado')
-      Helpers.existsOrError(localization.description, 'Descrição não informado')
+      Helpers.existsOrError(req.body.name, 'Nome da localização não informado')
+      Helpers.existsOrError(req.body.description, 'Descrição não informado')
     } catch (msg) {
       return res.status(400).send(msg)
     }
     if (req.body.id) {
       return res.status(401).send({ message: 'Utilize o update' })
     }
-    return db('localization')
-      .insert(localization)
-      .then(localization => {
-        return db('localization')
-          .select('id', 'name', 'cover', 'description', 'notes')
-          .where({ id: localization })
-          .first()
-          .then(localization => res.json(localization).status(201).send())
-      })
-      .catch(err => res.status(500).send(err))
+    const localization = new Localization()
+    localization.make(req.body)
+    const objectData = await localization.save()
+    return res.status(201).send(objectData)
   }
 
   async get (req: Request, res: Response): Promise<Response> {
-    return db('localization')
-      .select('id', 'name', 'cover', 'description', 'notes')
-      .then(localization => res.json(localization))
-      .catch(err => res.status(500).send(err))
+    const localization = new Localization()
+    return await localization.get()
   }
 
   async find (req: Request, res: Response): Promise<Response> {
@@ -44,16 +34,16 @@ class LocalizationController {
       .catch(err => res.status(500).send(err))
   }
 
-  async update (req: Request, res: Response): Promise<Response> {
-    const localization = new Localization(req.body)
-    return db('localization')
-      .update(localization)
-      .where({
-        id: req.body.id
-      })
-      .then(localization => res.status(200).send())
-      .catch(err => res.status(500).send(err))
-  }
+  // async update (req: Request, res: Response): Promise<Response> {
+  //   // const localization = new Localization(req.body)
+  //   // return db('localization')
+  //   //   .update(localization)
+  //   //   .where({
+  //   //     id: req.body.id
+  //   //   })
+  //   //   .then(localization => res.status(200).send())
+  //   //   .catch(err => res.status(500).send(err))
+  // }
 
   async delete (req: Request, res: Response): Promise<Response> {
     if (req.body.id == null) return res.status(401).send({ message: 'Falta o id' })
