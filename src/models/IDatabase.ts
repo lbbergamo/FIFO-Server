@@ -1,21 +1,10 @@
 interface IDatabase {
-  Entity: string
+  Entity: String
   Secure: Array<String>
-  RequiredFields: Array<String>;
+  RequiredFields: Array<String>
   init (): void
 }
 
-interface IRequiredFields {
-  [index: number]: string;
-}
-
-interface IProtected {
-  [index: number]: string;
-}
-
 interface IInit {
-  entity: string
-  secure: IProtected
-  requiredFields: IRequiredFields;
-  __constructor (entity: number, secure: IProtected, requiredFields: IRequiredFields): void;
+  __constructor (entity: number, secure: Array<String>, requiredFields: Array<String>): void;
 }
