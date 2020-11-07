@@ -22,7 +22,12 @@ class LocalizationController {
 
   async get (req: Request, res: Response): Promise<Response> {
     const localization = new Localization()
-    return await localization.get()
+    const findLocalization = await localization.get()
+    if (findLocalization == null) {
+      return res.status(401).send({})
+    } else {
+      return res.status(201).send(findLocalization)
+    }
   }
 
   async find (req: Request, res: Response): Promise<Response> {

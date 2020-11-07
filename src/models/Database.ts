@@ -5,53 +5,72 @@ abstract class Database {
   protected abstract Secure: Array<String> = ['id']
   protected abstract RequiredFields: Array<String> = ['*']
   protected abstract Entity: string
-  protected readonly abstract id: number
   protected abstract data: IData
   protected abstract make (object: any): void
-
-  public findById (name: string, columns: string, RequiredFields: Array<String> = this.RequiredFields): Promise<any> {
+  private error: boolean = false
+  private errorList
+  public findId (name: string, RequiredFields: Array<String> = this.RequiredFields): Promise<any> {
     return db(this.Entity)
       .select(RequiredFields)
-      .where({ columns: name })
+      .where({ id: name })
       .then(object => { return object })
       .catch(err => { return err })
+  }
+
+  public requiredFields (requiredFields: Array<string>): void {
+    this.RequiredFields = requiredFields
   }
 
   async get (): Promise<any> {
-    return await db(this.Entity)
+    const data = await db(this.Entity)
       .select(this.RequiredFields)
       .then(object => { return object })
       .catch(err => { return err })
+    return data
   }
 
   async delete (id: number): Promise<any> {
-    return await db(this.Entity)
+    const data = await db(this.Entity)
       .where({ id: id })
       .del()
       .then(object => { return object })
       .catch(err => { return err })
+    return data
   }
 
-  async save (): Promise<any> {
-    let data = null
+  private fail () {
+
+  }
+
+  async update (): Promise<any> {
+
+  }
+
+  private async create (object: any): Promise<any> {
+    const data = await db(this.Entity)
+      .insert(object)
+      .then(object => { return object })
+      .catch(err => { return err })
+    return data
+  }
+
+  async save (returnData: boolean = true): Promise<any> {
+    let id = null
+    let result = null
     /** Verifica o objeto */
     if (this.data.id != null) {
       /** Update */
 
     } else {
-      data = await db(this.Entity)
-        .insert(this.data)
-        .then(async object => {
-          const findId = await db(this.Entity)
-            .select('*')
-            .where({ id: object })
-            .first()
-            .then(objects => { return objects })
-          return findId
-        })
-        .catch(err => { return err })
+      id = this.create(this.data)
+      if (this.fail()) {
+
+      }
     }
-    return data
+    if (returnData) {
+      result = this.findId(id)
+    }
+    return result
   }
 }
 
