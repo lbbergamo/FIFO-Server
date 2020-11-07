@@ -11,9 +11,9 @@ class LocalizationController {
     } catch (msg) {
       return res.status(400).send(msg)
     }
-    if (req.body.id) {
-      return res.status(401).send({ message: 'Utilize o update' })
-    }
+    // if (req.body.id) {
+    //   return res.status(401).send({ message: 'Utilize o update' })
+    // }
     const localization = new Localization()
     localization.make(req.body)
     const objectData = await localization.save()
