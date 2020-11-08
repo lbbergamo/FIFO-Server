@@ -21,8 +21,8 @@ class LocalizationController {
     const localization = new Localization()
     localization.make(req.body)
     const objectData = await localization.save()
-    if (localization.fail.Status()) {
-      return res.status(401).send(localization.fail.Error())
+    if (localization.erro.Status()) {
+      return res.status(401).send(localization.erro.Error())
     }
     return res.status(201).send(objectData)
   }
@@ -52,8 +52,8 @@ class LocalizationController {
   async find (req: Request, res: Response): Promise<Response> {
     const localization = new Localization()
     const findLocalization = await localization.findId(req.params.id)
-    if (localization.fail.Status()) {
-      return res.status(401).send(localization.fail.Error())
+    if (localization.erro.Status()) {
+      return res.status(401).send(localization.erro.Error())
     } else {
       return res.status(201).send(findLocalization)
     }
@@ -70,8 +70,8 @@ class LocalizationController {
     const localization = new Localization()
     localization.make(req.body)
     const objectData = await localization.save()
-    if (localization.fail.Status()) {
-      return res.status(401).send(localization.fail.Error())
+    if (localization.erro.Status()) {
+      return res.status(401).send(localization.erro.Error())
     }
     return res.status(201).json(objectData)
   }
@@ -87,8 +87,8 @@ class LocalizationController {
     const localization = new Localization()
     localization.make(req.body)
     const objectData = await localization.delete(req.body.id)
-    if (localization.fail.Status()) {
-      return res.status(401).send(localization.fail.Error())
+    if (localization.erro.Status()) {
+      return res.status(401).send(localization.erro.Error())
     }
     return res.status(201).json(objectData)
   }

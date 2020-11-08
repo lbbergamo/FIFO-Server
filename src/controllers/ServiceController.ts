@@ -22,8 +22,8 @@ class ServiceController {
     const service = new Service()
     service.make(req.body)
     const objectData = await service.save()
-    if (service.fail.Status()) {
-      return res.status(401).send(service.fail.Error())
+    if (service.erro.Status()) {
+      return res.status(401).send(service.erro.Error())
     }
     return res.status(201).send(objectData)
   }
@@ -45,7 +45,7 @@ class ServiceController {
       const category = new Category()
       category.requiredFields(['name', 'description', 'cover', 'notes'])
       const findCategory = await category.findId(service.category_id)
-      if (!category.fail.Status()) {
+      if (!category.erro.Status()) {
         service.category = findCategory
       }
       result.push(service)
@@ -62,8 +62,8 @@ class ServiceController {
   async find (req: Request, res: Response): Promise<Response> {
     const service = new Service()
     const findService = await service.findId(req.params.id)
-    if (service.fail.Status()) {
-      return res.status(401).send(service.fail.Error())
+    if (service.erro.Status()) {
+      return res.status(401).send(service.erro.Error())
     } else {
       return res.status(201).send(findService)
     }
@@ -80,8 +80,8 @@ class ServiceController {
     const service = new Service()
     service.make(req.body)
     const objectData = await service.save()
-    if (service.fail.Status()) {
-      return res.status(401).send(service.fail.Error())
+    if (service.erro.Status()) {
+      return res.status(401).send(service.erro.Error())
     }
     return res.status(201).json(objectData)
   }
@@ -97,8 +97,8 @@ class ServiceController {
     const service = new Service()
     service.make(req.body)
     const objectData = await service.delete(req.body.id)
-    if (service.fail.Status()) {
-      return res.status(401).send(service.fail.Error())
+    if (service.erro.Status()) {
+      return res.status(401).send(service.erro.Error())
     }
     return res.status(201).json(objectData)
   }

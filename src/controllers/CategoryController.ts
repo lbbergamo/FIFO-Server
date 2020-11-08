@@ -19,8 +19,8 @@ class CategoryController {
     const category = new Category()
     category.make(req.body)
     const objectData = await category.save()
-    if (category.fail.Status()) {
-      return res.status(401).send(category.fail.Error())
+    if (category.erro.Status()) {
+      return res.status(401).send(category.erro.Error())
     }
     return res.status(201).send(objectData)
   }
@@ -34,8 +34,8 @@ class CategoryController {
   async find (req: Request, res: Response): Promise<Response> {
     const category = new Category()
     const findService = await category.findId(req.params.id)
-    if (category.fail.Status()) {
-      return res.status(401).send(category.fail.Error())
+    if (category.erro.Status()) {
+      return res.status(401).send(category.erro.Error())
     } else {
       return res.status(201).send(findService)
     }
@@ -68,8 +68,8 @@ class CategoryController {
     const category = new Category()
     category.make(req.body)
     const objectData = await category.save()
-    if (category.fail.Status()) {
-      return res.status(401).send(category.fail.Error())
+    if (category.erro.Status()) {
+      return res.status(401).send(category.erro.Error())
     }
     return res.status(201).json(objectData)
   }
@@ -85,8 +85,8 @@ class CategoryController {
     const category = new Category()
     category.make(req.body)
     const objectData = await category.delete(req.body.id)
-    if (category.fail.Status()) {
-      return res.status(401).send(category.fail.Error())
+    if (category.erro.Status()) {
+      return res.status(401).send(category.erro.Error())
     }
     return res.status(201).json(objectData)
   }
