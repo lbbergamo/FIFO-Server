@@ -1,12 +1,11 @@
 import db from '@database/connection'
-import Error from '@models/Error'
+import Error from '@helpers/Error'
 
 abstract class Database {
   protected abstract db: IDatabase
   protected abstract data: IData
   protected abstract make (object: any): void
-  private Result: any
-  private fail = new Error();
+  public fail = new Error();
 
   /**
    * FindId

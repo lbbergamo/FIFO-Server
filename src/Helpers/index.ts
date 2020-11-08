@@ -15,6 +15,16 @@ class Helpers {
     return true
   }
 
+  static existOrError (value, msg) {
+    // eslint-disable-next-line no-useless-catch
+    try {
+      this.existsOrError(value, msg)
+    } catch (msg) {
+      return true
+    }
+    throw msg
+  }
+
   static equalsOrError (valueA, valueB, msg) {
     if (valueA !== valueB) throw msg
   }
