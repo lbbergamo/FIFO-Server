@@ -1,7 +1,12 @@
 import Database from './Database'
 
 class Localization extends Database {
-  protected db: IDatabase
+  protected db = {
+    Entity: 'localization',
+    RequiredFields: ['id', 'name', 'cover', 'notes'],
+    Secure: ['id']
+  }
+
   protected data: {
     id: number,
     name: string,

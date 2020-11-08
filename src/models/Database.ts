@@ -1,13 +1,12 @@
 import db from '@database/connection'
+import Error from '@models/Error'
 
 abstract class Database {
   protected abstract db: IDatabase
   protected abstract data: IData
   protected abstract make (object: any): void
-  private error = {
-    status: false,
-    info: null
-  }
+  private Result: any
+  private fail = new Error();
 
   /**
    * FindId
@@ -60,8 +59,8 @@ abstract class Database {
       .where({
         id: object.id
       })
-      .then(objects => { return (objects != null ? object.id : this.setError('Erro ao fazer o Update')) })
-      .catch(err => this.setError(err))
+      .then(objects => { return (objects != null && objects ? object.id : this.fail.setError('Erro ao fazer o Update')) })
+      .catch(err => { return this.fail.setError(err) })
   }
 
   /**
@@ -73,7 +72,7 @@ abstract class Database {
     const data = await db(this.db.Entity)
       .insert(object)
       .then(object => { return object })
-      .catch(err => { return this.setError(err) })
+      .catch(err => { return this.fail.setError(err) })
     return data
   }
 
@@ -86,15 +85,15 @@ abstract class Database {
     let result = null
     /** Verifica se tem objeto */
     if (this.data == null || this.db == null) {
-      return { message: 'Objeto data não iniciado' }
+      return { message: 'Ocorreu um error no model iniciado' }
     }
     if (this.data.id != null) {
       result = await this.update(this.data)
     } else {
       result = await this.create(this.data)
     }
-    if (this.fail()) {
-      return this.error
+    if (this.fail.Status()) {
+      return this.fail.Error()
     }
     if (returnData) {
       result = this.findId(result)
@@ -115,24 +114,6 @@ abstract class Database {
    */
   public requiredFields (requiredFields: Array<string>): void {
     this.db.RequiredFields = requiredFields
-  }
-
-  /**
-   * @return Error Status
-   *  @return boolean
-   */
-  private fail (): boolean {
-    return this.error.status
-  }
-
-  /**
-   * SetError
-   * @param error : any
-   * @return void
-   */
-  private setError (error: any): void {
-    this.error.status = true
-    this.error.info = error
   }
 }
 

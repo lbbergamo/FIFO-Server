@@ -1,9 +1,12 @@
 import Database from './Database'
 
 class Service extends Database {
-  protected Secure: String[]
-  protected RequiredFields: String[]
-  protected Entity: string
+  protected db: {
+    Entity: 'localization',
+    RequiredFields: ['id', 'name', 'cover', 'notes'],
+    Secure: ['id']
+  }
+
   protected data: {
     id: number,
     name: string,
