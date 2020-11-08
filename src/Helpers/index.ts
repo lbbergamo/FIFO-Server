@@ -10,9 +10,9 @@ class Helpers {
     try {
       this.existsOrError(value, msg)
     } catch (msg) {
-      throw msg
+      return true
     }
-    return true
+    throw msg
   }
 
   static equalsOrError (valueA, valueB, msg) {

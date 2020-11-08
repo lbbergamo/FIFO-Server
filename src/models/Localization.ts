@@ -1,16 +1,21 @@
-class Localization {
-  public id: string
-  public name: string
-  public description: string
-  public cover: string
-  public notes: string
+import Database from './Database'
 
-  constructor (localization: any) {
-    this.name = localization.name
-    this.description = localization.description
-    this.cover = localization.cover
-    this.notes = localization.notes
-    return this
+class Localization extends Database {
+  protected db = {
+    Entity: 'localization',
+    RequiredFields: ['id', 'name', 'cover', 'notes'],
+    Secure: ['id']
+  }
+
+  protected data: {
+    id: number,
+    name: string,
+    cover: string,
+    notes: string,
+  }
+
+  public make (object: any) {
+    this.data = object
   }
 }
 

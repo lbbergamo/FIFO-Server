@@ -1,21 +1,27 @@
-/* eslint-disable camelcase */
-class Service {
-    public id: number
-    public name: string
-    public description: string
-    public cover: string
-    public notes: string
-    public status: string
-    public category_id: number
+import Database from './Database'
 
-    constructor (service: any) {
-      this.name = service.name
-      this.cover = service.description
-      this.cover = service.cover
-      this.notes = service.notes
-      this.status = service.status
-      this.category_id = service.category_id
-    }
+class Service extends Database {
+  protected db = {
+    Entity: 'service',
+    RequiredFields: ['id', 'name', 'description', 'cover', 'notes', 'status', 'category_id'],
+    Secure: ['id']
+  }
+
+  protected data: {
+    id: number,
+    name: string,
+    description: string,
+    cover: string,
+    notes: string,
+    status: string,
+    // eslint-disable-next-line camelcase
+    category_id: number,
+  }
+
+  public make (object: any) {
+    object.status = 'pending'
+    this.data = object
+  }
 }
 
 export default Service

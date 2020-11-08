@@ -1,16 +1,18 @@
-class Category {
-  public id: number
-  public description: string
-  public name: string
-  public cover: string
-  public notes: string
+import Database from './Database'
 
-  constructor (category: any) {
-    this.description = category.description
-    this.name = category.name
-    this.cover = category.cover
-    this.notes = category.notes
-    return this
+class Category extends Database {
+  protected db = {
+    Entity: 'category',
+    RequiredFields: ['id', 'name', 'description', 'cover', 'notes'],
+    Secure: ['id']
+  }
+
+  protected data: {
+    id: number,
+    description: string,
+    name: string,
+    cover: string,
+    notes: string
   }
 }
 

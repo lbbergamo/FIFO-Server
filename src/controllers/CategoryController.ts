@@ -1,64 +1,94 @@
 import Category from '@models/Category'
 import { Request, Response } from 'express'
-import db from '@database/connection'
 import Helpers from '@helpers/index'
 class CategoryController {
+  /**
+   * Realiza o cadastro
+   * @param req Request
+   * @param res Response
+   * @return Response
+   */
   async save (req: Request, res: Response): Promise<Response> {
-    const category = new Category(req.body)
-
     try {
-      Helpers.existsOrError(category.name, 'Nome não informado')
-      Helpers.existsOrError(category.description, 'Descrição não informado')
+      Helpers.existsOrError(req.body.name, 'Nome não informado')
+      Helpers.existsOrError(req.body.description, 'Descrição não informado')
     } catch (msg) {
       return res.status(400).send({ message: msg })
     }
 
-    return db('category')
-      .insert(category)
-      .then(category => {
-        return db('category')
-          .select('id', 'name', 'description', 'notes', 'cover')
-          .where({ id: category })
-          .first()
-          .then(category => res.json(category).status(201).send())
-      })
-      .catch(err => res.status(500).send(err))
-  }
-
-  async get (req: Request, res: Response): Promise<Response> {
-    return db('category')
-      .select('id', 'name', 'description', 'notes', 'cover')
-      .then(category => res.json(category).status(201).send())
-      .catch(err => res.status(500).send(err))
-  }
-
-  async find (req: Request, res: Response): Promise<Response> {
-    return db('category')
-      .select('id', 'name', 'description', 'notes', 'cover')
-      .where({ id: req.params.id })
-      .then(category => res.json(category).status(201).send())
-      .catch(err => res.status(500).send(err))
-  }
-
-  async update (req: Request, res: Response): Promise<Response> {
-    const category = new Category(req.body)
-    if (req.body.id == null) {
-      return res.status(400).send({ message: 'Favor informar o id' })
+    const category = new Category()
+    category.make(req.body)
+    const objectData = await category.save()
+    if (category.erro.Status()) {
+      return res.status(401).send(category.erro.Error())
     }
-    return db('category')
-      .update(category)
-      .where({ id: req.body.id })
-      .then(_ => res.status(200).json({ message: 'Update success' }).send())
-      .catch(err => res.status(500).send(err))
+    return res.status(201).send(objectData)
   }
 
+  /**
+  * Realiza a pesquisa pelo ID
+  * @param req Request - request ID
+  * @param res Response
+  * @return Response
+  */
+  async find (req: Request, res: Response): Promise<Response> {
+    const category = new Category()
+    const findService = await category.findId(req.params.id)
+    if (category.erro.Status()) {
+      return res.status(401).send(category.erro.Error())
+    } else {
+      return res.status(201).send(findService)
+    }
+  }
+
+  /**
+  * Realiza a pesquisa
+  * @param req Request
+  * @param res Response
+  * @return Response
+  */
+  async get (req: Request, res: Response): Promise<Response> {
+    const category = new Category()
+    const findCategory = await category.get()
+    if (findCategory == null) {
+      return res.status(401).send({})
+    } else {
+      return res.status(201).send(findCategory)
+    }
+  }
+
+  /**
+  * Realiza o Update pelo id
+  * @param req Request - required ID
+  * @param res Response
+  * @return Response
+  */
+  async update (req: Request, res: Response): Promise<Response> {
+    if (req.body.id == null) return res.status(401).send({ message: 'Falta o id' })
+    const category = new Category()
+    category.make(req.body)
+    const objectData = await category.save()
+    if (category.erro.Status()) {
+      return res.status(401).send(category.erro.Error())
+    }
+    return res.status(201).json(objectData)
+  }
+
+  /**
+  * Realiza a exclusão pelo ID
+  * @param req Request - required ID
+  * @param res Response
+  * @return Response
+  */
   async delete (req: Request, res: Response): Promise<Response> {
     if (req.body.id == null) return res.status(401).send({ message: 'Falta o id' })
-    return db('category')
-      .where({ id: req.body.id })
-      .del()
-      .then(_ => res.status(200).send())
-      .catch(err => res.status(500).send(err))
+    const category = new Category()
+    category.make(req.body)
+    const objectData = await category.delete(req.body.id)
+    if (category.erro.Status()) {
+      return res.status(401).send(category.erro.Error())
+    }
+    return res.status(201).json(objectData)
   }
 }
 export default CategoryController
