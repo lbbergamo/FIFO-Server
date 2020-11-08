@@ -4,8 +4,16 @@ import Error from '@helpers/Error'
 abstract class Database {
   protected abstract db: IDatabase
   protected abstract data: IData
-  protected abstract make (object: any): void
   public fail = new Error();
+
+  /**
+   * make - transforma o objeto
+   * @param object || any
+   * @return void
+   */
+  public make (object: any): void {
+    this.data = object
+  }
 
   /**
    * FindId
@@ -82,6 +90,7 @@ abstract class Database {
    */
   async save (returnData: boolean = true): Promise<any> {
     let result = null
+    console.log(this.db)
     /** Verifica se tem objeto */
     if (this.data == null || this.db == null) {
       return { message: 'Ocorreu um error no model iniciado' }

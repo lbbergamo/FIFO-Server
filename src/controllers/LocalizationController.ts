@@ -1,5 +1,5 @@
 import Localization from '@models/Localization'
-import e, { Request, Response } from 'express'
+import { Request, Response } from 'express'
 import Helpers from '@helpers/index'
 import db from '@database/connection'
 

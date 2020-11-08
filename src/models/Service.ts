@@ -1,9 +1,9 @@
 import Database from './Database'
 
 class Service extends Database {
-  protected db: {
-    Entity: 'localization',
-    RequiredFields: ['id', 'name', 'cover', 'notes'],
+  protected db = {
+    Entity: 'service',
+    RequiredFields: ['id', 'name', 'description', 'cover', 'notes', 'status', 'category_id'],
     Secure: ['id']
   }
 
@@ -18,7 +18,8 @@ class Service extends Database {
     category_id: number,
   }
 
-  protected make (object: any): void {
+  public make (object: any) {
+    object.status = 'pending'
     this.data = object
   }
 }
