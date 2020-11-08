@@ -42,7 +42,7 @@ abstract class Database {
     const data = await db(this.db.Entity)
       .where({ id: id })
       .del()
-      .then(object => { return object })
+      .then(object => { return object ? { message: 'Item excluído com sucesso' } : { message: 'Não foi possível realizar o delete' } })
       .catch(err => { return err })
     return data
   }

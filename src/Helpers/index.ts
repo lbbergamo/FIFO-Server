@@ -10,16 +10,6 @@ class Helpers {
     try {
       this.existsOrError(value, msg)
     } catch (msg) {
-      throw msg
-    }
-    return true
-  }
-
-  static existOrError (value, msg) {
-    // eslint-disable-next-line no-useless-catch
-    try {
-      this.existsOrError(value, msg)
-    } catch (msg) {
       return true
     }
     throw msg

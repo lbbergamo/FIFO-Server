@@ -8,6 +8,7 @@ class LocalizationController {
     try {
       Helpers.existsOrError(req.body.name, 'Nome da localização não informado')
       Helpers.existsOrError(req.body.description, 'Descrição não informado')
+      Helpers.notExistsOrError(req.body.id, 'Favor utilizar a rota update')
     } catch (msg) {
       return res.status(400).send(msg)
     }
@@ -49,13 +50,13 @@ class LocalizationController {
 
   async delete (req: Request, res: Response): Promise<Response> {
     if (req.body.id == null) return res.status(401).send({ message: 'Falta o id' })
-    return db('localization')
-      .where({
-        id: req.body.id
-      })
-      .del()
-      .then(localization => res.status(200).send())
-      .catch(err => res.status(500).send(err))
+    const localization = new Localization()
+    localization.make(req.body)
+    const objectData = await localization.delete(req.body.id)
+    if (localization.fail.Status()) {
+      return res.status(401).send(localization.fail.Error())
+    }
+    return res.status(201).json(objectData)
   }
 }
 export default LocalizationController
