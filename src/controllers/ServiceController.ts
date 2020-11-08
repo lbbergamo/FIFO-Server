@@ -4,6 +4,12 @@ import Service from '@models/Service'
 import { Request, Response } from 'express'
 
 class ServiceController {
+  /**
+  * Realiza o cadastro
+  * @param req Request
+  * @param res Response
+  * @return Response
+  */
   async save (req: Request, res: Response): Promise<Response> {
     try {
       Helpers.existsOrError(req.body.name, 'Nome não informado.')

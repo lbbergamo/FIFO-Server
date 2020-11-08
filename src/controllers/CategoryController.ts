@@ -2,6 +2,12 @@ import Category from '@models/Category'
 import { Request, Response } from 'express'
 import Helpers from '@helpers/index'
 class CategoryController {
+  /**
+   * Realiza o cadastro
+   * @param req Request
+   * @param res Response
+   * @return Response
+   */
   async save (req: Request, res: Response): Promise<Response> {
     try {
       Helpers.existsOrError(req.body.name, 'Nome não informado')
