@@ -50,7 +50,7 @@ abstract class Database {
     const data = await db(this.db.Entity)
       .where({ id: id })
       .del()
-      .then(object => { return object ? { message: 'Item excluído com sucesso' } : { message: 'Não foi possível realizar o delete' } })
+      .then(object => { return object ? { message: 'Item excluído com sucesso' } : this.fail.setError('Não foi possível realizar o delete') })
       .catch(err => { return err })
     return data
   }
@@ -90,7 +90,6 @@ abstract class Database {
    */
   async save (returnData: boolean = true): Promise<any> {
     let result = null
-    console.log(this.db)
     /** Verifica se tem objeto */
     if (this.data == null || this.db == null) {
       return { message: 'Ocorreu um error no model iniciado' }

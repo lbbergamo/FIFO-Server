@@ -5,7 +5,6 @@ import { Request, Response } from 'express'
 
 class ServiceController {
   async save (req: Request, res: Response): Promise<Response> {
-    console.log(req.body)
     try {
       Helpers.existsOrError(req.body.name, 'Nome não informado.')
       Helpers.existsOrError(req.body.category_id, 'Categoria não informada.')
@@ -17,7 +16,9 @@ class ServiceController {
     const service = new Service()
     service.make(req.body)
     const objectData = await service.save()
-    console.log(objectData)
+    if (service.fail.Status()) {
+      return res.status(401).send(service.fail.Error())
+    }
     return res.status(201).send(objectData)
   }
 

@@ -21,6 +21,9 @@ class LocalizationController {
     const localization = new Localization()
     localization.make(req.body)
     const objectData = await localization.save()
+    if (localization.fail.Status()) {
+      return res.status(401).send(localization.fail.Error())
+    }
     return res.status(201).send(objectData)
   }
 
