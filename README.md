@@ -4,7 +4,7 @@
 
 ```bash
 # Clone este repositório
-$ git clone 
+$ git clone https://github.com/lbbergamo/FIFO-Server
 
 # Navegue até ele e instale todas as dependências
 $ yarn
@@ -14,13 +14,14 @@ $ yarn dev
 ```
 
 #### :scream_cat:  Importante
-1. Crie na raiz do projeto o arquivo .env
+1. Entre no arquivo src/config/database-config.ts
+
 2. Digite o valor das variáveis de acordo com o seu banco de dados MySQL
 ```
-HOST_MYSQL=
-DATABASE_NAME=
-DATABASE_USER=
-DATABASE_PASSWORD=
+const HOST_MYSQL = process.env.HOST_MYSQL || 'localhost'
+const DATABASE_NAME = process.env.DATABASE_NAME || 'fifo-server'
+const DATABASE_USER = process.env.DATABASE_USER || 'root'
+const DATABASE_PASSWORD = process.env.DATABASE_PASSWORD || ''
 ```
 
 ## :memo: Scripts

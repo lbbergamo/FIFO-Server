@@ -1,13 +1,14 @@
 import path from 'path'
 import knex from 'knex'
+import { DATABASE_NAME, DATABASE_PASSWORD, DATABASE_USER, HOST_MYSQL } from '@config/database-config'
 
 const db = knex({
   client: 'mysql2',
   connection: {
-    host: process.env.HOST_MYSQL,
-    database: process.env.DATABASE_NAME,
-    user: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASSWORD
+    host: HOST_MYSQL,
+    database: DATABASE_NAME,
+    user: DATABASE_USER,
+    password: DATABASE_PASSWORD
   },
   migrations: {
     directory: path.resolve(__dirname, 'src', 'database', 'migrations')
