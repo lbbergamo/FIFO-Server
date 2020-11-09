@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import Database from './Database'
 
 class Service extends Database {
@@ -7,20 +8,31 @@ class Service extends Database {
     Secure: ['id']
   }
 
-  protected data: {
-    id: number,
-    name: string,
-    description: string,
-    cover: string,
-    notes: string,
-    status: string,
-    // eslint-disable-next-line camelcase
-    category_id: number,
+  public make (object: any) {
+    this.data = new ServiceModel(object)
+  }
+}
+
+class ServiceModel implements IData {
+  readonly id: number
+  name: string
+  description: string
+  cover: string
+  notes: string
+  status: string
+  category_id: any
+
+  constructor (object: any) {
+    this.name = object.name
+    this.description = object.description
+    this.cover = object.cover
+    this.notes = object.notes
+    this.status = 'pending'
+    this.category_id = object.category_id
   }
 
-  public make (object: any) {
-    object.status = 'pending'
-    this.data = object
+  get ServiceModel () {
+    return this
   }
 }
 

@@ -3,7 +3,7 @@ import Error from '@helpers/Error'
 
 abstract class Database {
   protected abstract db: IDatabase
-  protected abstract data: IData
+  protected data
   public erro = new Error();
 
   /**

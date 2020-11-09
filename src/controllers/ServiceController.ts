@@ -14,6 +14,7 @@ class ServiceController {
     try {
       Helpers.existsOrError(req.body.name, 'Nome não informado.')
       Helpers.existsOrError(req.body.category_id, 'Categoria não informada.')
+      Helpers.notExistsOrError(req.body.id, 'Favor utilizar a rota update')
     } catch (error) {
       return res.status(400).send({
         message: error
@@ -43,7 +44,7 @@ class ServiceController {
     const result = []
     for (const service of findService) {
       const category = new Category()
-      category.requiredFields(['name', 'description', 'cover', 'notes'])
+      category.requiredFields(['id', 'name', 'description', 'cover', 'notes'])
       const findCategory = await category.findId(service.category_id)
       if (!category.erro.Status()) {
         service.category = findCategory
@@ -64,9 +65,18 @@ class ServiceController {
     const findService = await service.findId(req.params.id)
     if (service.erro.Status()) {
       return res.status(401).send(service.erro.Error())
-    } else {
-      return res.status(201).send(findService)
     }
+    const result = []
+    for (const service of findService) {
+      const category = new Category()
+      category.requiredFields(['id', 'name', 'description', 'cover', 'notes'])
+      const findCategory = await category.findId(service.category_id)
+      if (!category.erro.Status()) {
+        service.category = findCategory
+      }
+      result.push(service)
+    }
+    return res.status(201).json(result)
   }
 
   /**

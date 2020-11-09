@@ -15,8 +15,25 @@ class Localization extends Database {
   }
 
   public make (object: any) {
-    this.data = object
+    this.data = new LocalizationModel(object)
   }
 }
 
+class LocalizationModel implements IData {
+  readonly id: number
+  name: string
+  cover: string
+  notes: string
+
+  constructor (object: any) {
+    this.id = object.id
+    this.name = object.name
+    this.cover = object.cover
+    this.notes = object.notes
+  }
+
+  get LocalizationModel () {
+    return this
+  }
+}
 export default Localization

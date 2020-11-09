@@ -20,11 +20,11 @@ class LocalizationController {
     }
     const localization = new Localization()
     localization.make(req.body)
-    const objectData = await localization.save()
+    const localizationData = await localization.save()
     if (localization.erro.Status()) {
       return res.status(401).send(localization.erro.Error())
     }
-    return res.status(201).send(objectData)
+    return res.status(201).send(localizationData)
   }
 
   /**
@@ -35,11 +35,11 @@ class LocalizationController {
   */
   async get (req: Request, res: Response): Promise<Response> {
     const localization = new Localization()
-    const findLocalization = await localization.get()
-    if (findLocalization == null) {
+    const localizationData = await localization.get()
+    if (localizationData == null) {
       return res.status(401).send({})
     } else {
-      return res.status(201).send(findLocalization)
+      return res.status(201).send(localizationData)
     }
   }
 
@@ -51,11 +51,11 @@ class LocalizationController {
   */
   async find (req: Request, res: Response): Promise<Response> {
     const localization = new Localization()
-    const findLocalization = await localization.findId(req.params.id)
+    const localizationData = await localization.findId(req.params.id)
     if (localization.erro.Status()) {
       return res.status(401).send(localization.erro.Error())
     } else {
-      return res.status(201).send(findLocalization)
+      return res.status(201).send(localizationData)
     }
   }
 
@@ -69,11 +69,11 @@ class LocalizationController {
     if (req.body.id == null) return res.status(401).send({ message: 'Falta o id' })
     const localization = new Localization()
     localization.make(req.body)
-    const objectData = await localization.save()
+    const localizationData = await localization.save()
     if (localization.erro.Status()) {
       return res.status(401).send(localization.erro.Error())
     }
-    return res.status(201).json(objectData)
+    return res.status(201).json(localizationData)
   }
 
   /**
@@ -86,11 +86,11 @@ class LocalizationController {
     if (req.body.id == null) return res.status(401).send({ message: 'Falta o id' })
     const localization = new Localization()
     localization.make(req.body)
-    const objectData = await localization.delete(req.body.id)
+    const localizationData = await localization.delete(req.body.id)
     if (localization.erro.Status()) {
       return res.status(401).send(localization.erro.Error())
     }
-    return res.status(201).json(objectData)
+    return res.status(201).json(localizationData)
   }
 }
 export default LocalizationController
