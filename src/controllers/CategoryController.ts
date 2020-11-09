@@ -12,17 +12,18 @@ class CategoryController {
     try {
       Helpers.existsOrError(req.body.name, 'Nome não informado')
       Helpers.existsOrError(req.body.description, 'Descrição não informado')
+      Helpers.notExistsOrError(req.body.id, 'Favor utilizar a rota update')
     } catch (msg) {
       return res.status(400).send({ message: msg })
     }
 
     const category = new Category()
     category.make(req.body)
-    const objectData = await category.save()
+    const categoryData = await category.save()
     if (category.erro.Status()) {
       return res.status(401).send(category.erro.Error())
     }
-    return res.status(201).send(objectData)
+    return res.status(201).json(categoryData)
   }
 
   /**
@@ -33,11 +34,12 @@ class CategoryController {
   */
   async find (req: Request, res: Response): Promise<Response> {
     const category = new Category()
-    const findService = await category.findId(req.params.id)
+    if (req.params.id == null) return res.status(401).send({ message: 'Falta o id' })
+    const categoryData = await category.findId(req.params.id)
     if (category.erro.Status()) {
       return res.status(401).send(category.erro.Error())
     } else {
-      return res.status(201).send(findService)
+      return res.status(201).json(categoryData)
     }
   }
 
@@ -49,11 +51,11 @@ class CategoryController {
   */
   async get (req: Request, res: Response): Promise<Response> {
     const category = new Category()
-    const findCategory = await category.get()
-    if (findCategory == null) {
+    const categoryData = await category.get()
+    if (categoryData == null) {
       return res.status(401).send({})
     } else {
-      return res.status(201).send(findCategory)
+      return res.status(201).json(categoryData)
     }
   }
 
@@ -67,11 +69,11 @@ class CategoryController {
     if (req.body.id == null) return res.status(401).send({ message: 'Falta o id' })
     const category = new Category()
     category.make(req.body)
-    const objectData = await category.save()
+    const categoryData = await category.save()
     if (category.erro.Status()) {
       return res.status(401).send(category.erro.Error())
     }
-    return res.status(201).json(objectData)
+    return res.status(201).json(categoryData)
   }
 
   /**
@@ -84,11 +86,11 @@ class CategoryController {
     if (req.body.id == null) return res.status(401).send({ message: 'Falta o id' })
     const category = new Category()
     category.make(req.body)
-    const objectData = await category.delete(req.body.id)
+    const categoryData = await category.delete(req.body.id)
     if (category.erro.Status()) {
       return res.status(401).send(category.erro.Error())
     }
-    return res.status(201).json(objectData)
+    return res.status(201).json(categoryData)
   }
 }
 export default CategoryController
