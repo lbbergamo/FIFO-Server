@@ -18,10 +18,10 @@ $ yarn dev
 
 2. Digite o valor das variáveis de acordo com o seu banco de dados MySQL
 ```
-const HOST_MYSQL = 'localhost'
-const DATABASE_NAME = 'fifo-server'
-const DATABASE_USER = 'root'
-const DATABASE_PASSWORD = 'root'
+const HOST_MYSQL = process.env.HOST_MYSQL || 'localhost'
+const DATABASE_NAME = process.env.DATABASE_NAME || 'fifo-server'
+const DATABASE_USER = process.env.DATABASE_USER || 'root'
+const DATABASE_PASSWORD = process.env.DATABASE_PASSWORD || ''
 ```
 
 ## :memo: Scripts
@@ -44,3 +44,4 @@ $ yarn knex:migrate
 # Remove todas as tabelas do banco de dados
 $ yarn knex:rollback 
 ```
+
