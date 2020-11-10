@@ -9,26 +9,26 @@
 ![GitHub top language](https://img.shields.io/github/languages/top/lbbergamo/FIFO-Server)
   
 <!--ts-->
-   * [Requisito](#gear-requisito-para-executar)
-   * [Como usar](#memo-como-usar)
-      * [Download](#paperclip-download-do-projeto)
-      * [Pre Requisitos](#gear-requisito-para-executar)
-      * [Configurar a conexão com banco de dados](#configurar-a-conexão-com-banco-de-dados)
-      * [Configurar a porta do servidor](#configurar-a-porta-do-servidor)
-      * [Iniciando o projeto](#computer-instalação)
+   * [Requisitos](#gear-requisito-para-executar)
+   * [Download do Projeto](#paperclip-download-do-projeto)
+   * [Configurar a conexão com banco de dados](#floppy_disk-configurar-a-conexão-com-banco-de-dados)
+   * [Configurar a porta do servidor](#electric_plug-configurar-a-porta-do-servidor)
+   * [Iniciando o projeto](#computer-iniciando-o-projeto)
    * [Scripts](#memo-scripts)
-   * [Tecnologias](#tecnologias)
+   * [Tecnologias](#crystal_ball-tecnologias)
 <!--te-->
 
-## :memo: Como usar
-
-### :paperclip: Download do projeto
+## :paperclip: Download do projeto
 ```bash
 # Clone este repositório
 $ git clone https://github.com/lbbergamo/FIFO-Server
 ```
 
 ## :gear: Requisito para executar
+
+Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
+[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/) e [Mysql](https://www.mysql.com/products/workbench/) ou [MariaDB](https://mariadb.org/)
+Além disto é bom ter um editor para trabalhar com o código como [VSCode](https://code.visualstudio.com/)
 
 ```bash
 # Banco de Dados
@@ -38,7 +38,7 @@ $ git clone https://github.com/lbbergamo/FIFO-Server
 > Superior ao 12
 ```
 
-### Configurar a conexão com banco de dados 
+##  :floppy_disk: Configurar a conexão com banco de dados 
 1. Entre no arquivo src/config/database-config.ts
 
 2. Digite o valor das variáveis de acordo com o seu banco de dados MySQL
@@ -49,7 +49,7 @@ const DATABASE_USER = process.env.DATABASE_USER || 'USUARIO_DO_BANCO_DE_DADOS'
 const DATABASE_PASSWORD = process.env.DATABASE_PASSWORD || 'SENHA_DO_BANCO_DE_DADOS'
 ```
 
-### Configurar a porta do servidor
+##  :electric_plug: Configurar a porta do servidor
 1. Entre no arquivo src/server.ts
 
 2. Configure a porta na variavel PORT
@@ -58,7 +58,7 @@ const app = express()
 export const port = process.env.PORT || 3333
 ``` 
 
-## :computer: Instalação
+## :computer: Iniciando o projeto
 ```bash
 # Navegue até ele e instale todas as dependências
 $ yarn
@@ -91,3 +91,18 @@ $ yarn knex:migrate
 $ yarn knex:rollback 
 ```
 
+## :crystal_ball: Tecnologias
+
+- [typescript](https://www.typescriptlang.org/docs/)
+
+- [git-commit-msg-linter](https://www.npmjs.com/package/git-commit-msg-linter)
+
+- [jest](https://jestjs.io/)
+
+- [eslint](https://eslint.org/)
+
+- [babel](https://babeljs.io/)
+
+- [Node.js](https://nodejs.org/en/)
+
+- [knex](http://knexjs.org/)
