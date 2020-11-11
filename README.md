@@ -24,6 +24,7 @@
 $ git clone https://github.com/lbbergamo/FIFO-Server
 ```
 
+
 ## :gear: Requisito para executar
 
 Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
@@ -38,7 +39,9 @@ Além disto é bom ter um editor para trabalhar com o código como [VSCode](http
 > Superior ao 12
 ```
 
+
 ##  :floppy_disk: Configurar a conexão com banco de dados 
+
 1. Entre no arquivo src/config/database-config.ts
 
 2. Digite o valor das variáveis de acordo com o seu banco de dados MySQL
