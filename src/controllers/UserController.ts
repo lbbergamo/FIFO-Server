@@ -69,11 +69,12 @@ class UserController {
     }
     const result = []
     for (const user of findUser) {
-      const category = new Category()
-      category.requiredFields([ 'id', 'name', 'description', 'cover', 'notes' ])
-      const findCategory = await category.findId(user.category_id)
-      if (!category.erro.Status()) {
-        user.category = findCategory
+      if (user.localization_id != null) {
+        const localization = new Localization()
+        const findLocalization = await localization.findId(user.localization_id)
+        if (!localization.erro.Status()) {
+          user.localization = findLocalization
+        }
       }
       result.push(user)
     }
