@@ -4,8 +4,8 @@ import Database from './Database'
 class User extends Database {
     protected db = {
         Entity: 'user',
-        RequiredFields: [ 'id', 'name', 'email', 'last_socket_id', 'localization_id', 'cover' ],
-        Secure: [ 'id' ]
+        RequiredFields: ['id', 'name', 'email', 'last_socket_id', 'localization_id', 'cover'],
+        Secure: ['id']
     }
 
     public make (object: any) {
@@ -19,7 +19,7 @@ class UserModel implements IData {
     email: string
     cover: string
     last_socket_id: number
-    localization_id: number    
+    localization_id: number
 
     constructor (object: any) {
         this.name = object.name
@@ -27,7 +27,7 @@ class UserModel implements IData {
         this.cover = object.cover
         this.last_socket_id = object.last_socket_id
         this.localization_id = object.localization_id
-        
+
     }
 
     get UserModel () {
