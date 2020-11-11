@@ -23,6 +23,7 @@ class ServiceModel implements IData {
   category_id: any
 
   constructor (object: any) {
+    this.id = object.id
     this.name = object.name
     this.description = object.description
     this.cover = object.cover
