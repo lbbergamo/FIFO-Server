@@ -1,8 +1,7 @@
 import Helpers from '@helpers/index'
-import Category from '@models/Category'
 import Localization from '@models/Localization'
 import User from '@models/User'
-import {Request, Response} from 'express'
+import { Request, Response } from 'express'
 
 class UserController {
   /**
@@ -14,7 +13,7 @@ class UserController {
   async save (req: Request, res: Response): Promise<Response> {
     try {
       Helpers.existsOrError(req.body.name, 'Nome não informado.')
-      Helpers.existsOrError(req.body.email, 'email não informada.')
+      Helpers.existsOrError(req.body.email, 'Email não informada.')
     } catch (error) {
       return res.status(400).send({
         message: error
@@ -88,7 +87,7 @@ class UserController {
   * @return Response
   */
   async update (req: Request, res: Response): Promise<Response> {
-    if (req.body.id == null) return res.status(401).send({message: 'Falta o id'})
+    if (req.body.id == null) return res.status(401).send({ message: 'Falta o id' })
     const user = new User()
     user.make(req.body)
     const objectData = await user.save()
@@ -105,7 +104,7 @@ class UserController {
   * @return Response
   */
   async delete (req: Request, res: Response): Promise<Response> {
-    if (req.body.id == null) return res.status(401).send({message: 'Falta o id'})
+    if (req.body.id == null) return res.status(401).send({ message: 'Falta o id' })
     const user = new User()
     user.make(req.body)
     const objectData = await user.delete(req.body.id)
