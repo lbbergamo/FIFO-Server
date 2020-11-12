@@ -46,5 +46,8 @@ routes.delete('/user', userController.delete)
 const localizationServiceController = new LocalizationServiceController()
 routes.post('/localization_service', localizationServiceController.save)
 routes.get('/localization_service', localizationServiceController.get)
+routes.get('/localization_service/:id', localizationServiceController.find)
+routes.put('/localization_service', localizationServiceController.update)
+routes.delete('/localization_service', localizationServiceController.delete)
 
 export default routes
