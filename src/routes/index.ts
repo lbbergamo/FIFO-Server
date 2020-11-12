@@ -1,5 +1,6 @@
 import CategoryController from '@controllers/CategoryController'
 import LocalizationController from '@controllers/LocalizationController'
+import LocalizationServiceController from '@controllers/LocalizationServiceController'
 import ServiceController from '@controllers/ServiceController'
 import UserController from '@controllers/UserController'
 import express from 'express'
@@ -40,5 +41,10 @@ routes.get('/user', userController.get)
 routes.get('/user/:id', userController.find)
 routes.put('/user', userController.update)
 routes.delete('/user', userController.delete)
+
+/** LocalizationService */
+const localizationServiceController = new LocalizationServiceController()
+routes.post('/localization_service', localizationServiceController.save)
+routes.get('/localization_service', localizationServiceController.get)
 
 export default routes
