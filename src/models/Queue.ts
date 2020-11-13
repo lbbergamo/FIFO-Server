@@ -32,7 +32,7 @@ class QueueModel implements IData {
     this.status = 'pending'
   }
 
-  get ServiceModel () {
+  get QueueModel () {
     return this
   }
 }
