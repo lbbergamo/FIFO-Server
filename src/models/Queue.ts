@@ -27,7 +27,7 @@ class QueueModel implements IData {
     this.localization_id = object.localization_id
     this.service_id = object.service_id
     this.users_id = object.users_id
-    this.entry_queue = new Date()
+    this.entry_queue = object.entry_queue
     this.entry_service = object.entry_service
     this.status = 'pending'
   }
