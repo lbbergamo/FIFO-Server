@@ -1,5 +1,4 @@
 import Helpers from '@helpers/index'
-import Category from '@models/Category'
 import Localization from '@models/Localization'
 import Queue from '@models/Queue'
 import Service from '@models/Service'
@@ -124,7 +123,6 @@ class QueueController {
     const queue = new Queue()
     queue.make(req.body)
     const objectData = await queue.save()
-    console.log(queue)
     if (queue.erro.Status()) {
       return res.status(401).send(queue.erro.Error())
     }
