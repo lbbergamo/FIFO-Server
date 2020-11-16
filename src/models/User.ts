@@ -22,6 +22,7 @@ class UserModel implements IData {
   localization_id: number
 
   constructor (object: any) {
+    this.id = object.id
     this.name = object.name
     this.email = object.email
     this.cover = object.cover
