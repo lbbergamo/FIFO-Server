@@ -88,15 +88,10 @@ $ yarn knex:rollback
 ## :crystal_ball: Tecnologias
 
 - [typescript](https://www.typescriptlang.org/docs/)
-
 - [git-commit-msg-linter](https://www.npmjs.com/package/git-commit-msg-linter)
-
 - [jest](https://jestjs.io/)
-
 - [eslint](https://eslint.org/)
-
 - [babel](https://babeljs.io/)
-
 - [Node.js](https://nodejs.org/en/)
-
 - [knex](http://knexjs.org/)
+- [dotenv](https://www.npmjs.com/package/dotenv) 
