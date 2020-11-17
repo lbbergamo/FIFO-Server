@@ -3,7 +3,10 @@ import routes from './routes/index'
 import cors from 'cors'
 
 const app = express()
-export const port = process.env.PORT || 3333
+require('dotenv/config')
+
+export const port = process.env.PORT
+
 app.use(cors())
 app.use(express.json())
 app.use(routes)

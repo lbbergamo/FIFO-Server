@@ -12,7 +12,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 class Localization extends _Database.default {
   db = {
     Entity: 'localization',
-    RequiredFields: ['id', 'name', 'cover', 'notes'],
+    RequiredFields: ['id', 'name', 'cover', 'notes', 'description'],
     Secure: ['id']
   };
 
@@ -28,6 +28,7 @@ class LocalizationModel {
     this.name = object.name;
     this.cover = object.cover;
     this.notes = object.notes;
+    this.description = object.description;
   }
 
   get LocalizationModel() {

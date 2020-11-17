@@ -11,8 +11,7 @@
 <!--ts-->
    * [Requisitos](#gear-requisito-para-executar)
    * [Download do Projeto](#paperclip-download-do-projeto)
-   * [Configurar a conexão com banco de dados](#floppy_disk-configurar-a-conexão-com-banco-de-dados)
-   * [Configurar a porta do servidor](#electric_plug-configurar-a-porta-do-servidor)
+   * [Configurando o Projeto](#floppy_disk-configurando-o-projeto)
    * [Iniciando o projeto](#computer-iniciando-o-projeto)
    * [Scripts](#memo-scripts)
    * [Tecnologias](#crystal_ball-tecnologias)
@@ -40,26 +39,18 @@ Além disto é bom ter um editor para trabalhar com o código como [VSCode](http
 ```
 
 
-##  :floppy_disk: Configurar a conexão com banco de dados 
+##  :floppy_disk: Configurando o projeto
 
-1. Entre no arquivo src/config/database-config.ts
+1. Crie um arquivo na pasta local do projeto com o nome ".env"
 
-2. Digite o valor das variáveis de acordo com o seu banco de dados MySQL
+2. Digite o valor das variáveis de acordo com o seu banco de dados MySQL e a Porta
 ```
-const HOST_MYSQL = process.env.HOST_MYSQL || 'ENDERECO_DO_BANCO_DE_DADOS'
-const DATABASE_NAME = process.env.DATABASE_NAME || 'NOME_DO_BANCO_DE_DADOS'
-const DATABASE_USER = process.env.DATABASE_USER || 'USUARIO_DO_BANCO_DE_DADOS'
-const DATABASE_PASSWORD = process.env.DATABASE_PASSWORD || 'SENHA_DO_BANCO_DE_DADOS'
+HOST_MYSQL=
+DATABASE_NAME=
+DATABASE_USER=
+DATABASE_PASSWORD=
+PORT=
 ```
-
-##  :electric_plug: Configurar a porta do servidor
-1. Entre no arquivo src/server.ts
-
-2. Configure a porta na variavel PORT
-```
-const app = express()
-export const port = process.env.PORT || 3333
-``` 
 
 ## :computer: Iniciando o projeto
 ```bash

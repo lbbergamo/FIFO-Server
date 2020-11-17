@@ -25,6 +25,7 @@ class Service extends _Database.default {
 
 class ServiceModel {
   constructor(object) {
+    this.id = object.id;
     this.name = object.name;
     this.description = object.description;
     this.cover = object.cover;
