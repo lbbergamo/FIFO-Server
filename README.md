@@ -41,7 +41,7 @@ Além disto é bom ter um editor para trabalhar com o código como [VSCode](http
 
 ##  :floppy_disk: Configurando o projeto
 
-1. Crie um arquivo na pasta local do projeto com o nome ".env"
+1. Crie um arquivo na raiz do projeto com o nome ".env"
 
 2. Digite o valor das variáveis de acordo com o seu banco de dados MySQL e a Porta
 ```
