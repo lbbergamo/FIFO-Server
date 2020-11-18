@@ -24,7 +24,7 @@
       "@views/*": ["./src/views/*"],
       "@config/*": ["./src/config/*"],
       "@database/*": ["./src/database/*"],
-      "@helpers/*": ["./src/helpers/*"]
+      "@helpers/*": ["src/helpers2/*"]
     }
   },
   "include": [
