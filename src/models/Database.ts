@@ -1,5 +1,5 @@
 import db from '@database/connection'
-import Error from 'src/helpers2/Error'
+import Error from '@helpers/Error'
 
 abstract class Database {
   protected abstract db: IDatabase

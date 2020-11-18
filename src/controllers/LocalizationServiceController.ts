@@ -1,4 +1,4 @@
-import Helpers from 'src/helpers2/index'
+import Helpers from '@helpers/index'
 import Localization from '@models/Localization'
 import LocalizationService from '@models/LocalizationService'
 import Service from '@models/Service'

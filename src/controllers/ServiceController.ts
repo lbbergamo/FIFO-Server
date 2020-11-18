@@ -1,4 +1,4 @@
-import Helpers from 'src/helpers2/index'
+import Helpers from '@helpers/index'
 import Category from '@models/Category'
 import Service from '@models/Service'
 import { Request, Response } from 'express'
