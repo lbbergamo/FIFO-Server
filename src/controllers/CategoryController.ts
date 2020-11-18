@@ -1,6 +1,6 @@
 import Category from '@models/Category'
 import { Request, Response } from 'express'
-import Helpers from '@helpers/index'
+import Helpers from 'src/helpers2/index'
 class CategoryController {
   /**
    * Realiza o cadastro

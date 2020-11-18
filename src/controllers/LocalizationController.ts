@@ -1,6 +1,6 @@
 import Localization from '@models/Localization'
 import { Request, Response } from 'express'
-import Helpers from '@helpers/index'
+import Helpers from 'src/helpers2/index'
 import db from '@database/connection'
 
 class LocalizationController {
