@@ -23,8 +23,8 @@ class ServiceController {
     const service = new Service()
     service.make(req.body)
     const objectData = await service.save()
-    if (service.erro.Status()) {
-      return res.status(401).send(service.erro.Error())
+    if (service.error.Status()) {
+      return res.status(service.error.code).send(service.error.info)
     }
     return res.status(201).send(objectData)
   }
@@ -46,7 +46,7 @@ class ServiceController {
       const category = new Category()
       category.requiredFields(['id', 'name', 'description', 'cover', 'notes'])
       const findCategory = await category.findId(service.category_id)
-      if (!category.erro.Status()) {
+      if (!category.error.Status()) {
         service.category = findCategory
       }
       result.push(service)
@@ -63,15 +63,15 @@ class ServiceController {
   async find (req: Request, res: Response): Promise<Response> {
     const service = new Service()
     const findService = await service.findId(req.params.id)
-    if (service.erro.Status()) {
-      return res.status(401).send(service.erro.Error())
+    if (service.error.Status()) {
+      return res.status(service.error.code).send(service.error.info)
     }
     const result = []
     for (const service of findService) {
       const category = new Category()
       category.requiredFields(['id', 'name', 'description', 'cover', 'notes'])
       const findCategory = await category.findId(service.category_id)
-      if (!category.erro.Status()) {
+      if (!category.error.Status()) {
         service.category = findCategory
       }
       result.push(service)
@@ -90,8 +90,8 @@ class ServiceController {
     const service = new Service()
     service.make(req.body)
     const objectData = await service.save()
-    if (service.erro.Status()) {
-      return res.status(401).send(service.erro.Error())
+    if (service.error.Status()) {
+      return res.status(service.error.code).send(service.error.info)
     }
     return res.status(201).json(objectData)
   }
@@ -107,8 +107,8 @@ class ServiceController {
     const service = new Service()
     service.make(req.body)
     const objectData = await service.delete(req.body.id)
-    if (service.erro.Status()) {
-      return res.status(401).send(service.erro.Error())
+    if (service.error.Status()) {
+      return res.status(service.error.code).send(service.error.info)
     }
     return res.status(201).json(objectData)
   }
