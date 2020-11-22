@@ -1,4 +1,4 @@
-import Helpers from '@helpers/index'
+import { Validation } from '@helpers/Validation'
 import Localization from '@models/Localization'
 import LocalizationService from '@models/LocalizationService'
 import Service from '@models/Service'
@@ -12,14 +12,25 @@ class LocalizationServiceController {
   * @return Response
   */
   async save (req: Request, res: Response): Promise<Response> {
-    try {
-      Helpers.existsOrError(req.body.localization_id, 'Id localization não encontrado.')
-      Helpers.existsOrError(req.body.service_id, 'Id service não encontrado.')
-      Helpers.notExistsOrError(req.body.id, 'Favor utilizar a rota update')
-    } catch (error) {
-      return res.status(400).send({
-        message: error
-      })
+    const validate = new Validation()
+    validate.existsOrError({
+      value: req.body.localization_id,
+      msg: 'Id localization não informado',
+      code: 300
+    })
+    validate.existsOrError({
+      value: req.body.description,
+      msg: 'Id localization não informado',
+      code: 300
+    })
+    validate.notExistsOrError({
+      value: req.body.id,
+      msg: 'Favor utilizar a rota update',
+      code: 400
+    })
+
+    if (validate.status) {
+      return res.status(validate.code).send({ message: validate.info })
     }
     const localizationService = new LocalizationService()
     localizationService.make(req.body)

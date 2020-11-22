@@ -1,4 +1,4 @@
-import Helpers from '@helpers/index'
+import { Validation } from '@helpers/Validation'
 import Localization from '@models/Localization'
 import Queue from '@models/Queue'
 import Service from '@models/Service'
@@ -13,15 +13,30 @@ class QueueController {
   * @return Response
   */
   async save (req: Request, res: Response): Promise<Response> {
-    try {
-      Helpers.existsOrError(req.body.service_id, 'Serviço não informado.')
-      Helpers.existsOrError(req.body.localization_id, 'Localização não informado.')
-      Helpers.existsOrError(req.body.users_id, 'Usuário não informado.')
-      Helpers.notExistsOrError(req.body.id, 'Favor utilizar a rota update')
-    } catch (error) {
-      return res.status(400).send({
-        message: error
-      })
+    const validate = new Validation()
+    validate.existsOrError({
+      value: req.body.service_id,
+      msg: 'Serviço não informado',
+      code: 300
+    })
+    validate.existsOrError({
+      value: req.body.localization_id,
+      msg: 'Localização não informado',
+      code: 300
+    })
+    validate.existsOrError({
+      value: req.body.users_id,
+      msg: 'Usuário não informado.',
+      code: 300
+    })
+    validate.notExistsOrError({
+      value: req.body.id,
+      msg: 'Favor utilizar a rota update',
+      code: 400
+    })
+
+    if (validate.status) {
+      return res.status(validate.code).send({ message: validate.info })
     }
     const queue = new Queue()
     queue.make(req.body)
@@ -57,7 +72,6 @@ class QueueController {
         const service = new Service()
         const findService = await service.findId(queue.service_id)
         if (!service.error.Status()) {
-
           queue.service = findService
         }
       }
