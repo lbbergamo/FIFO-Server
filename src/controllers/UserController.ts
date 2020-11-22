@@ -24,7 +24,7 @@ class UserController {
     user.make(req.body)
     const objectData = await user.save()
     if (objectData.Status()) {
-      return res.status(401).send(user.erro.())
+      return res.status(user.error.code).send(user.error.info)
     }
     return res.status(201).send(objectData)
   }
@@ -46,7 +46,7 @@ class UserController {
       if (user.localization_id != null) {
         const localization = new Localization()
         const findLocalization = await localization.findId(user.localization_id)
-        if (!localization.erro.Status()) {
+        if (!localization.error.Status()) {
           user.localization = findLocalization
         }
       }
@@ -64,15 +64,15 @@ class UserController {
   async find (req: Request, res: Response): Promise<Response> {
     const user = new User()
     const findUser = await user.findId(req.params.id)
-    if (user.erro.Status()) {
-      return res.status(401).send(user.erro.Error())
+    if (user.error.Status()) {
+      return res.status(user.error.code).send(user.error.info)
     }
     const result = []
     for (const user of findUser) {
       if (user.localization_id != null) {
         const localization = new Localization()
         const findLocalization = await localization.findId(user.localization_id)
-        if (!localization.erro.Status()) {
+        if (!localization.error.Status()) {
           user.localization = findLocalization
         }
       }
@@ -92,8 +92,8 @@ class UserController {
     const user = new User()
     user.make(req.body)
     const objectData = await user.save()
-    if (user.erro.Status()) {
-      return res.status(401).send(user.erro.Error())
+    if (user.error.Status()) {
+      return res.status(user.error.code).send(user.error.info)
     }
     return res.status(201).json(objectData)
   }
@@ -109,8 +109,8 @@ class UserController {
     const user = new User()
     user.make(req.body)
     const objectData = await user.delete(req.body.id)
-    if (user.erro.Status()) {
-      return res.status(401).send(user.erro.Error())
+    if (user.error.Status()) {
+      return res.status(user.error.code).send(user.error.info)
     }
     return res.status(201).json(objectData)
   }
