@@ -23,8 +23,8 @@ class UserController {
     const user = new User()
     user.make(req.body)
     const objectData = await user.save()
-    if (objectData.Status()) {
-      return res.status(user.error.code).send(user.error.info)
+    if (user.error.Status()) {
+      return res.status(user.error.code).json({ message: user.error.info, data: user.error.data })
     }
     return res.status(201).send(objectData)
   }
