@@ -57,6 +57,7 @@ class QueueController {
         const service = new Service()
         const findService = await service.findId(queue.service_id)
         if (!service.error.Status()) {
+
           queue.service = findService
         }
       }

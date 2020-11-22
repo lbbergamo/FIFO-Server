@@ -1,5 +1,4 @@
 import Helpers from '@helpers/index'
-import { Error } from '@helpers/Error'
 import Localization from '@models/Localization'
 import User from '@models/User'
 import { Request, Response } from 'express'
