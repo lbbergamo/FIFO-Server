@@ -1,6 +1,9 @@
 import CategoryController from '@controllers/CategoryController'
 import LocalizationController from '@controllers/LocalizationController'
+import LocalizationServiceController from '@controllers/LocalizationServiceController'
+import QueueController from '@controllers/QueueController'
 import ServiceController from '@controllers/ServiceController'
+import UserController from '@controllers/UserController'
 import express from 'express'
 
 const routes = express.Router()
@@ -31,5 +34,29 @@ routes.get('/service', serviceController.get)
 routes.get('/service/:id', serviceController.find)
 routes.put('/service', serviceController.update)
 routes.delete('/service', serviceController.delete)
+
+/** User */
+const userController = new UserController()
+routes.post('/user', userController.save)
+routes.get('/user', userController.get)
+routes.get('/user/:id', userController.find)
+routes.put('/user', userController.update)
+routes.delete('/user', userController.delete)
+
+/** LocalizationService */
+const localizationServiceController = new LocalizationServiceController()
+routes.post('/localization_service', localizationServiceController.save)
+routes.get('/localization_service', localizationServiceController.get)
+routes.get('/localization_service/:id', localizationServiceController.find)
+routes.put('/localization_service', localizationServiceController.update)
+routes.delete('/localization_service', localizationServiceController.delete)
+
+/** Queue */
+const queueController = new QueueController()
+routes.post('/queue', queueController.save)
+routes.get('/queue', queueController.get)
+routes.get('/queue/:id', queueController.find)
+routes.put('/queue', queueController.update)
+routes.delete('/queue', queueController.delete)
 
 export default routes
