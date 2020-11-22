@@ -1,6 +1,6 @@
 import Category from '@models/Category'
 import { Request, Response } from 'express'
-import Helpers from '@helpers/index'
+import { Validation } from '@helpers/Validation'
 class CategoryController {
   /**
    * Realiza o cadastro
@@ -9,12 +9,24 @@ class CategoryController {
    * @return Response
    */
   async save (req: Request, res: Response): Promise<Response> {
-    try {
-      Helpers.existsOrError(req.body.name, 'Nome não informado')
-      Helpers.existsOrError(req.body.description, 'Descrição não informado')
-      Helpers.notExistsOrError(req.body.id, 'Favor utilizar a rota update')
-    } catch (msg) {
-      return res.status(400).send({ message: msg })
+    const validate = new Validation()
+    validate.existsOrError({
+      value: req.body.name,
+      msg: 'Nome não informado',
+      code: 300
+    })
+    validate.existsOrError({
+      value: req.body.description,
+      msg: 'Descrição não informado',
+      code: 300
+    })
+    validate.notExistsOrError({
+      value: req.body.id,
+      msg: 'Favor utilizar a rota update',
+      code: 400
+    })
+    if (validate.status) {
+      return res.status(validate.code).send({ message: validate.info })
     }
 
     const category = new Category()

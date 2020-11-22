@@ -1,4 +1,4 @@
-import Helpers from '@helpers/index'
+import { Validation } from '@helpers/Validation'
 import Localization from '@models/Localization'
 import User from '@models/User'
 import { Request, Response } from 'express'
@@ -11,13 +11,24 @@ class UserController {
   * @return Response
   */
   async save (req: Request, res: Response): Promise<Response> {
-    try {
-      Helpers.existsOrError(req.body.name, 'Nome não informado.')
-      Helpers.existsOrError(req.body.email, 'Email não informada.')
-    } catch (error) {
-      return res.status(400).send({
-        message: error
-      })
+    const validate = new Validation()
+    validate.existsOrError({
+      value: req.body.name,
+      msg: 'Nome não informado',
+      code: 300
+    })
+    validate.existsOrError({
+      value: req.body.email,
+      msg: 'Email não informado',
+      code: 300
+    })
+    validate.notExistsOrError({
+      value: req.body.id,
+      msg: 'Favor utilizar a rota update',
+      code: 400
+    })
+    if (validate.status) {
+      return res.status(validate.code).send({ message: validate.info })
     }
     const user = new User()
     user.make(req.body)
