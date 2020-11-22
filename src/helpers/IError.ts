@@ -1,4 +1,5 @@
 interface IError {
-  status: boolean,
-  info: Array<String>
+  readonly status?: boolean,
+  info: string,
+  code: number
 }

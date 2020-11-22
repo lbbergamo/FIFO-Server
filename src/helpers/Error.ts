@@ -1,20 +1,25 @@
-class Error implements IError {
-  public status = false
-  public info = []
+export class Error implements IError {
+  private static status: boolean = false;
+  info: string
+  code: number
+  static info = []
+  static code: number
 
-  setError (erro: any): void {
-    this.status = true
-    this.info.push(erro)
+  static SetError (Error: IError): void {
+    this.status = Error.status ?? true
+    this.info.push(Error.info)
+    this.code = Error.code
   }
 
-  Status () {
-    return this.status
+  static Status () {
+    return (this.status ?? false)
   }
 
-  Error () {
-    return this
+  get Error (): IError {
+    return {
+      code: this.code,
+      info: this.info,
+      status: Error.Status()
+    }
   }
 }
-
-
-export default Error
