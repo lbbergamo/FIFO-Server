@@ -24,8 +24,8 @@ class LocalizationServiceController {
     const localizationService = new LocalizationService()
     localizationService.make(req.body)
     const objectData = await localizationService.save()
-    if (localizationService.erro.Status()) {
-      return res.status(401).send(localizationService.erro.Error())
+    if (localizationService.error.Status()) {
+      return res.status(localizationService.error.code).send(localizationService.error.info)
     }
     return res.status(201).send(objectData)
   }
@@ -39,15 +39,15 @@ class LocalizationServiceController {
   async get (req: Request, res: Response): Promise<Response> {
     const localizationService = new LocalizationService()
     const findLocalizationService = await localizationService.get()
-    if (findLocalizationService == null) {
-      return res.status(401).send({})
+    if (localizationService.error.Status()) {
+      return res.status(localizationService.error.code).send(localizationService.error.info)
     }
     const result = []
     for (const localizationService of findLocalizationService) {
       if (localizationService.localization_id != null) {
         const localization = new Localization()
         const findLocalization = await localization.findId(localizationService.localization_id)
-        if (!localization.erro.Status()) {
+        if (!localization.error.Status()) {
           localizationService.localization = findLocalization
         }
       }
@@ -55,7 +55,7 @@ class LocalizationServiceController {
       if (localizationService.service_id != null) {
         const service = new Service()
         const findService = await service.findId(localizationService.service_id)
-        if (!service.erro.Status()) {
+        if (!service.error.Status()) {
           localizationService.service = findService
         }
       }
@@ -73,15 +73,15 @@ class LocalizationServiceController {
   async find (req: Request, res: Response): Promise<Response> {
     const localizationService = new LocalizationService()
     const findLocalizationService = await localizationService.findId(req.params.id)
-    if (localizationService.erro.Status()) {
-      return res.status(401).send(localizationService.erro.Error())
+    if (localizationService.error.Status()) {
+      return res.status(localizationService.error.code).send(localizationService.error.info)
     }
     const result = []
     for (const localizationService of findLocalizationService) {
       if (localizationService.localization_id != null) {
         const localization = new Localization()
         const findLocalization = await localization.findId(localizationService.localization_id)
-        if (!localization.erro.Status()) {
+        if (!localization.error.Status()) {
           localizationService.localization = findLocalization
         }
       }
@@ -89,7 +89,7 @@ class LocalizationServiceController {
       if (localizationService.service_id != null) {
         const service = new Service()
         const findService = await service.findId(localizationService.service_id)
-        if (!service.erro.Status()) {
+        if (!service.error.Status()) {
           localizationService.service = findService
         }
       }
@@ -109,8 +109,8 @@ class LocalizationServiceController {
     const localizationService = new LocalizationService()
     localizationService.make(req.body)
     const objectData = await localizationService.save()
-    if (localizationService.erro.Status()) {
-      return res.status(401).send(localizationService.erro.Error())
+    if (localizationService.error.Status()) {
+      return res.status(localizationService.error.code).send(localizationService.error.info)
     }
     return res.status(201).json(objectData)
   }
@@ -126,8 +126,8 @@ class LocalizationServiceController {
     const localizationService = new LocalizationService()
     localizationService.make(req.body)
     const objectData = await localizationService.delete(req.body.id)
-    if (localizationService.erro.Status()) {
-      return res.status(401).send(localizationService.erro.Error())
+    if (localizationService.error.Status()) {
+      return res.status(localizationService.error.code).send(localizationService.error.info)
     }
     return res.status(201).json(objectData)
   }
