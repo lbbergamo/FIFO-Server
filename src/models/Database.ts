@@ -36,7 +36,7 @@ abstract class Database {
     const data = await db(this.db.Entity)
       .select(this.db.RequiredFields)
       .then(object => { return object })
-      .catch(err => { return err })
+      .catch(err => { return this.error.SetError({ info: 'Erro de conexão no banco de dados', data: err, code: 200 }) })
     return data
   }
 
