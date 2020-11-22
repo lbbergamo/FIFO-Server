@@ -1,10 +1,10 @@
 import db from '@database/connection'
-import { Error } from '@helpers/Error'
+import { Validate } from '@helpers/Validate'
 
 abstract class Database {
   protected abstract db: IDatabase
   protected data
-  public error = new Error()
+  public error = new Validate()
   /**
    * make - transforma o objeto
    * @param object || any
