@@ -2,10 +2,12 @@ import { Error } from '@helpers/Error'
 
 describe('helpers - Error', () => {
   it('get Error', () => {
-    expect(Error.Status()).toEqual(false)
+    const error = new Error()
+    expect(error.Status()).toEqual(false)
   })
   it('data null - Error', () => {
-    expect(Error.data).toBeNull()
+    const error = new Error()
+    expect(error.data).toBeUndefined()
   })
   it('set Error - sem data', () => {
     const code = 400
@@ -14,10 +16,11 @@ describe('helpers - Error', () => {
       code: code,
       info: info
     }
-    const error = Error.SetError(erro)
-    expect(Error.code).toBe(400)
-    expect(Error.info).toContain('test de status')
-    expect(Error.data).toBeDefined()
+    const error = new Error()
+    error.SetError(erro)
+    expect(error.code).toBe(400)
+    expect(error.info).toContain('test de status')
+    expect(error.data).toBeUndefined()
   })
   it('set Error', () => {
     const code = 400
@@ -27,10 +30,11 @@ describe('helpers - Error', () => {
       info: info,
       data: 'test'
     }
-    const error = Error.SetError(erro)
-    expect(Error.code).toBe(400)
-    expect(Error.info).toContain('test de status')
-    expect(Error.data).toBeNull()
+    const error = new Error()
+    error.SetError(erro)
+    expect(error.code).toBe(400)
+    expect(error.info).toContain('test de status')
+    expect(error.data).toBeUndefined()
   })
 
   it('get Status Error ', () => {
@@ -40,7 +44,8 @@ describe('helpers - Error', () => {
       code: code,
       info: info
     }
-    const error = Error.SetError(erro)
-    expect(Error.Status()).toEqual(true)
+    const error = new Error()
+    error.SetError(erro)
+    expect(error.Status()).toEqual(true)
   })
 })
