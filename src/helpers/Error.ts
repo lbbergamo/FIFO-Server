@@ -16,4 +16,5 @@ class Error implements IError {
   }
 }
 
+
 export default Error
