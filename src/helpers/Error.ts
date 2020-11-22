@@ -1,9 +1,11 @@
 export class Error implements IError {
   private static status: boolean = false;
+  data: any;
   info: string
   code: number
   static info = []
   static code: number
+  static data = null
 
   static SetError (Error: IError): void {
     this.status = Error.status ?? true
@@ -19,7 +21,8 @@ export class Error implements IError {
     return {
       code: this.code,
       info: this.info,
-      status: Error.Status()
+      status: Error.Status(),
+      data: this.data ?? null
     }
   }
 }

@@ -4,8 +4,6 @@ import { Error } from '@helpers/Error'
 abstract class Database {
   protected abstract db: IDatabase
   protected data
-  public erro = new Error();
-
   /**
    * make - transforma o objeto
    * @param object || any
@@ -50,7 +48,7 @@ abstract class Database {
     const data = await db(this.db.Entity)
       .where({ id: id })
       .del()
-      .then(object => { return object ? { message: 'Item excluído com sucesso' } : this.erro.setError('Não foi possível realizar o delete') })
+      .then(object => { return object ? { message: 'Item excluído com sucesso' } : this.erro.error('Não foi possível realizar o delete') })
       .catch(err => { return err })
     return data
   }
@@ -66,8 +64,8 @@ abstract class Database {
       .where({
         id: object.id
       })
-      .then(objects => { return (objects != null && objects ? object.id : this.erro.setError('Erro ao fazer o Update')) })
-      .catch(err => { return this.erro.setError(err) })
+      .then(objects => { return (objects != null && objects ? object.id : Error.SetError({ info: 'Erro ao fazer o Update', code: 200 })) })
+      .catch(err => { return Error.SetError({ info: 'Erro de conexão no banco de dados', data: err, code: 200 }) })
   }
 
   /**
@@ -79,7 +77,7 @@ abstract class Database {
     const data = await db(this.db.Entity)
       .insert(object)
       .then(object => { return object })
-      .catch(err => { return this.erro.setError(err) })
+      .catch(err => { return Error.SetError({ info: 'Erro de conexão no banco de dados', data: err, code: 200 }) })
     return data
   }
 
@@ -99,8 +97,8 @@ abstract class Database {
     } else {
       result = await this.create(this.data)
     }
-    if (this.erro.Status()) {
-      return this.erro.Error()
+    if (Error.Status()) {
+      return Error
     }
     if (returnData) {
       result = this.findId(result)

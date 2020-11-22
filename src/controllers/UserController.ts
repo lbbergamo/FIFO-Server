@@ -1,4 +1,5 @@
 import Helpers from '@helpers/index'
+import { Error } from '@helpers/Error'
 import Localization from '@models/Localization'
 import User from '@models/User'
 import { Request, Response } from 'express'
@@ -22,8 +23,8 @@ class UserController {
     const user = new User()
     user.make(req.body)
     const objectData = await user.save()
-    if (user.erro.Status()) {
-      return res.status(401).send(user.erro.Error())
+    if (objectData.Status()) {
+      return res.status(401).send(user.erro.())
     }
     return res.status(201).send(objectData)
   }
