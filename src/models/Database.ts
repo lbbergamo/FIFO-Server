@@ -4,6 +4,7 @@ import { Error } from '@helpers/Error'
 abstract class Database {
   protected abstract db: IDatabase
   protected data
+  protected error
   /**
    * make - transforma o objeto
    * @param object || any
@@ -11,6 +12,7 @@ abstract class Database {
    */
   public make (object: any): void {
     this.data = object
+    this.error = Error
   }
 
   /**
@@ -48,8 +50,8 @@ abstract class Database {
     const data = await db(this.db.Entity)
       .where({ id: id })
       .del()
-      .then(object => { return object ? { message: 'Item excluído com sucesso' } : this.erro.error('Não foi possível realizar o delete') })
-      .catch(err => { return err })
+      .then(object => { return object ? { message: 'Item excluído com sucesso' } : this.error.SetError({ info: 'Erro de conexão no banco de dados', code: 200 }) })
+      .catch(err => { return this.error.SetError({ info: 'Erro de conexão no banco de dados', data: err, code: 200 }) })
     return data
   }
 
@@ -64,8 +66,8 @@ abstract class Database {
       .where({
         id: object.id
       })
-      .then(objects => { return (objects != null && objects ? object.id : Error.SetError({ info: 'Erro ao fazer o Update', code: 200 })) })
-      .catch(err => { return Error.SetError({ info: 'Erro de conexão no banco de dados', data: err, code: 200 }) })
+      .then(objects => { return (objects != null && objects ? object.id : this.error.SetError({ info: 'Erro ao fazer o Update', code: 200 })) })
+      .catch(err => { return this.error.SetError({ info: 'Erro de conexão no banco de dados', data: err, code: 200 }) })
   }
 
   /**
@@ -77,7 +79,7 @@ abstract class Database {
     const data = await db(this.db.Entity)
       .insert(object)
       .then(object => { return object })
-      .catch(err => { return Error.SetError({ info: 'Erro de conexão no banco de dados', data: err, code: 200 }) })
+      .catch(err => { return this.error.SetError({ info: 'Erro de conexão no banco de dados', data: err, code: 200 }) })
     return data
   }
 
@@ -97,7 +99,7 @@ abstract class Database {
     } else {
       result = await this.create(this.data)
     }
-    if (Error.Status()) {
+    if (this.error.Status()) {
       return Error
     }
     if (returnData) {

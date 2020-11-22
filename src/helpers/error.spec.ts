@@ -9,33 +9,33 @@ describe('helpers - Error', () => {
   })
   it('set Error - sem data', () => {
     const code = 400
-    const info = 'Setando um status'
+    const info = 'test de status'
     const erro = {
       code: code,
       info: info
     }
     const error = Error.SetError(erro)
     expect(Error.code).toBe(400)
-    expect(Error.info).toContain('Setando um status')
+    expect(Error.info).toContain('test de status')
     expect(Error.data).toBeDefined()
   })
   it('set Error', () => {
     const code = 400
-    const info = 'Setando um status'
+    const info = 'test de status'
     const erro = {
       code: code,
       info: info,
-      data: 'HIHISDHAIDHJAI'
+      data: 'test'
     }
     const error = Error.SetError(erro)
     expect(Error.code).toBe(400)
-    expect(Error.info).toContain('Setando um status')
+    expect(Error.info).toContain('test de status')
     expect(Error.data).toBeNull()
   })
 
   it('get Status Error ', () => {
     const code = 400
-    const info = 'Setando um status'
+    const info = 'test de status'
     const erro = {
       code: code,
       info: info
