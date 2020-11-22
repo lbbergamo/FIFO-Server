@@ -1,19 +1,20 @@
 export class Error implements IError {
-  private static status: boolean = false;
-  data: any;
-  info: string
-  code: number
-  static info = []
-  static code: number
-  static data = null
+  status?: boolean;
+  info: string;
+  code: number;
+  data?: any;
 
-  static SetError (Error: IError): void {
+  constructor () {
+    this.status = false
+  }
+
+  SetError (Error: IError): void {
     this.status = Error.status ?? true
-    this.info.push(Error.info)
+    this.info = Error.info
     this.code = Error.code
   }
 
-  static Status () {
+  Status () {
     return (this.status ?? false)
   }
 
@@ -21,7 +22,7 @@ export class Error implements IError {
     return {
       code: this.code,
       info: this.info,
-      status: Error.Status(),
+      status: this.status,
       data: this.data ?? null
     }
   }
