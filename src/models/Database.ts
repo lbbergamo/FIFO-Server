@@ -4,7 +4,7 @@ import { Error } from '@helpers/Error'
 abstract class Database {
   protected abstract db: IDatabase
   protected data
-  protected error
+  public error = Error
   /**
    * make - transforma o objeto
    * @param object || any
@@ -12,7 +12,6 @@ abstract class Database {
    */
   public make (object: any): void {
     this.data = object
-    this.error = Error
   }
 
   /**

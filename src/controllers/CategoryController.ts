@@ -20,8 +20,8 @@ class CategoryController {
     const category = new Category()
     category.make(req.body)
     const categoryData = await category.save()
-    if (category.erro.Status()) {
-      return res.status(401).send(category.erro.Error())
+    if (category.error.Status()) {
+      return res.status(category.error.code).send(category.error.info)
     }
     return res.status(201).json(categoryData)
   }
@@ -36,8 +36,8 @@ class CategoryController {
     const category = new Category()
     if (req.params.id == null) return res.status(401).send({ message: 'Falta o id' })
     const categoryData = await category.findId(req.params.id)
-    if (category.erro.Status()) {
-      return res.status(401).send(category.erro.Error())
+    if (category.error.Status()) {
+      return res.status(category.error.code).send(category.error.info)
     } else {
       return res.status(201).json(categoryData)
     }
@@ -70,8 +70,8 @@ class CategoryController {
     const category = new Category()
     category.make(req.body)
     const categoryData = await category.save()
-    if (category.erro.Status()) {
-      return res.status(401).send(category.erro.Error())
+    if (category.error.Status()) {
+      return res.status(category.error.code).send(category.error.info)
     }
     return res.status(201).json(categoryData)
   }
@@ -87,8 +87,8 @@ class CategoryController {
     const category = new Category()
     category.make(req.body)
     const categoryData = await category.delete(req.body.id)
-    if (category.erro.Status()) {
-      return res.status(401).send(category.erro.Error())
+    if (category.error.Status()) {
+      return res.status(category.error.code).send(category.error.info)
     }
     return res.status(201).json(categoryData)
   }
