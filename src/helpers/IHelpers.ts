@@ -1,4 +1,4 @@
-interface IValidate {
+interface IHelpers {
   readonly status?: boolean,
   info: string,
   code: number
@@ -11,11 +11,11 @@ interface IValidation {
   code: number
 }
 
-interface Validate {
+interface Helpers {
   readonly status?: boolean,
   info: string,
   code: number
   readonly data?: any
-  existCode (obj: IValidate): IValidate
-  existInfo (obj: IValidate): IValidate
+  existCode (obj: IHelpers): IHelpers
+  existInfo (obj: IHelpers): IHelpers
 }
