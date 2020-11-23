@@ -13,31 +13,7 @@ class QueueController {
   * @return Response
   */
   async save (req: Request, res: Response): Promise<Response> {
-    const validate = new Validation()
-    validate.existsOrError({
-      value: req.body.service_id,
-      msg: 'Serviço não informado',
-      code: 300
-    })
-    validate.existsOrError({
-      value: req.body.localization_id,
-      msg: 'Localização não informado',
-      code: 300
-    })
-    validate.existsOrError({
-      value: req.body.users_id,
-      msg: 'Usuário não informado.',
-      code: 300
-    })
-    validate.notExistsOrError({
-      value: req.body.id,
-      msg: 'Favor utilizar a rota update',
-      code: 400
-    })
-
-    if (validate.status) {
-      return res.status(validate.code).send({ message: validate.info })
-    }
+    if (req.body.id != null) return res.status(401).send({ message: 'Favor utilizar a rota de update' })
     const queue = new Queue()
     queue.make(req.body)
     const objectData = await queue.save()
