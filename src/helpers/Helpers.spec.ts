@@ -1,19 +1,19 @@
-import { Validate } from './Validate'
+import { Helpers } from './Helpers'
 
-const makeSut = (): Validate => {
-  return new Validate()
+const makeSut = (): Helpers => {
+  return new Helpers()
 }
 
-describe('helpers - Validate', () => {
-  it('get Validate', () => {
+describe('helpers - Helpers', () => {
+  it('get Helpers', () => {
     const error = makeSut()
     expect(error.Status()).toEqual(false)
   })
-  it('data null - Validate', () => {
+  it('data null - Helpers', () => {
     const error = makeSut()
     expect(error.data).toBeUndefined()
   })
-  it('set Validate - sem data', () => {
+  it('set Helpers - sem data', () => {
     const erro = {
       code: 400,
       info: 'test de status'
@@ -24,7 +24,7 @@ describe('helpers - Validate', () => {
     expect(error.info).toContain('test de status')
     expect(error.data).toBeUndefined()
   })
-  it('set Validate', () => {
+  it('set Helpers', () => {
     const erro = {
       code: 400,
       info: 'test de status',
@@ -37,7 +37,7 @@ describe('helpers - Validate', () => {
     expect(error.data).not.toBeUndefined()
   })
 
-  it('!info - Validate ', () => {
+  it('!info - Helpers ', () => {
     const erro = {
       code: 400,
       info: null
@@ -46,7 +46,7 @@ describe('helpers - Validate', () => {
     error.SetError(erro)
     expect(error.Status()).toEqual(true)
   })
-  it('!code - Validate ', () => {
+  it('!code - Helpers ', () => {
     const erro = {
       code: null,
       info: '200'

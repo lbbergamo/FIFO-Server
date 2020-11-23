@@ -1,11 +1,11 @@
-import { Validate } from './Validate'
-export class Validation extends Validate {
+import { Helpers } from './Helpers'
+export class Validation extends Helpers {
   status?: boolean
   info: string
   code: number
   data?: any
 
-  existsOrError (value: IValidation): IValidate {
+  existsOrError (value: IValidation): IHelpers {
     this.info = value.msg
     this.code = value.code
     if (!value.value) {
@@ -25,7 +25,7 @@ export class Validation extends Validate {
     return this
   }
 
-  validateEmail (value: IValidation): IValidate {
+  validateEmail (value: IValidation): IHelpers {
     this.info = value.msg
     this.code = value.code
     var re = /\S+@\S+\.\S+/
@@ -40,7 +40,7 @@ export class Validation extends Validate {
     return this
   }
 
-  notExistsOrError (value: IValidation): IValidate {
+  notExistsOrError (value: IValidation): IHelpers {
     const erro = this.existsOrError(value)
     if (erro.status) {
       this.status = true

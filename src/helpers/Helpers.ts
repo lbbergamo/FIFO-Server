@@ -1,4 +1,4 @@
-export class Validate implements Validate {
+export class Helpers implements Helpers {
   status?: boolean;
   info: string;
   code: number;
@@ -8,7 +8,7 @@ export class Validate implements Validate {
     this.status = false
   }
 
-  SetError (obj: IValidate): void {
+  SetError (obj: IHelpers): void {
     this.info = obj.info
     this.code = obj.code
     this.status = obj.status ?? true
@@ -21,7 +21,7 @@ export class Validate implements Validate {
     return (this.status ?? false)
   }
 
-  get Error (): IValidate {
+  get Error (): IHelpers {
     return {
       code: this.code,
       info: this.info,
@@ -30,7 +30,7 @@ export class Validate implements Validate {
     }
   }
 
-  existCode (value: IValidate): IValidate {
+  existCode (value: IHelpers): IHelpers {
     if (!value.code) {
       this.info = 'Falta o code'
       this.code = 500
@@ -40,7 +40,7 @@ export class Validate implements Validate {
     return this
   }
 
-  existInfo (value: IValidate): IValidate {
+  existInfo (value: IHelpers): IHelpers {
     if (!value.info) {
       this.info = 'Falta a info'
       this.code = 500
