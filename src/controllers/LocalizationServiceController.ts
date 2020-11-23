@@ -12,26 +12,8 @@ class LocalizationServiceController {
   * @return Response
   */
   async save (req: Request, res: Response): Promise<Response> {
-    const validate = new Validation()
-    validate.existsOrError({
-      value: req.body.localization_id,
-      msg: 'Id localization não informado',
-      code: 300
-    })
-    validate.existsOrError({
-      value: req.body.description,
-      msg: 'Id localization não informado',
-      code: 300
-    })
-    validate.notExistsOrError({
-      value: req.body.id,
-      msg: 'Favor utilizar a rota update',
-      code: 400
-    })
+    if (req.body.id != null) return res.status(401).send({ message: 'Favor utilizar a rota de update' })
 
-    if (validate.status) {
-      return res.status(validate.code).send({ message: validate.info })
-    }
     const localizationService = new LocalizationService()
     localizationService.make(req.body)
     const objectData = await localizationService.save()

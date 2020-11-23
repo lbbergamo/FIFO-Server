@@ -5,7 +5,7 @@ class Service extends Database {
   protected db = {
     Entity: 'service',
     RequiredFields: ['id', 'name', 'description', 'cover', 'notes', 'status', 'category_id'],
-    Secure: ['id']
+    Secure: ['name', 'category_id']
   }
 
   public make (object: any) {

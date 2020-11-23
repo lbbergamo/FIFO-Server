@@ -1,5 +1,6 @@
 import db from '@database/connection'
 import { Helpers } from '@helpers/Helpers'
+import { Validation } from '@helpers/Validation'
 abstract class Database {
   protected abstract db: IDatabase
   protected data
@@ -117,6 +118,10 @@ abstract class Database {
     if (this.data.id != null) {
       result = await this.update(this.data)
     } else {
+      this.secure(this.data)
+      if (this.error.Status()) {
+        return this.error.info
+      }
       result = await this.create(this.data)
     }
     if (this.error.Status()) {
@@ -141,6 +146,26 @@ abstract class Database {
    */
   public requiredFields (requiredFields: Array<string>): void {
     this.db.RequiredFields = requiredFields
+  }
+
+  /**
+   * Realiza a verificação de objetos
+   * @param value
+   */
+  private secure (value: object): void {
+    const validation = new Validation()
+    for (const field of this.db.Secure) {
+      if (!value[field]) {
+        validation.existsOrError({
+          value: value[field],
+          msg: field + ' não informado',
+          code: 300
+        })
+      }
+    }
+    if (validation.status) {
+      this.error = validation
+    }
   }
 }
 

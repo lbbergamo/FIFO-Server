@@ -4,7 +4,7 @@ class Localization extends Database {
   protected db = {
     Entity: 'localization',
     RequiredFields: ['id', 'name', 'cover', 'notes', 'description'],
-    Secure: ['id']
+    Secure: ['name', 'description']
   }
 
   public make (object: any) {
