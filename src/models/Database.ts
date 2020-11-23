@@ -118,6 +118,10 @@ abstract class Database {
     if (this.data.id != null) {
       result = await this.update(this.data)
     } else {
+      this.secure(this.data)
+      if (this.error.Status()) {
+        return this.error.info
+      }
       result = await this.create(this.data)
     }
     if (this.error.Status()) {
@@ -144,13 +148,17 @@ abstract class Database {
     this.db.RequiredFields = requiredFields
   }
 
-  public secure (value: object): void {
+  /**
+   * Realiza a verificação de objetos
+   * @param value
+   */
+  private secure (value: object): void {
     const validation = new Validation()
     for (const field of this.db.Secure) {
       if (!value[field]) {
         validation.existsOrError({
           value: value[field],
-          msg: 'field não informado',
+          msg: field + ' não informado',
           code: 300
         })
       }
