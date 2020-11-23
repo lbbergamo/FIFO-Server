@@ -1,6 +1,5 @@
 import db from '@database/connection'
 import { Helpers } from '@helpers/Helpers'
-
 abstract class Database {
   protected abstract db: IDatabase
   protected data
