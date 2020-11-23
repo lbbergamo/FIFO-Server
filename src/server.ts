@@ -1,21 +1,32 @@
 import express from 'express'
 import routes from './routes/index'
 import cors from 'cors'
+import { Server, Socket } from 'socket.io'
+import http from 'http'
 
-const app = express()
 require('dotenv/config')
 
-export const port = process.env.PORT
-
+const app = express()
+const server = http.createServer(app)
+const io = new Server(server, {
+  cors: {
+    origin: '*'
+  }
+})
 app.use(cors())
 app.use(express.json())
 app.use(routes)
 
-// catch all
+io.on('connection', (socket: Socket) => {
+  socket.on('cadadastro_fila', (msg) => {
+    console.log(msg)
+  })
+  socket.emit('status', '4546')
+})
+
 app.use((error, req, res, next) => {
   res.status(error.status || 500)
   res.json({ error: error.message })
 })
 
-/** */
-app.listen(port, () => console.log(`\n\n\n **** Server is running, port: ${port} ****\n\n\n`))
+server.listen(process.env.PORT, () => console.log(`\n\n\n **** Server is running, port: ${process.env.PORT} ****\n\n\n`))
