@@ -5,7 +5,7 @@ class User extends Database {
   protected db = {
     Entity: 'user',
     RequiredFields: ['id', 'name', 'email', 'last_socket_id', 'localization_id', 'cover'],
-    Secure: ['id']
+    Secure: ['email', 'name']
   }
 
   public make (object: any) {

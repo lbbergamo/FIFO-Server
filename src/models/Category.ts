@@ -4,7 +4,7 @@ class Category extends Database {
   protected db = {
     Entity: 'category',
     RequiredFields: ['id', 'name', 'description', 'cover', 'notes'],
-    Secure: ['id']
+    Secure: ['description', 'name']
   }
 
   public make (object: any) {

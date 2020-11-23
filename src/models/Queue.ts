@@ -5,7 +5,7 @@ class Queue extends Database {
   protected db = {
     Entity: 'queues',
     RequiredFields: ['id', 'localization_id', 'service_id', 'users_id', 'entry_queue', 'entry_service', 'status'],
-    Secure: ['id']
+    Secure: ['service_id', 'localization_id', 'users_id']
   }
 
   public make (object: any) {
