@@ -1,5 +1,6 @@
 import db from '@database/connection'
 import { Helpers } from '@helpers/Helpers'
+import { Validation } from '@helpers/Validation'
 abstract class Database {
   protected abstract db: IDatabase
   protected data
@@ -141,6 +142,22 @@ abstract class Database {
    */
   public requiredFields (requiredFields: Array<string>): void {
     this.db.RequiredFields = requiredFields
+  }
+
+  public secure (value: object): void {
+    const validation = new Validation()
+    for (const field of this.db.Secure) {
+      if (!value[field]) {
+        validation.existsOrError({
+          value: value[field],
+          msg: 'field não informado',
+          code: 300
+        })
+      }
+    }
+    if (validation.status) {
+      this.error = validation
+    }
   }
 }
 
