@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import Database from './Database'
+import Database from '../Database'
 
 class Queue extends Database {
   protected db = {

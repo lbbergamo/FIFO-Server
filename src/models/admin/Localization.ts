@@ -1,4 +1,4 @@
-import Database from './Database'
+import Database from './../Database'
 
 class Localization extends Database {
   protected db = {

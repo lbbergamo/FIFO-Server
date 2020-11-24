@@ -1,4 +1,4 @@
-import Category from '@models/Category'
+import Category from '@models/admin/Category'
 import { Request, Response } from 'express'
 import { Validation } from '@helpers/Validation'
 class CategoryController {

@@ -1,4 +1,4 @@
-import Localization from '@models/Localization'
+import Localization from '@models/admin/Localization'
 import { Request, Response } from 'express'
 import { Validation } from '@helpers/Validation'
 import db from '@database/connection'

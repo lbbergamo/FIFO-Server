@@ -1,6 +1,6 @@
 import { Validation } from '@helpers/Validation'
-import Localization from '@models/Localization'
-import User from '@models/User'
+import Localization from '@models/admin/Localization'
+import User from '@models/admin/User'
 import { Request, Response } from 'express'
 
 class UserController {
