@@ -48,7 +48,7 @@ class CategoryController {
     if (categoryData == null) {
       return res.status(401).send({})
     } else {
-      return res.status(201).json(categoryData)
+      return res.status(200).json(categoryData)
     }
   }
 
@@ -66,7 +66,7 @@ class CategoryController {
     if (category.error.Status()) {
       return res.status(category.error.code).send(category.error.info)
     }
-    return res.status(201).json(categoryData)
+    return res.status(200).json(categoryData)
   }
 
   /**

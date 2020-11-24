@@ -31,8 +31,8 @@ export class Validation extends Helpers {
     var re = /\S+@\S+\.\S+/
     if (!re.test(value.value)) {
       this.status = true
-      this.code = 500
-      this.info = 'email invalido'
+      this.code = 400
+      this.info = 'E-mail inválido'
       return this
     }
     this.existCode({ info: value.msg, code: value.code })

@@ -84,6 +84,17 @@ $ yarn knex:migrate
 # Remove todas as tabelas do banco de dados
 $ yarn knex:rollback 
 ```
+## :warning: Exceções
+```
+1. ✅ Retorna erro 204 se caso não for possível atualizar ou deletar motivos : "item . já excluído ou atualizado"
+
+2. ✅ Retorna erro 404 se a API não existir
+3. ✅ Retorna erro 400 se os parâmetro obrigatório não forem fornecidos pelo client
+4. ✅ Retorna erro 400 se o campo email for um e-mail inválido
+5. ✅ Retorna erro 500 se der erro no banco de dados
+
+```
+
 
 ## :crystal_ball: Tecnologias
 
