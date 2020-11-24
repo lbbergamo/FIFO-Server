@@ -44,3 +44,8 @@ interface IListQueue {
   user: number,
   date?: Date
 }
+
+/** precisa verificar essa questao */
+interface IList {
+  [index: number]: Array<IListQueue>
+}
