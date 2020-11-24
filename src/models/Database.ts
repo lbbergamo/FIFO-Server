@@ -25,7 +25,13 @@ abstract class Database {
       .select(RequiredFields)
       .where({ id: name })
       .then(object => { return object })
-      .catch(err => { return err })
+      .catch(err => {
+        return this.error.SetError({
+          info: 'Erro de conexão no banco de dados',
+          data: err,
+          code: 500
+        })
+      })
   }
 
   /**
@@ -40,7 +46,7 @@ abstract class Database {
         return this.error.SetError({
           info: 'Erro de conexão no banco de dados',
           data: err,
-          code: 200
+          code: 500
         })
       })
     return data
@@ -57,11 +63,17 @@ abstract class Database {
       .del()
       .then(object => {
         return object ? { message: 'Item excluído com sucesso' } : this.error.SetError({
-          info: 'Erro de conexão no banco de dados',
-          code: 200
+          info: 'Item inexistente no banco de dados',
+          code: 204
         })
       })
-      .catch(err => { return this.error.SetError({ info: 'Erro de conexão no banco de dados', data: err, code: 200 }) })
+      .catch(err => {
+        return this.error.SetError({
+          info: 'Erro de conexão no banco de dados',
+          data: err,
+          code: 500
+        })
+      })
     return data
   }
 
@@ -78,11 +90,17 @@ abstract class Database {
       })
       .then(objects => {
         return ((objects != null && objects) ? object.id : this.error.SetError({
-          info: 'Erro ao fazer o Update - Update',
-          code: 200
+          info: 'Não foi possível fazer a atualização',
+          code: 204
         }))
       })
-      .catch(err => { return this.error.SetError({ info: 'Erro de conexão no banco de dados', data: err, code: 445 }) })
+      .catch(err => {
+        return this.error.SetError({
+          info: 'Erro de conexão no banco de dados',
+          data: err,
+          code: 500
+        })
+      })
   }
 
   /**
@@ -96,9 +114,9 @@ abstract class Database {
       .then(object => { return object })
       .catch(err => {
         return this.error.SetError({
-          info: 'Problemas com o banco de dados - create - ' + err.msg,
+          info: 'Erro de conexão no banco de dados',
           data: err,
-          code: 445
+          code: 500
         })
       })
     return data
@@ -159,7 +177,7 @@ abstract class Database {
         validation.existsOrError({
           value: value[field],
           msg: field + ' não informado',
-          code: 300
+          code: 400
         })
       }
     }
