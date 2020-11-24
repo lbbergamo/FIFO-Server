@@ -86,8 +86,8 @@ describe('helpers - Validation', () => {
     const error = makeSut()
     error.validateEmail(erro)
     expect(error.status).toEqual(true)
-    expect(error.code).toEqual(500)
-    expect(error.info).toEqual('email invalido')
+    expect(error.code).toEqual(400)
+    expect(error.info).toEqual('E-mail inválido')
   })
   it('validateEmail - !validated value@domain ', () => {
     const erro = {
@@ -98,8 +98,8 @@ describe('helpers - Validation', () => {
     const error = makeSut()
     error.validateEmail(erro)
     expect(error.status).toEqual(true)
-    expect(error.code).toEqual(500)
-    expect(error.info).toEqual('email invalido')
+    expect(error.code).toEqual(400)
+    expect(error.info).toEqual('E-mail inválido')
   })
   it('notExistsOrError - true ', () => {
     const erro = {
