@@ -1,5 +1,5 @@
 export class ListQueue {
-  private items: Array<IListQueue> = []
+  private items: Array<IListQueue>
 
   constructor (items?: Array<IListQueue>) {
     this.items = items ?? []
