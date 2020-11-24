@@ -14,6 +14,7 @@ export class WebSocket {
     this.io.on('connection', async (socket: Socket) => {
       socket.on('entryQueue', (msg) => this.entryQueue(msg, socket))
       socket.on('exit', (socket: Socket) => {
+        console.log('to chegando aqui sim ')
         this.disconnect(socket)
       })
       socket.on('disconnect', (value) => {
@@ -37,7 +38,6 @@ export class WebSocket {
   }
 
   private disconnect (socketId: Socket) {
-    console.log('to chegando aqui sim ')
     this.listQueue.removeSocket(socketId.id)
   }
 
@@ -46,12 +46,9 @@ export class WebSocket {
     for (const localization in list) {
       for (const service in list[localization]) {
         let i = list[localization][service].length
-        list[localization][service].sort(function (a, b) {
-          var keyA = new Date(a.date)
-          var keyB = new Date(b.date)
-          // Compare the 2 dates
-          if (keyA > keyB) return -1
-          if (keyA < keyB) return 1
+        list[localization][service].sort((a, b) => {
+          if (new Date(a.date) > new Date(b.date)) return -1
+          if (new Date(a.date) < new Date(b.date)) return 1
           return 0
         })
         list[localization][service].forEach((value) => {
