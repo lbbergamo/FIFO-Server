@@ -20,7 +20,8 @@ module.exports = {
         '@database': './src/database',
         '@helpers': './src/helpers',
         '@core': './src/core',
-        '@routes': './src/routes', 
+        '@routes': './src/routes',
+        '@docs': './src/docs',
       }
     }]
   ],

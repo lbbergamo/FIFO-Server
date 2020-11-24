@@ -4,6 +4,7 @@ import * as socketIo from 'socket.io'
 import { createServer, Server } from 'http'
 import routes from '@routes/index'
 import { WebSocket } from '@core/WebSocket'
+import setupSwagger from '@core/config-swagger'
 
 class App {
   public app = express();
@@ -16,6 +17,7 @@ class App {
     this.app.use(cors())
     this.app.use(express.json())
     this.app.use(routes)
+    setupSwagger(this.app)
   }
 
   private socket (): void {
