@@ -1,8 +1,8 @@
 import { Validation } from '@helpers/Validation'
-import Localization from '@models/Localization'
-import Queue from '@models/Queue'
-import Service from '@models/Service'
-import User from '@models/User'
+import Localization from '@models/admin/Localization'
+import Queue from '@models/admin/Queue'
+import Service from '@models/admin/Service'
+import User from '@models/admin/User'
 import { Request, Response } from 'express'
 
 class QueueController {

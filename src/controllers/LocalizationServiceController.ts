@@ -1,7 +1,7 @@
 import { Validation } from '@helpers/Validation'
-import Localization from '@models/Localization'
-import LocalizationService from '@models/LocalizationService'
-import Service from '@models/Service'
+import Localization from '@models/admin/Localization'
+import LocalizationService from '@models/admin/LocalizationService'
+import Service from '@models/admin/Service'
 import { Request, Response } from 'express'
 
 class LocalizationServiceController {
