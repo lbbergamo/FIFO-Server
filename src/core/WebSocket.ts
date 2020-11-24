@@ -12,12 +12,15 @@ export class WebSocket {
 
   public listen (): void {
     this.io.on('connection', async (socket: Socket) => {
-      socket.on('disconnect', () => {
-        this.disconnect(socket.id)
+      socket.on('entryQueue', (msg) => this.entryQueue(msg, socket))
+      socket.on('exit', (socket: Socket) => {
+        console.log('to chegando aqui sim ')
+        this.disconnect(socket)
       })
-      await socket.on('entryQueue', (msg) => this.entryQueue(msg, socket))
-      await this.status(socket)
-      socket.on('exit', (socket: Socket) => { })
+      socket.on('disconnect', (value) => {
+        this.disconnect(socket)
+      })
+      this.status(socket)
     })
   }
 
@@ -31,23 +34,29 @@ export class WebSocket {
     }
     this.listQueue.add(web)
     socket.emit('status', socket.id)
+    socket.emit('queue', this.listQueue.getFilter(msg.service, msg.localization).length)
   }
 
-  private disconnect (socketId: string) {
-    console.log('to chegando aqui solo ')
-    console.log(socketId)
-    // this.listQueue.disconnect(socketId)
+  private disconnect (socketId: Socket) {
+    this.listQueue.removeSocket(socketId.id)
   }
 
   private status (socket: Socket): void {
-    console.log(this.listQueue.getList())
-    let i = 0
-    this.listQueue.getList().forEach((value) => {
-      console.log(value.socketId)
-      socket.broadcast.to(value.socketId).emit('status', value.socketId)
-      socket.broadcast.to(value.socketId).emit('count', i)
-      i++
-    })
+    const list = this.listQueue.getGroup()
+    for (const localization in list) {
+      for (const service in list[localization]) {
+        let i = list[localization][service].length
+        list[localization][service].sort((a, b) => {
+          if (new Date(a.date) > new Date(b.date)) return -1
+          if (new Date(a.date) < new Date(b.date)) return 1
+          return 0
+        })
+        list[localization][service].forEach((value) => {
+          socket.broadcast.to(value.socketId).emit('queue', i)
+          i--
+        })
+      }
+    }
   }
 }
 
