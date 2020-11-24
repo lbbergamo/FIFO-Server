@@ -30,6 +30,14 @@ export class ListQueue {
     })
   }
 
+  public sendStatus (): Array<IListQueue> {
+    return this.items.reduce(function (r, a) {
+      r[a.service] = r[a.service] || []
+      r[a.service].push(a)
+      return r
+    }, Object.create(null))
+  }
+
   public delete (value: IListQueue, object: IListQueue) {
     return value.service !== object.service &&
       value.localization !== object.localization &&
