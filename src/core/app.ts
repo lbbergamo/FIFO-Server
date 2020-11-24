@@ -5,6 +5,7 @@ import { createServer, Server } from 'http'
 import routes from '@routes/index'
 import { WebSocket } from '@core/WebSocket'
 import setupSwagger from '@core/config-swagger'
+require('dotenv/config')
 
 class App {
   public app = express();
@@ -24,7 +25,7 @@ class App {
     this.server = createServer(this.app)
     this.io = new socketIo.Server(this.server, {
       cors: {
-        origin: 'http://localhost:3000',
+        origin: process.env.WEBSOCKET_CONNECT,
         methods: ['GET', 'POST'],
         allowedHeaders: ['my-custom-header'],
         credentials: true
