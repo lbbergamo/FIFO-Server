@@ -112,4 +112,17 @@ describe('ListQueue', () => {
     }
     expect(object.getList().length).toBe(teste.length)
   })
+  it('remove item with SocketID ', () => {
+    const object = makeSut()
+    const data = new Date()
+    object.add({ socketId: 'aqui é o socket id 1 ', service: 2, localization: 1, user: 121, date: data })
+    object.add({ socketId: 'aqui é o socket id 2 ', service: 2, localization: 1, user: 121, date: data })
+    object.add({ socketId: 'aqui é o socket id 3 ', service: 2, localization: 1, user: 121, date: data })
+    object.add({ socketId: 'socket id2', service: 4, localization: 2, user: 121, date: data })
+    object.add({ socketId: 'socket id2', service: 3, localization: 2, user: 121, date: data })
+    object.add({ socketId: 'socket id3', service: 1, localization: 2, user: 121, date: data })
+    object.add({ socketId: 'socket', service: 4, localization: 2, user: 121, date: data })
+    object.removeSocket('socket')
+    expect(object.getList().length).toBe(6)
+  })
 })
