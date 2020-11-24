@@ -36,8 +36,6 @@ export class ListQueue {
         return value
       }
     })
-    console.log(this.items)
-    console.log(object)
   }
 
   public getGroup (): any {
