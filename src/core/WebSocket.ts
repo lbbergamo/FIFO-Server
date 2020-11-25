@@ -14,7 +14,7 @@ export class WebSocket {
     this.io.on('connection', async (socket: Socket) => {
       socket.on('entryQueue', (msg) => this.entryQueue(msg, socket))
       socket.on('exit', (socket: Socket) => {
-        console.log('to chegando aqui sim ')
+        // console.log('to chegando aqui sim ')
         this.disconnect(socket)
       })
       socket.on('disconnect', (value) => {

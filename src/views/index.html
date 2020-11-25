@@ -1,0 +1,36 @@
+<html>
+
+<head>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    let socket = io();
+    const user = {
+      localization: 16,
+      service: 15,
+      user: 1
+    }
+    socket.on('status', (code) => {
+      let teste = document.getElementById('code');
+      teste.innerHTML = 'Socket ID ' + code;
+    });
+    socket.on('queue', (count) => {
+      let teste = document.getElementById('fila');
+      teste.innerHTML = 'Posição da fila ' + count;
+    });
+    socket.emit('entryQueue', user)
+
+    function exit(){
+      console.log('to funcionando')
+      socket.emit('exit',user)
+    }
+  </script>
+</head>
+
+<body>
+  <h1 id='code'></h1>
+  <h1 id='fila'></h1>
+  <p id="server-time"></p>
+  <button type="button" onclick="exit()"></button>
+</body>
+
+</html>
