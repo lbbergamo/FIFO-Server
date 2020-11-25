@@ -18,6 +18,11 @@
       teste.innerHTML = 'Posição da fila ' + count;
     });
     socket.emit('entryQueue', user)
+
+    function exit(){
+      console.log('to funcionando')
+      socket.emit('exit',user)
+    }
   </script>
 </head>
 
@@ -25,6 +30,7 @@
   <h1 id='code'></h1>
   <h1 id='fila'></h1>
   <p id="server-time"></p>
+  <button type="button" onclick="exit()"></button>
 </body>
 
 </html>
