@@ -1,6 +1,6 @@
-import Helpers from '@helpers/index'
-import Category from '@models/Category'
-import Service from '@models/Service'
+import { Validation } from '@helpers/Validation'
+import Category from '@models/admin/Category'
+import Service from '@models/admin/Service'
 import { Request, Response } from 'express'
 
 class ServiceController {
@@ -11,20 +11,12 @@ class ServiceController {
   * @return Response
   */
   async save (req: Request, res: Response): Promise<Response> {
-    try {
-      Helpers.existsOrError(req.body.name, 'Nome não informado.')
-      Helpers.existsOrError(req.body.category_id, 'Categoria não informada.')
-      Helpers.notExistsOrError(req.body.id, 'Favor utilizar a rota update')
-    } catch (error) {
-      return res.status(400).send({
-        message: error
-      })
-    }
+    if (req.body.id != null) return res.status(401).send({ message: 'Favor utilizar a rota de update' })
     const service = new Service()
     service.make(req.body)
     const objectData = await service.save()
-    if (service.erro.Status()) {
-      return res.status(401).send(service.erro.Error())
+    if (service.error.Status()) {
+      return res.status(service.error.code).send(service.error.info)
     }
     return res.status(201).send(objectData)
   }
@@ -46,7 +38,7 @@ class ServiceController {
       const category = new Category()
       category.requiredFields(['id', 'name', 'description', 'cover', 'notes'])
       const findCategory = await category.findId(service.category_id)
-      if (!category.erro.Status()) {
+      if (!category.error.Status()) {
         service.category = findCategory
       }
       result.push(service)
@@ -63,15 +55,15 @@ class ServiceController {
   async find (req: Request, res: Response): Promise<Response> {
     const service = new Service()
     const findService = await service.findId(req.params.id)
-    if (service.erro.Status()) {
-      return res.status(401).send(service.erro.Error())
+    if (service.error.Status()) {
+      return res.status(service.error.code).send(service.error.info)
     }
     const result = []
     for (const service of findService) {
       const category = new Category()
       category.requiredFields(['id', 'name', 'description', 'cover', 'notes'])
       const findCategory = await category.findId(service.category_id)
-      if (!category.erro.Status()) {
+      if (!category.error.Status()) {
         service.category = findCategory
       }
       result.push(service)
@@ -90,8 +82,8 @@ class ServiceController {
     const service = new Service()
     service.make(req.body)
     const objectData = await service.save()
-    if (service.erro.Status()) {
-      return res.status(401).send(service.erro.Error())
+    if (service.error.Status()) {
+      return res.status(service.error.code).send(service.error.info)
     }
     return res.status(201).json(objectData)
   }
@@ -107,8 +99,8 @@ class ServiceController {
     const service = new Service()
     service.make(req.body)
     const objectData = await service.delete(req.body.id)
-    if (service.erro.Status()) {
-      return res.status(401).send(service.erro.Error())
+    if (service.error.Status()) {
+      return res.status(service.error.code).send(service.error.info)
     }
     return res.status(201).json(objectData)
   }

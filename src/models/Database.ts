@@ -1,11 +1,10 @@
 import db from '@database/connection'
-import Error from '@helpers/Error'
-
+import { Helpers } from '@helpers/Helpers'
+import { Validation } from '@helpers/Validation'
 abstract class Database {
   protected abstract db: IDatabase
   protected data
-  public erro = new Error();
-
+  public error = new Helpers()
   /**
    * make - transforma o objeto
    * @param object || any
@@ -26,7 +25,13 @@ abstract class Database {
       .select(RequiredFields)
       .where({ id: name })
       .then(object => { return object })
-      .catch(err => { return err })
+      .catch(err => {
+        return this.error.SetError({
+          info: 'Erro de conexão no banco de dados',
+          data: err,
+          code: 500
+        })
+      })
   }
 
   /**
@@ -37,7 +42,13 @@ abstract class Database {
     const data = await db(this.db.Entity)
       .select(this.db.RequiredFields)
       .then(object => { return object })
-      .catch(err => { return err })
+      .catch(err => {
+        return this.error.SetError({
+          info: 'Erro de conexão no banco de dados',
+          data: err,
+          code: 500
+        })
+      })
     return data
   }
 
@@ -50,8 +61,19 @@ abstract class Database {
     const data = await db(this.db.Entity)
       .where({ id: id })
       .del()
-      .then(object => { return object ? { message: 'Item excluído com sucesso' } : this.erro.setError('Não foi possível realizar o delete') })
-      .catch(err => { return err })
+      .then(object => {
+        return object ? { message: 'Item excluído com sucesso' } : this.error.SetError({
+          info: 'Item inexistente no banco de dados',
+          code: 204
+        })
+      })
+      .catch(err => {
+        return this.error.SetError({
+          info: 'Erro de conexão no banco de dados',
+          data: err,
+          code: 500
+        })
+      })
     return data
   }
 
@@ -66,8 +88,19 @@ abstract class Database {
       .where({
         id: object.id
       })
-      .then(objects => { return (objects != null && objects ? object.id : this.erro.setError('Erro ao fazer o Update')) })
-      .catch(err => { return this.erro.setError(err) })
+      .then(objects => {
+        return ((objects != null && objects) ? object.id : this.error.SetError({
+          info: 'Não foi possível fazer a atualização',
+          code: 204
+        }))
+      })
+      .catch(err => {
+        return this.error.SetError({
+          info: 'Erro de conexão no banco de dados',
+          data: err,
+          code: 500
+        })
+      })
   }
 
   /**
@@ -79,7 +112,13 @@ abstract class Database {
     const data = await db(this.db.Entity)
       .insert(object)
       .then(object => { return object })
-      .catch(err => { return this.erro.setError(err) })
+      .catch(err => {
+        return this.error.SetError({
+          info: 'Erro de conexão no banco de dados',
+          data: err,
+          code: 500
+        })
+      })
     return data
   }
 
@@ -97,10 +136,14 @@ abstract class Database {
     if (this.data.id != null) {
       result = await this.update(this.data)
     } else {
+      this.secure(this.data)
+      if (this.error.Status()) {
+        return this.error.info
+      }
       result = await this.create(this.data)
     }
-    if (this.erro.Status()) {
-      return this.erro.Error()
+    if (this.error.Status()) {
+      return this.error.info
     }
     if (returnData) {
       result = this.findId(result)
@@ -121,6 +164,26 @@ abstract class Database {
    */
   public requiredFields (requiredFields: Array<string>): void {
     this.db.RequiredFields = requiredFields
+  }
+
+  /**
+   * Realiza a verificação de objetos
+   * @param value
+   */
+  private secure (value: object): void {
+    const validation = new Validation()
+    for (const field of this.db.Secure) {
+      if (!value[field]) {
+        validation.existsOrError({
+          value: value[field],
+          msg: field + ' não informado',
+          code: 400
+        })
+      }
+    }
+    if (validation.status) {
+      this.error = validation
+    }
   }
 }
 

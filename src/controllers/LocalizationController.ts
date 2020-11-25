@@ -1,6 +1,6 @@
-import Localization from '@models/Localization'
+import Localization from '@models/admin/Localization'
 import { Request, Response } from 'express'
-import Helpers from '@helpers/index'
+import { Validation } from '@helpers/Validation'
 import db from '@database/connection'
 
 class LocalizationController {
@@ -11,18 +11,12 @@ class LocalizationController {
    * @return Response
    */
   async save (req: Request, res: Response): Promise<Response> {
-    try {
-      Helpers.existsOrError(req.body.name, 'Nome da localização não informado')
-      Helpers.existsOrError(req.body.description, 'Descrição não informado')
-      Helpers.notExistsOrError(req.body.id, 'Favor utilizar a rota update')
-    } catch (msg) {
-      return res.status(400).send(msg)
-    }
+    if (req.body.id != null) return res.status(401).send({ message: 'Favor utilizar a rota de update' })
     const localization = new Localization()
     localization.make(req.body)
     const localizationData = await localization.save()
-    if (localization.erro.Status()) {
-      return res.status(401).send(localization.erro.Error())
+    if (localization.error.Status()) {
+      return res.status(localization.error.code).send(localization.error.info)
     }
     return res.status(201).send(localizationData)
   }
@@ -52,8 +46,8 @@ class LocalizationController {
   async find (req: Request, res: Response): Promise<Response> {
     const localization = new Localization()
     const localizationData = await localization.findId(req.params.id)
-    if (localization.erro.Status()) {
-      return res.status(401).send(localization.erro.Error())
+    if (localization.error.Status()) {
+      return res.status(localization.error.code).send(localization.error.info)
     } else {
       return res.status(201).send(localizationData)
     }
@@ -70,8 +64,8 @@ class LocalizationController {
     const localization = new Localization()
     localization.make(req.body)
     const localizationData = await localization.save()
-    if (localization.erro.Status()) {
-      return res.status(401).send(localization.erro.Error())
+    if (localization.error.Status()) {
+      return res.status(localization.error.code).send(localization.error.info)
     }
     return res.status(201).json(localizationData)
   }
@@ -87,8 +81,8 @@ class LocalizationController {
     const localization = new Localization()
     localization.make(req.body)
     const localizationData = await localization.delete(req.body.id)
-    if (localization.erro.Status()) {
-      return res.status(401).send(localization.erro.Error())
+    if (localization.error.Status()) {
+      return res.status(localization.error.code).send(localization.error.info)
     }
     return res.status(201).json(localizationData)
   }

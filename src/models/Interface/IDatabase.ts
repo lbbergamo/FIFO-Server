@@ -4,5 +4,5 @@ interface IData {
 interface IDatabase {
   Entity: string,
   RequiredFields: Array<String>,
-  Secure: Array<String>
+  Secure: Array<string>
 }

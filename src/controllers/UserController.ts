@@ -1,6 +1,5 @@
-import Helpers from '@helpers/index'
-import Localization from '@models/Localization'
-import User from '@models/User'
+import Localization from '@models/admin/Localization'
+import User from '@models/admin/User'
 import { Request, Response } from 'express'
 
 class UserController {
@@ -11,19 +10,12 @@ class UserController {
   * @return Response
   */
   async save (req: Request, res: Response): Promise<Response> {
-    try {
-      Helpers.existsOrError(req.body.name, 'Nome não informado.')
-      Helpers.existsOrError(req.body.email, 'Email não informada.')
-    } catch (error) {
-      return res.status(400).send({
-        message: error
-      })
-    }
+    if (req.body.id != null) return res.status(401).send({ message: 'Favor utilizar a rota de update' })
     const user = new User()
     user.make(req.body)
     const objectData = await user.save()
-    if (user.erro.Status()) {
-      return res.status(401).send(user.erro.Error())
+    if (user.error.Status()) {
+      return res.status(user.error.code).json({ message: user.error.info, data: user.error.data })
     }
     return res.status(201).send(objectData)
   }
@@ -45,7 +37,7 @@ class UserController {
       if (user.localization_id != null) {
         const localization = new Localization()
         const findLocalization = await localization.findId(user.localization_id)
-        if (!localization.erro.Status()) {
+        if (!localization.error.Status()) {
           user.localization = findLocalization
         }
       }
@@ -63,15 +55,15 @@ class UserController {
   async find (req: Request, res: Response): Promise<Response> {
     const user = new User()
     const findUser = await user.findId(req.params.id)
-    if (user.erro.Status()) {
-      return res.status(401).send(user.erro.Error())
+    if (user.error.Status()) {
+      return res.status(user.error.code).send(user.error.info)
     }
     const result = []
     for (const user of findUser) {
       if (user.localization_id != null) {
         const localization = new Localization()
         const findLocalization = await localization.findId(user.localization_id)
-        if (!localization.erro.Status()) {
+        if (!localization.error.Status()) {
           user.localization = findLocalization
         }
       }
@@ -91,8 +83,8 @@ class UserController {
     const user = new User()
     user.make(req.body)
     const objectData = await user.save()
-    if (user.erro.Status()) {
-      return res.status(401).send(user.erro.Error())
+    if (user.error.Status()) {
+      return res.status(user.error.code).send(user.error.info)
     }
     return res.status(201).json(objectData)
   }
@@ -108,8 +100,8 @@ class UserController {
     const user = new User()
     user.make(req.body)
     const objectData = await user.delete(req.body.id)
-    if (user.erro.Status()) {
-      return res.status(401).send(user.erro.Error())
+    if (user.error.Status()) {
+      return res.status(user.error.code).send(user.error.info)
     }
     return res.status(201).json(objectData)
   }

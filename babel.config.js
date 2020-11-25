@@ -18,7 +18,10 @@ module.exports = {
         '@controllers': './src/controllers',
         '@views': './src/views',
         '@database': './src/database',
-        '@helpers': './src/helpers'
+        '@helpers': './src/helpers',
+        '@core': './src/core',
+        '@routes': './src/routes',
+        '@docs': './src/docs',
       }
     }]
   ],

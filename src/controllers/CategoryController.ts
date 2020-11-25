@@ -1,6 +1,6 @@
-import Category from '@models/Category'
+import Category from '@models/admin/Category'
 import { Request, Response } from 'express'
-import Helpers from '@helpers/index'
+import { Validation } from '@helpers/Validation'
 class CategoryController {
   /**
    * Realiza o cadastro
@@ -9,19 +9,12 @@ class CategoryController {
    * @return Response
    */
   async save (req: Request, res: Response): Promise<Response> {
-    try {
-      Helpers.existsOrError(req.body.name, 'Nome não informado')
-      Helpers.existsOrError(req.body.description, 'Descrição não informado')
-      Helpers.notExistsOrError(req.body.id, 'Favor utilizar a rota update')
-    } catch (msg) {
-      return res.status(400).send({ message: msg })
-    }
-
+    if (req.body.id != null) return res.status(401).send({ message: 'Favor utilizar a rota de update' })
     const category = new Category()
     category.make(req.body)
     const categoryData = await category.save()
-    if (category.erro.Status()) {
-      return res.status(401).send(category.erro.Error())
+    if (category.error.Status()) {
+      return res.status(category.error.code).send(category.error.info)
     }
     return res.status(201).json(categoryData)
   }
@@ -36,8 +29,8 @@ class CategoryController {
     const category = new Category()
     if (req.params.id == null) return res.status(401).send({ message: 'Falta o id' })
     const categoryData = await category.findId(req.params.id)
-    if (category.erro.Status()) {
-      return res.status(401).send(category.erro.Error())
+    if (category.error.Status()) {
+      return res.status(category.error.code).send(category.error.info)
     } else {
       return res.status(201).json(categoryData)
     }
@@ -55,7 +48,7 @@ class CategoryController {
     if (categoryData == null) {
       return res.status(401).send({})
     } else {
-      return res.status(201).json(categoryData)
+      return res.status(200).json(categoryData)
     }
   }
 
@@ -70,10 +63,10 @@ class CategoryController {
     const category = new Category()
     category.make(req.body)
     const categoryData = await category.save()
-    if (category.erro.Status()) {
-      return res.status(401).send(category.erro.Error())
+    if (category.error.Status()) {
+      return res.status(category.error.code).send(category.error.info)
     }
-    return res.status(201).json(categoryData)
+    return res.status(200).json(categoryData)
   }
 
   /**
@@ -87,8 +80,8 @@ class CategoryController {
     const category = new Category()
     category.make(req.body)
     const categoryData = await category.delete(req.body.id)
-    if (category.erro.Status()) {
-      return res.status(401).send(category.erro.Error())
+    if (category.error.Status()) {
+      return res.status(category.error.code).send(category.error.info)
     }
     return res.status(201).json(categoryData)
   }

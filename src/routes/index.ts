@@ -7,8 +7,9 @@ import UserController from '@controllers/UserController'
 import express from 'express'
 
 const routes = express.Router()
+const path = require('path')
 routes.get('/', (request, response) => {
-  return response.status(200).json({ message: 'Oi, está rota não esta sendo utilizada' }).send()
+  return response.sendFile(path.join('index.html'), { root: './src/views' })
 })
 
 /** Localization */
