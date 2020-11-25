@@ -7,7 +7,12 @@ export class ListQueue {
 
   public add (value: IListQueue): void {
     value.date ?? new Date()
-    this.items.push(value)
+    const getUser = this.getUser(value.user)[0]
+    if (getUser != null) {
+      getUser.socketId = value.socketId
+    } else {
+      this.items.push(value)
+    }
   }
 
   public getList (): Array<IListQueue> {
@@ -20,6 +25,10 @@ export class ListQueue {
 
   private filter (value: IListQueue, service: number, localization: number) {
     return value.service === service && value.localization === localization
+  }
+
+  private getUser (user: number): Array<IListQueue> {
+    return this.items.filter(value => value.user === user)
   }
 
   public remove (object: IListQueue): void {
@@ -63,7 +72,7 @@ export class ListQueue {
 }
 
 interface IListQueue {
-  readonly socketId: string,
+  socketId: string,
   service: number,
   localization: number,
   user: number,
