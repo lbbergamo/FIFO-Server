@@ -92,11 +92,3 @@ export class ListQueue {
     return groupLocalization
   }
 }
-
-interface IListQueue {
-  socketId: string,
-  service: number,
-  localization: number,
-  user: number,
-  date?: Date
-}
