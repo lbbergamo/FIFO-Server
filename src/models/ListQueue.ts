@@ -5,23 +5,51 @@ export class ListQueue {
     this.items = items ?? []
   }
 
+  /**
+   * Add only single user or Update
+   * @param value : IListQueue
+   * @return Void
+   */
   public add (value: IListQueue): void {
     value.date ?? new Date()
-    this.items.push(value)
+    const getUser = this.getUser(value.user)[0]
+    if (getUser != null) {
+      getUser.socketId = value.socketId
+    } else {
+      this.items.push(value)
+    }
   }
 
+  /**
+   * @return Array<IListQueue>
+   */
   public getList (): Array<IListQueue> {
     return this.items
   }
 
+  /**
+   * Get filter
+   * @param service
+   * @param localization
+   * @return Array<IListQueue>
+   */
   public getFilter (service: number, localization: number): Array<IListQueue> {
-    return this.items.filter(value => this.filter(value, service, localization))
+    return this.items.filter(value => value.service === service && value.localization === localization)
   }
 
-  private filter (value: IListQueue, service: number, localization: number) {
-    return value.service === service && value.localization === localization
+  /**
+   * @param user
+   * @return Array<IListQueue>
+   */
+  private getUser (user: number): Array<IListQueue> {
+    return this.items.filter(value => value.user === user)
   }
 
+  /**
+   * Remove User
+   * @param object : IListQueue
+   * @return Void
+   */
   public remove (object: IListQueue): void {
     this.items = this.items.filter(value => {
       if (value.user !== object.user) {
@@ -30,6 +58,11 @@ export class ListQueue {
     })
   }
 
+  /**
+   * Remove Socket
+   * @param object : socketID
+   * @return void
+   */
   public removeSocket (object: string): void {
     this.items = this.items.filter(value => {
       if (value.socketId !== object) {
@@ -38,7 +71,11 @@ export class ListQueue {
     })
   }
 
-  public getGroup (): any {
+  /**
+   * GetGroup
+   * @return Array Object
+   */
+  public getGroup (): Array<Object> {
     const groupLocalization = this.items.reduce(function (r, a) {
       r[a.localization] = r[a.localization] || []
       r[a.localization].push(a)
@@ -54,23 +91,4 @@ export class ListQueue {
     }
     return groupLocalization
   }
-
-  public delete (value: IListQueue, object: IListQueue) {
-    return value.service !== object.service &&
-      value.localization !== object.localization &&
-      value.user !== object.user
-  }
-}
-
-interface IListQueue {
-  readonly socketId: string,
-  service: number,
-  localization: number,
-  user: number,
-  date?: Date
-}
-
-/** precisa verificar essa questao */
-interface IList {
-  [index: number]: Array<IListQueue>
 }
