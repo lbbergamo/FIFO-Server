@@ -25,10 +25,7 @@ class App {
     this.server = createServer(this.app)
     this.io = new socketIo.Server(this.server, {
       cors: {
-        origin: process.env.WEBSOCKET_CONNECT,
-        methods: ['GET', 'POST'],
-        allowedHeaders: ['my-custom-header'],
-        credentials: true
+        origin: '*'
       }
     })
   }
