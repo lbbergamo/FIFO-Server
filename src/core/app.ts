@@ -5,6 +5,9 @@ import { createServer, Server } from 'http'
 import routes from '@routes/index'
 import { WebSocket } from '@core/WebSocket'
 import setupSwagger from '@core/config-swagger'
+import swaggerUi from 'swagger-ui-express'
+import * as swaggerDocument from '@docs/indexSwagger.json'
+
 require('dotenv/config')
 
 class App {
