@@ -11,6 +11,30 @@ class Queue extends Database {
   public make (object: any) {
     this.data = new QueueModel(object)
   }
+
+  /**
+  * findQueue
+  * @param name
+  * @param RequiredFields
+  * @return object
+  */
+  public async findQueue (localization: string, service: string, status: string = 'pending', RequiredFields: Array<String> = this.db.RequiredFields): Promise<any> {
+    const find = await this.findAny({ localization_id: localization, service_id: service, status: status })
+    return find
+  }
+
+  public async entryQueue (localization: string, service: string, user: string): Promise<any> {
+    let find = (await this.findAny({ users_id: user, status: 'pending' }))
+    if (this.error.Status()) {
+      this.error.reset()
+      this.make({ users_id: user, status: 'pending', localization_id: localization, service_id: service })
+      find = this.save()
+    }
+    if (find[0] != null) {
+      find = find[0]
+    }
+    return find
+  }
 }
 
 class QueueModel implements IData {
@@ -29,7 +53,7 @@ class QueueModel implements IData {
     this.users_id = object.users_id
     this.entry_queue = object.entry_queue
     this.entry_service = object.entry_service
-    this.status = 'pending'
+    this.status = object.status ?? 'pending'
   }
 
   get QueueModel () {

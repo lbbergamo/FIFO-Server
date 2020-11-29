@@ -11,6 +11,17 @@ class LocalizationService extends Database {
   public make (object: any) {
     this.data = new LocalizationServiceModel(object)
   }
+
+  /**
+  * findLocalization
+  * @param name
+  * @param RequiredFields
+  * @return object
+  */
+  public async findLocalization (id: string, RequiredFields: Array<String> = this.db.RequiredFields): Promise<any> {
+    const find = await this.findAny({ localization_id: id })
+    return find
+  }
 }
 
 class LocalizationServiceModel implements IData {

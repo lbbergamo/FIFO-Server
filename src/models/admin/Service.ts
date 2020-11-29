@@ -4,8 +4,8 @@ import Database from './../Database'
 class Service extends Database {
   protected db = {
     Entity: 'service',
-    RequiredFields: ['id', 'name', 'description', 'cover', 'notes', 'status', 'category_id'],
-    Secure: ['name', 'category_id']
+    RequiredFields: ['id', 'name', 'description', 'cover', 'notes', 'status'],
+    Secure: ['name']
   }
 
   public make (object: any) {
@@ -20,7 +20,6 @@ class ServiceModel implements IData {
   cover: string
   notes: string
   status: string
-  category_id: any
 
   constructor (object: any) {
     this.id = object.id
@@ -29,7 +28,6 @@ class ServiceModel implements IData {
     this.cover = object.cover
     this.notes = object.notes
     this.status = 'pending'
-    this.category_id = object.category_id
   }
 
   get ServiceModel () {

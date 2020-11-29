@@ -15,7 +15,7 @@ class UserController {
     user.make(req.body)
     const objectData = await user.save()
     if (user.error.Status()) {
-      return res.status(user.error.code).json({ message: user.error.info, data: user.error.data })
+      return res.status(user.error.code).json({ message: user.error, data: user.error.data })
     }
     return res.status(201).send(objectData)
   }
@@ -29,8 +29,8 @@ class UserController {
   async get (req: Request, res: Response): Promise<Response> {
     const user = new User()
     const findUser = await user.get()
-    if (findUser == null) {
-      return res.status(401).send({})
+    if (user.error.Status()) {
+      return res.status(user.error.code).send(user.error)
     }
     const result = []
     for (const user of findUser) {
@@ -56,7 +56,7 @@ class UserController {
     const user = new User()
     const findUser = await user.findId(req.params.id)
     if (user.error.Status()) {
-      return res.status(user.error.code).send(user.error.info)
+      return res.status(user.error.code).send(user.error)
     }
     const result = []
     for (const user of findUser) {
@@ -84,7 +84,7 @@ class UserController {
     user.make(req.body)
     const objectData = await user.save()
     if (user.error.Status()) {
-      return res.status(user.error.code).send(user.error.info)
+      return res.status(user.error.code).send(user.error)
     }
     return res.status(201).json(objectData)
   }
@@ -101,7 +101,7 @@ class UserController {
     user.make(req.body)
     const objectData = await user.delete(req.body.id)
     if (user.error.Status()) {
-      return res.status(user.error.code).send(user.error.info)
+      return res.status(user.error.code).send(user.error)
     }
     return res.status(201).json(objectData)
   }
@@ -113,18 +113,19 @@ class UserController {
    * @return Response
    */
   async login (req: Request, res: Response): Promise<Response> {
-    const user = new User()
+    let user = new User()
     const findUser = await user.findEmail(req.body.email)
     let result
 
-    if (findUser[0] == null) {
+    if (user.error.Status()) {
+      user = new User()
       user.make(req.body)
       result = await user.save()
     } else {
-      result = findUser
+      result = findUser[0]
     }
     if (user.error.Status()) {
-      return res.status(user.error.code).send(user.error.info)
+      return res.status(user.error.code).send(user.error)
     }
     return res.status(201).json(result)
   }

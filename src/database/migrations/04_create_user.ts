@@ -1,22 +1,17 @@
 import Knex from 'knex'
 
 export async function up (knex: Knex) {
-  return knex.schema.createTable('service', table => {
+  return knex.schema.createTable('user', table => {
     table.increments('id').primary()
-    table.string('description')
     table.string('name').notNullable()
-    table.string('cover', 1000)
-    table.string('notes')
-    table.string('status')
-
+    table.string('email').notNullable().unique()
+    table.string('last_socket_id')
+    table.integer('localization_id').unsigned()
     table
-      .integer('category_id')
+      .integer('cover')
       .references('id')
-      .inTable('category')
-      .notNullable()
+      .inTable('cover')
       .unsigned()
-      .onUpdate('CASCADE')
-      .onDelete('CASCADE')
 
     table
       .timestamp('created_at')
@@ -29,5 +24,5 @@ export async function up (knex: Knex) {
 }
 
 export async function down (knex: Knex) {
-  return knex.schema.dropTable('service')
+  return knex.schema.dropTable('user')
 }

@@ -6,7 +6,7 @@ interface IHelpers {
 }
 
 interface IValidation {
-  value: string,
+  value: any,
   msg: string,
   code: number
 }

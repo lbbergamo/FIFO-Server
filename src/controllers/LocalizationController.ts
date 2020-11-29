@@ -1,7 +1,5 @@
 import Localization from '@models/admin/Localization'
 import { Request, Response } from 'express'
-import { Validation } from '@helpers/Validation'
-import db from '@database/connection'
 
 class LocalizationController {
   /**
@@ -16,7 +14,7 @@ class LocalizationController {
     localization.make(req.body)
     const localizationData = await localization.save()
     if (localization.error.Status()) {
-      return res.status(localization.error.code).send(localization.error.info)
+      return res.status(localization.error.code).send(localization.error)
     }
     return res.status(201).send(localizationData)
   }
@@ -30,8 +28,8 @@ class LocalizationController {
   async get (req: Request, res: Response): Promise<Response> {
     const localization = new Localization()
     const localizationData = await localization.get()
-    if (localizationData == null) {
-      return res.status(401).send({})
+    if (localization.error.Status()) {
+      return res.status(localization.error.code).send(localization.error)
     } else {
       return res.status(201).send(localizationData)
     }
@@ -47,7 +45,7 @@ class LocalizationController {
     const localization = new Localization()
     const localizationData = await localization.findId(req.params.id)
     if (localization.error.Status()) {
-      return res.status(localization.error.code).send(localization.error.info)
+      return res.status(localization.error.code).send(localization.error)
     } else {
       return res.status(201).send(localizationData)
     }
@@ -65,7 +63,7 @@ class LocalizationController {
     localization.make(req.body)
     const localizationData = await localization.save()
     if (localization.error.Status()) {
-      return res.status(localization.error.code).send(localization.error.info)
+      return res.status(localization.error.code).send(localization.error)
     }
     return res.status(201).json(localizationData)
   }
@@ -82,7 +80,7 @@ class LocalizationController {
     localization.make(req.body)
     const localizationData = await localization.delete(req.body.id)
     if (localization.error.Status()) {
-      return res.status(localization.error.code).send(localization.error.info)
+      return res.status(localization.error.code).send(localization.error)
     }
     return res.status(201).json(localizationData)
   }

@@ -1,3 +1,4 @@
+import Cover from '@models/admin/Cover'
 import Localization from '@models/admin/Localization'
 import LocalizationService from '@models/admin/LocalizationService'
 import Service from '@models/admin/Service'
@@ -17,7 +18,7 @@ class LocalizationServiceController {
     localizationService.make(req.body)
     const objectData = await localizationService.save()
     if (localizationService.error.Status()) {
-      return res.status(localizationService.error.code).send(localizationService.error.info)
+      return res.status(localizationService.error.code).send(localizationService.error)
     }
     return res.status(201).send(objectData)
   }
@@ -32,7 +33,7 @@ class LocalizationServiceController {
     const localizationService = new LocalizationService()
     const findLocalizationService = await localizationService.get()
     if (localizationService.error.Status()) {
-      return res.status(localizationService.error.code).send(localizationService.error.info)
+      return res.status(localizationService.error.code).send(localizationService.error)
     }
     const result = []
     for (const localizationService of findLocalizationService) {
@@ -48,46 +49,15 @@ class LocalizationServiceController {
         const service = new Service()
         const findService = await service.findId(localizationService.service_id)
         if (!service.error.Status()) {
+          const cover = new Cover()
+          const findCover = await cover.findCover(findService.cover)
+          findService.cover = findCover
           localizationService.service = findService
         }
       }
       result.push(localizationService)
     }
     return res.status(200).json(result)
-  }
-
-  /**
-  * Realiza a pesquisa pelo ID
-  * @param req Request - request ID
-  * @param res Response
-  * @return Response
-  */
-  async find (req: Request, res: Response): Promise<Response> {
-    const localizationService = new LocalizationService()
-    const findLocalizationService = await localizationService.findId(req.params.id)
-    if (localizationService.error.Status()) {
-      return res.status(localizationService.error.code).send(localizationService.error.info)
-    }
-    const result = []
-    for (const localizationService of findLocalizationService) {
-      if (localizationService.localization_id != null) {
-        const localization = new Localization()
-        const findLocalization = await localization.findId(localizationService.localization_id)
-        if (!localization.error.Status()) {
-          localizationService.localization = findLocalization
-        }
-      }
-
-      if (localizationService.service_id != null) {
-        const service = new Service()
-        const findService = await service.findId(localizationService.service_id)
-        if (!service.error.Status()) {
-          localizationService.service = findService
-        }
-      }
-      result.push(localizationService)
-    }
-    return res.status(201).json(result)
   }
 
   /**
@@ -102,7 +72,7 @@ class LocalizationServiceController {
     localizationService.make(req.body)
     const objectData = await localizationService.save()
     if (localizationService.error.Status()) {
-      return res.status(localizationService.error.code).send(localizationService.error.info)
+      return res.status(localizationService.error.code).send(localizationService.error)
     }
     return res.status(201).json(objectData)
   }
@@ -119,9 +89,46 @@ class LocalizationServiceController {
     localizationService.make(req.body)
     const objectData = await localizationService.delete(req.body.id)
     if (localizationService.error.Status()) {
-      return res.status(localizationService.error.code).send(localizationService.error.info)
+      return res.status(localizationService.error.code).send(localizationService.error)
     }
     return res.status(201).json(objectData)
+  }
+
+  /**
+  * Realiza a pesquisa pela localization
+  * @param req Request - request ID
+  * @param res Response
+  * @return Response
+  */
+  async findLocalization (req: Request, res: Response): Promise<Response> {
+    const localizationService = new LocalizationService()
+    const findLocalizationService = await localizationService.findLocalization(req.params.localization)
+    if (localizationService.error.Status()) {
+      return res.status(localizationService.error.code).send(localizationService.error)
+    }
+    const result = []
+    for (const localizationService of findLocalizationService) {
+      if (localizationService.localization_id != null) {
+        const localization = new Localization()
+        const findLocalization = await localization.findId(localizationService.localization_id)
+        if (!localization.error.Status()) {
+          localizationService.localization = findLocalization
+        }
+      }
+
+      if (localizationService.service_id != null) {
+        const service = new Service()
+        const findService = await service.findId(localizationService.service_id)
+        if (!service.error.Status()) {
+          const cover = new Cover()
+          const findCover = await cover.findCover(findService.cover)
+          findService.cover = findCover
+          localizationService.service = findService
+        }
+      }
+      result.push(localizationService)
+    }
+    return res.status(201).json(result)
   }
 }
 

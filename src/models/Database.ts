@@ -24,7 +24,13 @@ abstract class Database {
     return database(this.db.Entity)
       .select(RequiredFields)
       .where({ id: name })
-      .then(object => { return object })
+      .then(object => {
+        return (object[0] == null)
+          ? this.error.SetError({
+            info: 'Item inexistente no banco de dados',
+            code: 402
+          }) : object[0]
+      })
       .catch(err => {
         return this.error.SetError({
           info: 'Erro de conexão no banco de dados',
@@ -44,7 +50,13 @@ abstract class Database {
     return database(this.db.Entity)
       .select(RequiredFields)
       .where(search)
-      .then(object => { return object })
+      .then(object => {
+        return (object[0] == null)
+          ? this.error.SetError({
+            info: 'Item inexistente no banco de dados',
+            code: 402
+          }) : object
+      })
       .catch(err => {
         return this.error.SetError({
           info: 'Erro de conexão no banco de dados',
@@ -61,7 +73,13 @@ abstract class Database {
   async get (): Promise<any> {
     const data = await database(this.db.Entity)
       .select(this.db.RequiredFields)
-      .then(object => { return object })
+      .then(object => {
+        return (object[0] == null)
+          ? this.error.SetError({
+            info: 'Item inexistente no banco de dados',
+            code: 402
+          }) : object
+      })
       .catch(err => {
         return this.error.SetError({
           info: 'Erro de conexão no banco de dados',
@@ -84,12 +102,12 @@ abstract class Database {
       .then(object => {
         return object ? { message: 'Item excluído com sucesso' } : this.error.SetError({
           info: 'Item inexistente no banco de dados',
-          code: 204
+          code: 402
         })
       })
       .catch(err => {
         return this.error.SetError({
-          info: 'Erro de conexão no banco de dados',
+          info: 'Erro no banco de dados',
           data: err,
           code: 500
         })
@@ -111,12 +129,12 @@ abstract class Database {
       .then(objects => {
         return ((objects != null && objects) ? object.id : this.error.SetError({
           info: 'Não foi possível fazer a atualização',
-          code: 204
+          code: 501
         }))
       })
       .catch(err => {
         return this.error.SetError({
-          info: 'Erro de conexão no banco de dados',
+          info: 'Erro no banco de dados',
           data: err,
           code: 500
         })
@@ -129,17 +147,21 @@ abstract class Database {
    * @return object
    */
   private async create (object: any): Promise<any> {
-    const data = await database(this.db.Entity)
+    return await database(this.db.Entity)
       .insert(object)
-      .then(object => { return object })
+      .then(object => {
+        return ((object != null && object) ? object : this.error.SetError({
+          info: 'Não foi possível fazer a atualização',
+          code: 501
+        }))
+      })
       .catch(err => {
         return this.error.SetError({
-          info: 'Erro de conexão no banco de dados',
-          data: err,
+          info: 'Erro no banco de dados',
+          data: err.sqlState,
           code: 500
         })
       })
-    return data
   }
 
   /**

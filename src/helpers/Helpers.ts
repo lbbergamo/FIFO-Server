@@ -49,4 +49,8 @@ export class Helpers implements Helpers {
     }
     return this
   }
+
+  reset () {
+    this.status = false
+  }
 }
