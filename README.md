@@ -93,7 +93,7 @@ $ yarn knex:rollback
 4. ✅ Retorna erro 400 se o campo email for um e-mail inválido
 5. ✅ Retorna erro 500 se der erro no banco de dados
 6. ✅ Retorna erro 402 se não encontrar nenhum item no banco de dados
-
+6. ✅ Retorna erro 501 não foi possível fazer o update
 ```
 
 
