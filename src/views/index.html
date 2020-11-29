@@ -1,36 +1,15 @@
+<!DOCTYPE html>
 <html>
 
 <head>
-  <script src="/socket.io/socket.io.js"></script>
-  <script>
-    let socket = io();
-    const user = {
-      localization: 16,
-      service: 15,
-      user: 1
-    }
-    socket.on('status', (code) => {
-      let teste = document.getElementById('code');
-      teste.innerHTML = 'Socket ID ' + code;
-    });
-    socket.on('queue', (count) => {
-      let teste = document.getElementById('fila');
-      teste.innerHTML = 'Posição da fila ' + count;
-    });
-    socket.emit('entryQueue', user)
+  <meta charset="utf-8" />
+  <title>Fifo-Server</title>
 
-    function exit(){
-      console.log('to funcionando')
-      socket.emit('exit',user)
-    }
-  </script>
+  <meta http-equiv="refresh" content="4; URL='https://fifo-web.vercel.app/'" />
 </head>
 
 <body>
-  <h1 id='code'></h1>
-  <h1 id='fila'></h1>
-  <p id="server-time"></p>
-  <button type="button" onclick="exit()"></button>
+  Você esta sendo redirecionado para o projeto.
 </body>
 
 </html>
