@@ -24,7 +24,13 @@ abstract class Database {
     return database(this.db.Entity)
       .select(RequiredFields)
       .where({ id: name })
-      .then(object => { return object })
+      .then(object => {
+        return (object[0] == null)
+          ? this.error.SetError({
+            info: 'Item inexistente no banco de dados',
+            code: 402
+          }) : object[0]
+      })
       .catch(err => {
         return this.error.SetError({
           info: 'Erro de conexão no banco de dados',
@@ -44,7 +50,13 @@ abstract class Database {
     return database(this.db.Entity)
       .select(RequiredFields)
       .where(search)
-      .then(object => { return object })
+      .then(object => {
+        return (object[0] == null)
+          ? this.error.SetError({
+            info: 'Item inexistente no banco de dados',
+            code: 402
+          }) : object
+      })
       .catch(err => {
         return this.error.SetError({
           info: 'Erro de conexão no banco de dados',
@@ -61,7 +73,13 @@ abstract class Database {
   async get (): Promise<any> {
     const data = await database(this.db.Entity)
       .select(this.db.RequiredFields)
-      .then(object => { return object })
+      .then(object => {
+        return (object[0] == null)
+          ? this.error.SetError({
+            info: 'Item inexistente no banco de dados',
+            code: 402
+          }) : object
+      })
       .catch(err => {
         return this.error.SetError({
           info: 'Erro de conexão no banco de dados',
@@ -129,17 +147,16 @@ abstract class Database {
    * @return object
    */
   private async create (object: any): Promise<any> {
-    const data = await database(this.db.Entity)
+    return await database(this.db.Entity)
       .insert(object)
       .then(object => { return object })
       .catch(err => {
         return this.error.SetError({
           info: 'Erro de conexão no banco de dados',
-          data: err,
+          data: err.sqlState,
           code: 500
         })
       })
-    return data
   }
 
   /**
