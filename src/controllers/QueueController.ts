@@ -1,3 +1,4 @@
+import Cover from '@models/admin/Cover'
 import Localization from '@models/admin/Localization'
 import Queue from '@models/admin/Queue'
 import Service from '@models/admin/Service'
@@ -165,6 +166,9 @@ class QueueController {
         const user = new User()
         const findUser = await user.findId(queue.users_id)
         if (!user.error.Status()) {
+          const cover = new Cover()
+          const findCover = await cover.findCover(findUser.cover)
+          findUser.cover = findCover
           queue.user = findUser
         }
       }
