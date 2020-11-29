@@ -28,8 +28,8 @@ class LocalizationController {
   async get (req: Request, res: Response): Promise<Response> {
     const localization = new Localization()
     const localizationData = await localization.get()
-    if (localizationData == null) {
-      return res.status(401).send({})
+    if (localization.error.Status()) {
+      return res.status(localization.error.code).send(localization.error)
     } else {
       return res.status(201).send(localizationData)
     }
