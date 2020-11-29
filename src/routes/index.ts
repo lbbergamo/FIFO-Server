@@ -39,6 +39,7 @@ routes.delete('/service', serviceController.delete)
 /** User */
 const userController = new UserController()
 routes.post('/user', userController.save)
+routes.post('/user/login', userController.save)
 routes.get('/user', userController.get)
 routes.get('/user/:id', userController.find)
 routes.put('/user', userController.update)

@@ -11,6 +11,16 @@ class User extends Database {
   public make (object: any) {
     this.data = new UserModel(object)
   }
+
+  /**
+* FindId
+* @param name
+* @param RequiredFields
+* @return object
+*/
+  public findEmail (email: string, RequiredFields: Array<String> = this.db.RequiredFields): Promise<any> {
+    return this.findAny({ email: email })
+  }
 }
 
 class UserModel implements IData {
