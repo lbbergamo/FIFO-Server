@@ -1,4 +1,3 @@
-import Category from '@models/admin/Category'
 import Service from '@models/admin/Service'
 import { Request, Response } from 'express'
 
@@ -15,7 +14,7 @@ class ServiceController {
     service.make(req.body)
     const objectData = await service.save()
     if (service.error.Status()) {
-      return res.status(service.error.code).send(service.error.info)
+      return res.status(service.error.code).send(service.error)
     }
     return res.status(201).send(objectData)
   }
@@ -29,20 +28,10 @@ class ServiceController {
   async get (req: Request, res: Response): Promise<Response> {
     const service = new Service()
     const findService = await service.get()
-    if (findService == null) {
-      return res.status(401).send({})
+    if (service.error.Status()) {
+      return res.status(service.error.code).send(service.error)
     }
-    const result = []
-    for (const service of findService) {
-      const category = new Category()
-      category.requiredFields(['id', 'name', 'description', 'cover', 'notes'])
-      const findCategory = await category.findId(service.category_id)
-      if (!category.error.Status()) {
-        service.category = findCategory
-      }
-      result.push(service)
-    }
-    return res.status(201).json(result)
+    return res.status(201).json(findService)
   }
 
   /**
@@ -55,19 +44,9 @@ class ServiceController {
     const service = new Service()
     const findService = await service.findId(req.params.id)
     if (service.error.Status()) {
-      return res.status(service.error.code).send(service.error.info)
+      return res.status(service.error.code).send(service.error)
     }
-    const result = []
-    for (const service of findService) {
-      const category = new Category()
-      category.requiredFields(['id', 'name', 'description', 'cover', 'notes'])
-      const findCategory = await category.findId(service.category_id)
-      if (!category.error.Status()) {
-        service.category = findCategory
-      }
-      result.push(service)
-    }
-    return res.status(201).json(result)
+    return res.status(200).json(findService)
   }
 
   /**
@@ -82,7 +61,7 @@ class ServiceController {
     service.make(req.body)
     const objectData = await service.save()
     if (service.error.Status()) {
-      return res.status(service.error.code).send(service.error.info)
+      return res.status(service.error.code).send(service.error)
     }
     return res.status(201).json(objectData)
   }
@@ -99,7 +78,7 @@ class ServiceController {
     service.make(req.body)
     const objectData = await service.delete(req.body.id)
     if (service.error.Status()) {
-      return res.status(service.error.code).send(service.error.info)
+      return res.status(service.error.code).send(service.error)
     }
     return res.status(201).json(objectData)
   }
