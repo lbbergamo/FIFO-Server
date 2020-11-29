@@ -5,7 +5,7 @@ class User extends Database {
   protected db = {
     Entity: 'user',
     RequiredFields: ['id', 'name', 'email', 'last_socket_id', 'localization_id', 'cover'],
-    Secure: ['email', 'name']
+    Secure: ['email']
   }
 
   public make (object: any) {
@@ -13,11 +13,11 @@ class User extends Database {
   }
 
   /**
-* FindId
-* @param name
-* @param RequiredFields
-* @return object
-*/
+  * findEmail
+  * @param name
+  * @param RequiredFields
+  * @return object
+  */
   public findEmail (email: string, RequiredFields: Array<String> = this.db.RequiredFields): Promise<any> {
     return this.findAny({ email: email })
   }
