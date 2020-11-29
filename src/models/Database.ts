@@ -1,4 +1,4 @@
-import db from '@database/connection'
+import database from '@database/connection'
 import { Helpers } from '@helpers/Helpers'
 import { Validation } from '@helpers/Validation'
 abstract class Database {
@@ -21,9 +21,29 @@ abstract class Database {
    * @return object
    */
   public findId (name: string, RequiredFields: Array<String> = this.db.RequiredFields): Promise<any> {
-    return db(this.db.Entity)
+    return database(this.db.Entity)
       .select(RequiredFields)
       .where({ id: name })
+      .then(object => { return object })
+      .catch(err => {
+        return this.error.SetError({
+          info: 'Erro de conexão no banco de dados',
+          data: err,
+          code: 500
+        })
+      })
+  }
+
+  /**
+ * FindId
+ * @param name
+ * @param RequiredFields
+ * @return object
+ */
+  public findAny (search: object, RequiredFields: Array<String> = this.db.RequiredFields): Promise<any> {
+    return database(this.db.Entity)
+      .select(RequiredFields)
+      .where(search)
       .then(object => { return object })
       .catch(err => {
         return this.error.SetError({
@@ -39,7 +59,7 @@ abstract class Database {
    * @return object||Array
    */
   async get (): Promise<any> {
-    const data = await db(this.db.Entity)
+    const data = await database(this.db.Entity)
       .select(this.db.RequiredFields)
       .then(object => { return object })
       .catch(err => {
@@ -58,7 +78,7 @@ abstract class Database {
    * @return resultado
    */
   async delete (id: number): Promise<any> {
-    const data = await db(this.db.Entity)
+    const data = await database(this.db.Entity)
       .where({ id: id })
       .del()
       .then(object => {
@@ -83,7 +103,7 @@ abstract class Database {
    * @return object
    */
   private async update (object: any): Promise<any> {
-    return db(this.db.Entity)
+    return database(this.db.Entity)
       .update(object)
       .where({
         id: object.id
@@ -109,7 +129,7 @@ abstract class Database {
    * @return object
    */
   private async create (object: any): Promise<any> {
-    const data = await db(this.db.Entity)
+    const data = await database(this.db.Entity)
       .insert(object)
       .then(object => { return object })
       .catch(err => {
