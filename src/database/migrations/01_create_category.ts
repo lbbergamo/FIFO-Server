@@ -5,7 +5,6 @@ export async function up (knex: Knex) {
     table.increments('id').primary()
     table.string('description')
     table.string('name').notNullable()
-    table.string('cover', 1000)
     table.string('notes')
 
     table
