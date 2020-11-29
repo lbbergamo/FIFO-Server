@@ -1,0 +1,1465 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "2.0",
+    "title": "FIFO-Server-API",
+    "description": "Api para o desafio do processo de seleção da FCacamra"
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "tags": [
+    {
+      "name": "Categoria"
+    },
+    {
+      "name": "Localizacao"
+    },
+    {
+      "name": "Localizacao X Servico"
+    },
+    {
+      "name": "Fila"
+    },
+    {
+      "name": "Servico"
+    },
+    {
+      "name": "Usuario"
+    },
+    {
+      "name": "API"
+    }
+  ],
+  "host": "localhost:3333",
+  "basePath": "/",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "paths": {
+    "/user": {
+      "get": {
+        "tags": [
+          "Usuario"
+        ],
+        "summary": "Consulta todos os usuarios",
+        "operationId": "",
+        "description": "Esta operação tem por objetivo consultar todos os usuarios",
+        "responses": {
+          "200": {
+            "description": "Sucesso ao consultar todos os usuarios.",
+            "schema": {
+              "$ref": "#/definitions/Users"
+            }
+          },
+          "400": {
+            "description": "Consulta inválida."
+          },
+          "401": {
+            "description": "Consulta não autorizada."
+          },
+          "404": {
+            "description": "Nenhum usuario encontrado para a consulta."
+          },
+          "500": {
+            "description": "Erro interno ao tentar realizar consulta."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Usuario"
+        ],
+        "summary": "Cadastro de um novo usuario.",
+        "operationId": "cadastraNovo",
+        "description": "Esta operação tem por objetivo cadastrar um novo usuario.",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Sucesso ao cadastrar novo cliente.",
+            "schema": {
+              "$ref": "#/definitions/User"
+            },
+            "headers": {
+              "Location": {
+                "type": "string",
+                "description": "URI do usuario cadastrado."
+              }
+            }
+          },
+          "400": {
+            "description": "Cadastro inválido."
+          },
+          "401": {
+            "description": "Cadastro não autorizado."
+          },
+          "500": {
+            "description": "Erro interno ao tentar realizar cadastro."
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "put": {
+        "tags": [
+          "Usuario"
+        ],
+        "summary": "Altera um usuario existente",
+        "operationId": "alteraExistente",
+        "description": "Esta operacao tem por objetivo alterar um usuario existente.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "integer",
+            "format": "int32",
+            "required": true,
+            "description": "Id do cliente"
+          },
+          {
+            "in": "body",
+            "name": "user",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Sucesso ao alterar um usuario existente.",
+            "schema": {
+              "$ref": "#/definitions/User"
+            },
+            "headers": {
+              "Location": {
+                "type": "string",
+                "description": "URI do usuario alterado."
+              }
+            }
+          },
+          "400": {
+            "description": "Alteração invalida."
+          },
+          "401": {
+            "description": "Alteracao nao autorizada."
+          },
+          "500": {
+            "description": "Erro interno ao tentar realizar alteracao."
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Usuario"
+        ],
+        "summary": "Consulta um usuario existente por id.",
+        "operationId": "consultaPorId",
+        "description": "Esta consulta tem por objetivo consultar um usuario existente por id.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "integer",
+            "format": "int32",
+            "required": true,
+            "description": "Numero do id do usuario"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso ao consultar um usuario existente por id.",
+            "schema": {
+              "$ref": "#/definitions/User"
+            },
+            "headers": {
+              "Location": {
+                "type": "string",
+                "description": "URI do usuario alterado."
+              }
+            }
+          },
+          "400": {
+            "description": "Consulta invalida."
+          },
+          "401": {
+            "description": "Consulta não autorizada."
+          },
+          "404": {
+            "description": "Nenhum usuario encontrado para consulta por id."
+          },
+          "500": {
+            "description": "Erro interno ao tentar realizar consulta."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Usuario"
+        ],
+        "summary": "Exclui um usuario existente.",
+        "operationId": "excluiExistente",
+        "description": "Esta operacao tem por objetivo excluir um usuario existente.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "integer",
+            "required": true,
+            "format": "int32",
+            "description": "Numero do id do usuario."
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Sucesso ao excluir um usuario existente."
+          },
+          "400": {
+            "description": "Exclusao invalida."
+          },
+          "401": {
+            "description": "Exclusão não autorizada."
+          },
+          "404": {
+            "description": "Usuario não encontrado."
+          },
+          "500": {
+            "description": "Erro interno ao tentar realizar exclusao."
+          }
+        }
+      }
+    },
+    "/category": {
+      "get": {
+        "tags": [
+          "Categoria"
+        ],
+        "summary": "Consulta todos as categorias",
+        "operationId": "consultaCategorias",
+        "description": "Esta operação tem por objetivo consultar todas as categorias",
+        "responses": {
+          "200": {
+            "description": "Sucesso ao consultar todos as categorias.",
+            "schema": {
+              "$ref": "#/definitions/Categories"
+            }
+          },
+          "400": {
+            "description": "Consulta inválida."
+          },
+          "401": {
+            "description": "Consulta não autorizada."
+          },
+          "404": {
+            "description": "Nenhum usuario encontrado para a consulta."
+          },
+          "500": {
+            "description": "Erro interno ao tentar realizar consulta."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Categoria"
+        ],
+        "summary": "Cadastro de uma nova categoria.",
+        "operationId": "cadastrarNova",
+        "description": "Esta operação tem por objetivo cadastrar um nova categoria.",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Category"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Sucesso ao cadastrar nova categoria.",
+            "schema": {
+              "$ref": "#/definitions/Category"
+            },
+            "headers": {
+              "Location": {
+                "type": "string",
+                "description": "URI da categoria cadastrada."
+              }
+            }
+          },
+          "400": {
+            "description": "Cadastro inválido."
+          },
+          "401": {
+            "description": "Cadastro não autorizado."
+          },
+          "500": {
+            "description": "Erro interno ao tentar realizar cadastro."
+          }
+        }
+      }
+    },
+    "/category/{id}": {
+      "put": {
+        "tags": [
+          "Categoria"
+        ],
+        "summary": "Altera uma categoria existente",
+        "operationId": "alteraCatExistente",
+        "description": "Esta operacao tem por objetivo alterar uma categoria existente.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "integer",
+            "format": "int32",
+            "required": true,
+            "description": "Id da categoria"
+          },
+          {
+            "in": "body",
+            "name": "user",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Category"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Sucesso ao alterar uma categoria existente.",
+            "schema": {
+              "$ref": "#/definitions/Category"
+            },
+            "headers": {
+              "Location": {
+                "type": "string",
+                "description": "URI da categoria alterada."
+              }
+            }
+          },
+          "400": {
+            "description": "Alteração invalida."
+          },
+          "401": {
+            "description": "Alteracao nao autorizada."
+          },
+          "500": {
+            "description": "Erro interno ao tentar realizar alteracao."
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Categoria"
+        ],
+        "summary": "Consulta um usuario existente por id.",
+        "operationId": "consultaCatPorId",
+        "description": "Esta consulta tem por objetivo consultar uma categoria existente por id.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "integer",
+            "format": "int32",
+            "required": true,
+            "description": "Numero do id da categoria"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso ao consultar uma categoria existente por id.",
+            "schema": {
+              "$ref": "#/definitions/Category"
+            },
+            "headers": {
+              "Location": {
+                "type": "string",
+                "description": "URI da categoria alterada."
+              }
+            }
+          },
+          "400": {
+            "description": "Consulta invalida."
+          },
+          "401": {
+            "description": "Consulta não autorizada."
+          },
+          "404": {
+            "description": "Nenhuma categoria encontrado para consulta por id."
+          },
+          "500": {
+            "description": "Erro interno ao tentar realizar consulta."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Categoria"
+        ],
+        "summary": "Exclui uma categoria existente.",
+        "operationId": "excluiCatExistente",
+        "description": "Esta operacao tem por objetivo excluir uma categoria existente.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "integer",
+            "required": true,
+            "format": "int32",
+            "description": "Numero do id da categoria."
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Sucesso ao excluir uma categoria existente."
+          },
+          "400": {
+            "description": "Exclusao invalida."
+          },
+          "401": {
+            "description": "Exclusão não autorizada."
+          },
+          "404": {
+            "description": "Categoria não encontrado."
+          },
+          "500": {
+            "description": "Erro interno ao tentar realizar exclusao."
+          }
+        }
+      }
+    },
+    "/localization": {
+      "get": {
+        "tags": [
+          "Localizacao"
+        ],
+        "summary": "Consulta todos as localizacoes",
+        "operationId": "consultaLocalizacao",
+        "description": "Esta operação tem por objetivo consultar todas as localizacao",
+        "responses": {
+          "200": {
+            "description": "Sucesso ao consultar todos as localizacao.",
+            "schema": {
+              "$ref": "#/definitions/Localizations"
+            }
+          },
+          "400": {
+            "description": "Consulta inválida."
+          },
+          "401": {
+            "description": "Consulta não autorizada."
+          },
+          "404": {
+            "description": "Nenhuma localizacao encontrado para a consulta."
+          },
+          "500": {
+            "description": "Erro interno ao tentar realizar consulta."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Localizacao"
+        ],
+        "summary": "Cadastro de uma nova localizacao.",
+        "operationId": "cadastrarNovaLoc",
+        "description": "Esta operação tem por objetivo cadastrar um nova localizacao.",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Localization"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Sucesso ao cadastrar nova localizacao.",
+            "schema": {
+              "$ref": "#/definitions/Localization"
+            },
+            "headers": {
+              "Location": {
+                "type": "string",
+                "description": "URI da localizacao cadastrada."
+              }
+            }
+          },
+          "400": {
+            "description": "Cadastro inválido."
+          },
+          "401": {
+            "description": "Cadastro não autorizado."
+          },
+          "500": {
+            "description": "Erro interno ao tentar realizar cadastro."
+          }
+        }
+      }
+    },
+    "/localization/{id}": {
+      "put": {
+        "tags": [
+          "Localizacao"
+        ],
+        "summary": "Altera uma localizacao existente",
+        "operationId": "alteraLocExistente",
+        "description": "Esta operacao tem por objetivo alterar uma localizacao existente.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "integer",
+            "format": "int32",
+            "required": true,
+            "description": "Id da localizacao"
+          },
+          {
+            "in": "body",
+            "name": "user",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Localization"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Sucesso ao alterar uma localizacao existente.",
+            "schema": {
+              "$ref": "#/definitions/Localization"
+            },
+            "headers": {
+              "Location": {
+                "type": "string",
+                "description": "URI da localizacao alterada."
+              }
+            }
+          },
+          "400": {
+            "description": "Alteração invalida."
+          },
+          "401": {
+            "description": "Alteracao nao autorizada."
+          },
+          "500": {
+            "description": "Erro interno ao tentar realizar alteracao."
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Localizacao"
+        ],
+        "summary": "Consulta um localizacao existente por id.",
+        "operationId": "consultaLocPorId",
+        "description": "Esta consulta tem por objetivo consultar uma localizacao existente por id.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "integer",
+            "format": "int32",
+            "required": true,
+            "description": "Numero do id da localizacao"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso ao consultar uma localizacao existente por id.",
+            "schema": {
+              "$ref": "#/definitions/Localization"
+            },
+            "headers": {
+              "Location": {
+                "type": "string",
+                "description": "URI da localizacao alterada."
+              }
+            }
+          },
+          "400": {
+            "description": "Consulta invalida."
+          },
+          "401": {
+            "description": "Consulta não autorizada."
+          },
+          "404": {
+            "description": "Nenhuma localizacao encontrado para consulta por id."
+          },
+          "500": {
+            "description": "Erro interno ao tentar realizar consulta."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Localizacao"
+        ],
+        "summary": "Exclui uma localizacao existente.",
+        "operationId": "excluiLocExistente",
+        "description": "Esta operacao tem por objetivo excluir uma localizacao existente.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "integer",
+            "required": true,
+            "format": "int32",
+            "description": "Numero do id da localizacao."
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Sucesso ao excluir uma localizacao existente."
+          },
+          "400": {
+            "description": "Exclusao invalida."
+          },
+          "401": {
+            "description": "Exclusão não autorizada."
+          },
+          "404": {
+            "description": "localizacao não encontrado."
+          },
+          "500": {
+            "description": "Erro interno ao tentar realizar exclusao."
+          }
+        }
+      }
+    },
+    "/queue": {
+      "get": {
+        "tags": [
+          "Fila"
+        ],
+        "summary": "Consulta todos as filas",
+        "operationId": "consultafila",
+        "description": "Esta operação tem por objetivo consultar todas as filas",
+        "responses": {
+          "200": {
+            "description": "Sucesso ao consultar todas as filas.",
+            "schema": {
+              "$ref": "#/definitions/Queues"
+            }
+          },
+          "400": {
+            "description": "Consulta inválida."
+          },
+          "401": {
+            "description": "Consulta não autorizada."
+          },
+          "404": {
+            "description": "Nenhuma fila encontrada para a consulta."
+          },
+          "500": {
+            "description": "Erro interno ao tentar realizar consulta."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Fila"
+        ],
+        "summary": "Cadastro de uma nova fila.",
+        "operationId": "cadastrarNovaFila",
+        "description": "Esta operação tem por objetivo cadastrar um nova fila.",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Queue"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Sucesso ao cadastrar nova fila.",
+            "schema": {
+              "$ref": "#/definitions/Queue"
+            },
+            "headers": {
+              "Location": {
+                "type": "string",
+                "description": "URI da localizacao cadastrada."
+              }
+            }
+          },
+          "400": {
+            "description": "Cadastro inválido."
+          },
+          "401": {
+            "description": "Cadastro não autorizado."
+          },
+          "500": {
+            "description": "Erro interno ao tentar realizar cadastro."
+          }
+        }
+      }
+    },
+    "/queue/{id}": {
+      "put": {
+        "tags": [
+          "Fila"
+        ],
+        "summary": "Altera uma fila existente",
+        "operationId": "alteraFilaExistente",
+        "description": "Esta operacao tem por objetivo alterar uma fila existente.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "integer",
+            "format": "int32",
+            "required": true,
+            "description": "Id da fila"
+          },
+          {
+            "in": "body",
+            "name": "user",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Queue"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Sucesso ao alterar uma fila existente.",
+            "schema": {
+              "$ref": "#/definitions/Queue"
+            },
+            "headers": {
+              "Location": {
+                "type": "string",
+                "description": "URI da fila alterada."
+              }
+            }
+          },
+          "400": {
+            "description": "Alteração invalida."
+          },
+          "401": {
+            "description": "Alteracao nao autorizada."
+          },
+          "500": {
+            "description": "Erro interno ao tentar realizar alteracao."
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Fila"
+        ],
+        "summary": "Consulta um fila existente por id.",
+        "operationId": "consultaFilaPorId",
+        "description": "Esta consulta tem por objetivo consultar uma fila existente por id.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "integer",
+            "format": "int32",
+            "required": true,
+            "description": "Numero do id da localizacao"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso ao consultar uma localizacao existente por id.",
+            "schema": {
+              "$ref": "#/definitions/Localization"
+            },
+            "headers": {
+              "Location": {
+                "type": "string",
+                "description": "URI da localizacao alterada."
+              }
+            }
+          },
+          "400": {
+            "description": "Consulta invalida."
+          },
+          "401": {
+            "description": "Consulta não autorizada."
+          },
+          "404": {
+            "description": "Nenhuma localizacao encontrado para consulta por id."
+          },
+          "500": {
+            "description": "Erro interno ao tentar realizar consulta."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Fila"
+        ],
+        "summary": "Exclui uma localizacao existente.",
+        "operationId": "excluiFilaExistente",
+        "description": "Esta operacao tem por objetivo excluir uma localizacao existente.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "integer",
+            "required": true,
+            "format": "int32",
+            "description": "Numero do id da localizacao."
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Sucesso ao excluir uma localizacao existente."
+          },
+          "400": {
+            "description": "Exclusao invalida."
+          },
+          "401": {
+            "description": "Exclusão não autorizada."
+          },
+          "404": {
+            "description": "localizacao não encontrado."
+          },
+          "500": {
+            "description": "Erro interno ao tentar realizar exclusao."
+          }
+        }
+      }
+    },
+    "/localization_service": {
+      "get": {
+        "tags": [
+          "Localizacao X Servico"
+        ],
+        "summary": "Consulta todos as Localizacoes",
+        "operationId": "consultaLocal",
+        "description": "Esta operação tem por objetivo consultar todas as Localizacoes",
+        "responses": {
+          "200": {
+            "description": "Sucesso ao consultar todas as filas.",
+            "schema": {
+              "$ref": "#/definitions/LocalizationServices"
+            }
+          },
+          "400": {
+            "description": "Consulta inválida."
+          },
+          "401": {
+            "description": "Consulta não autorizada."
+          },
+          "404": {
+            "description": "Nenhuma localizacao encontrada para a consulta."
+          },
+          "500": {
+            "description": "Erro interno ao tentar realizar consulta."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Localizacao X Servico"
+        ],
+        "summary": "Cadastro de uma nova Localizacao.",
+        "operationId": "cadastrarNovaLocalizacao",
+        "description": "Esta operação tem por objetivo cadastrar um nova fila.",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LocalizationService"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Sucesso ao cadastrar nova localizacao.",
+            "schema": {
+              "$ref": "#/definitions/LocalizationService"
+            },
+            "headers": {
+              "Location": {
+                "type": "string",
+                "description": "URI da localizacao cadastrada."
+              }
+            }
+          },
+          "400": {
+            "description": "Cadastro inválido."
+          },
+          "401": {
+            "description": "Cadastro não autorizado."
+          },
+          "500": {
+            "description": "Erro interno ao tentar realizar cadastro."
+          }
+        }
+      }
+    },
+    "/localization_service/{id}": {
+      "put": {
+        "tags": [
+          "Localizacao X Servico"
+        ],
+        "summary": "Altera uma localizacao existente",
+        "operationId": "alteraLocalExistente",
+        "description": "Esta operacao tem por objetivo alterar uma localizacao existente.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "integer",
+            "format": "int32",
+            "required": true,
+            "description": "Id da localizacao"
+          },
+          {
+            "in": "body",
+            "name": "user",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LocalizationService"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Sucesso ao alterar uma localizacao existente.",
+            "schema": {
+              "$ref": "#/definitions/LocalizationService"
+            },
+            "headers": {
+              "Location": {
+                "type": "string",
+                "description": "URI da localizacao alterada."
+              }
+            }
+          },
+          "400": {
+            "description": "Alteração invalida."
+          },
+          "401": {
+            "description": "Alteracao nao autorizada."
+          },
+          "500": {
+            "description": "Erro interno ao tentar realizar alteracao."
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Localizacao X Servico"
+        ],
+        "summary": "Consulta um localizacao existente por id.",
+        "operationId": "consultaLocalPorId",
+        "description": "Esta consulta tem por objetivo consultar uma localizacao existente por id.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "integer",
+            "format": "int32",
+            "required": true,
+            "description": "Numero do id da localizacao"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso ao consultar uma localizacao existente por id.",
+            "schema": {
+              "$ref": "#/definitions/LocalizationService"
+            },
+            "headers": {
+              "Location": {
+                "type": "string",
+                "description": "URI da localizacao alterada."
+              }
+            }
+          },
+          "400": {
+            "description": "Consulta invalida."
+          },
+          "401": {
+            "description": "Consulta não autorizada."
+          },
+          "404": {
+            "description": "Nenhuma localizacao encontrado para consulta por id."
+          },
+          "500": {
+            "description": "Erro interno ao tentar realizar consulta."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Localizacao X Servico"
+        ],
+        "summary": "Exclui uma localizacao existente.",
+        "operationId": "excluiLocalExistente",
+        "description": "Esta operacao tem por objetivo excluir uma localizacao existente.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "integer",
+            "required": true,
+            "format": "int32",
+            "description": "Numero do id da localizacao."
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Sucesso ao excluir uma localizacao existente."
+          },
+          "400": {
+            "description": "Exclusao invalida."
+          },
+          "401": {
+            "description": "Exclusão não autorizada."
+          },
+          "404": {
+            "description": "localizacao não encontrado."
+          },
+          "500": {
+            "description": "Erro interno ao tentar realizar exclusao."
+          }
+        }
+      }
+    },
+    "/service": {
+      "get": {
+        "tags": [
+          "Servico"
+        ],
+        "summary": "Consulta todos os servicos",
+        "operationId": "consultaServico",
+        "description": "Esta operação tem por objetivo consultar todas os servicos",
+        "responses": {
+          "200": {
+            "description": "Sucesso ao consultar todas as servicos.",
+            "schema": {
+              "$ref": "#/definitions/Services"
+            }
+          },
+          "400": {
+            "description": "Consulta inválida."
+          },
+          "401": {
+            "description": "Consulta não autorizada."
+          },
+          "404": {
+            "description": "Nenhum servico encontrada para a consulta."
+          },
+          "500": {
+            "description": "Erro interno ao tentar realizar consulta."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Servico"
+        ],
+        "summary": "Cadastro de um novo servico.",
+        "operationId": "cadastrarNovoServico",
+        "description": "Esta operação tem por objetivo cadastrar um novo servico.",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Service"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Sucesso ao cadastrar nova localizacao.",
+            "schema": {
+              "$ref": "#/definitions/Service"
+            },
+            "headers": {
+              "Location": {
+                "type": "string",
+                "description": "URI do servico cadastrada."
+              }
+            }
+          },
+          "400": {
+            "description": "Cadastro inválido."
+          },
+          "401": {
+            "description": "Cadastro não autorizado."
+          },
+          "500": {
+            "description": "Erro interno ao tentar realizar cadastro."
+          }
+        }
+      }
+    },
+    "/service/{id}": {
+      "put": {
+        "tags": [
+          "Servico"
+        ],
+        "summary": "Altera um servico existente",
+        "operationId": "alteraServicoExistente",
+        "description": "Esta operacao tem por objetivo alterar uma servico existente.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "integer",
+            "format": "int32",
+            "required": true,
+            "description": "Id do servico"
+          },
+          {
+            "in": "body",
+            "name": "service",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Service"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Sucesso ao alterar um servico existente.",
+            "schema": {
+              "$ref": "#/definitions/Service"
+            },
+            "headers": {
+              "Location": {
+                "type": "string",
+                "description": "URI da servico alterada."
+              }
+            }
+          },
+          "400": {
+            "description": "Alteração invalida."
+          },
+          "401": {
+            "description": "Alteracao nao autorizada."
+          },
+          "500": {
+            "description": "Erro interno ao tentar realizar alteracao."
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Servico"
+        ],
+        "summary": "Consulta um servico existente por id.",
+        "operationId": "consultaServPorId",
+        "description": "Esta consulta tem por objetivo consultar uma localizacao existente por id.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "integer",
+            "format": "int32",
+            "required": true,
+            "description": "Numero do id do servico"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso ao consultar uma servico existente por id.",
+            "schema": {
+              "$ref": "#/definitions/Service"
+            },
+            "headers": {
+              "Location": {
+                "type": "string",
+                "description": "URI do service alterada."
+              }
+            }
+          },
+          "400": {
+            "description": "Consulta invalida."
+          },
+          "401": {
+            "description": "Consulta não autorizada."
+          },
+          "404": {
+            "description": "Nenhuma servico encontrado para consulta por id."
+          },
+          "500": {
+            "description": "Erro interno ao tentar realizar consulta."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Servico"
+        ],
+        "summary": "Exclui uma Servico existente.",
+        "operationId": "excluiServiExistente",
+        "description": "Esta operacao tem por objetivo excluir um servico existente.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "integer",
+            "required": true,
+            "format": "int32",
+            "description": "Numero do id da servico."
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Sucesso ao excluir um servico existente."
+          },
+          "400": {
+            "description": "Exclusao invalida."
+          },
+          "401": {
+            "description": "Exclusão não autorizada."
+          },
+          "404": {
+            "description": "localizacao não encontrado."
+          },
+          "500": {
+            "description": "Erro interno ao tentar realizar exclusao."
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Users": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/User"
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Id do usuario."
+        },
+        "name": {
+          "type": "string",
+          "description": "Nome do usuario"
+        },
+        "email": {
+          "type": "string",
+          "description": "email do usuario"
+        },
+        "cover": {
+          "type": "string",
+          "description": "Avatar do usuario"
+        },
+        "last_socket_id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Id socket"
+        },
+        "localization_id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Id localizacao"
+        }
+      }
+    },
+    "Categories": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Category"
+      }
+    },
+    "Category": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Id da categoria."
+        },
+        "description": {
+          "type": "string",
+          "description": "Descrição da categoria"
+        },
+        "name": {
+          "type": "string",
+          "description": "Nome da categoria."
+        },
+        "cover": {
+          "type": "string",
+          "description": "Avatar da categoria."
+        },
+        "notes": {
+          "type": "string",
+          "description": "Anotações da categoria."
+        }
+      }
+    },
+    "Localizations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Localization"
+      }
+    },
+    "Localization": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Id da localizacao."
+        },
+        "description": {
+          "type": "string",
+          "description": "Descrição da localizacao"
+        },
+        "name": {
+          "type": "string",
+          "description": "Nome da localizacao."
+        },
+        "cover": {
+          "type": "string",
+          "description": "Avatar da localizacao."
+        },
+        "notes": {
+          "type": "string",
+          "description": "Anotações da localizacao."
+        }
+      }
+    },
+    "Services": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Service"
+      }
+    },
+    "Service": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Id do servico."
+        },
+        "description": {
+          "type": "string",
+          "description": "Descrição do servico"
+        },
+        "name": {
+          "type": "string",
+          "description": "Nome do servico."
+        },
+        "cover": {
+          "type": "string",
+          "description": "Avatar do servico."
+        },
+        "notes": {
+          "type": "string",
+          "description": "Anotacoes refrente ao servico."
+        },
+        "status": {
+          "type": "string",
+          "description": "Status do servico."
+        },
+        "category_id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Id da categoria"
+        }
+      }
+    },
+    "Queues": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Queue"
+      }
+    },
+    "Queue": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Id da fila"
+        },
+        "localization_id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Id da localizacao"
+        },
+        "service_id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Id do servico"
+        },
+        "users_id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Id do usuario"
+        },
+        "entry_queue": {
+          "type": "string",
+          "description": "Entrada na fila"
+        },
+        "entry_service": {
+          "type": "string",
+          "description": "Entrada do servico"
+        },
+        "status": {
+          "type": "string",
+          "description": "Status da fila"
+        }
+      }
+    },
+    "LocalizationServices": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/LocalizationService"
+      }
+    },
+    "LocalizationService": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Id da localizacaoXservico"
+        },
+        "localization_id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Id da localizacao"
+        },
+        "service_id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Id do servico"
+        }
+      }
+    }
+  }
+}
