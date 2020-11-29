@@ -19,6 +19,7 @@ class Cover extends Database {
   */
   public async findCover (id: string, RequiredFields: Array<String> = this.db.RequiredFields): Promise<any> {
     const find = await this.findId(id)
+    console.log(id)
     find.url = 'covers/' + find.url
     return find
   }

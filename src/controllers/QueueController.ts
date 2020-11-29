@@ -148,7 +148,6 @@ class QueueController {
    */
   async statusQueue (req: Request, res: Response): Promise<Response> {
     const queue = new Queue()
-    console.log(req.body)
     const findQueue = await queue.findQueue(req.body.localization, req.body.service)
     if (queue.error.Status()) {
       return res.status(queue.error.code).send(queue.error)
@@ -167,7 +166,7 @@ class QueueController {
         const findUser = await user.findId(queue.users_id)
         if (!user.error.Status()) {
           const cover = new Cover()
-          const findCover = await cover.findCover(findUser.cover)
+          const findCover = await cover.findCover(findUser.cover ?? 1)
           findUser.cover = findCover
           queue.user = findUser
         }
