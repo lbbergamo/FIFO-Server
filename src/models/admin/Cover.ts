@@ -2,13 +2,25 @@ import Database from '../Database'
 
 class Cover extends Database {
   protected db = {
-    Entity: 'category',
+    Entity: 'cover',
     RequiredFields: ['id', 'url'],
     Secure: ['url']
   }
 
   public make (object: any) {
     this.data = new CoverModel(object)
+  }
+
+  /**
+  * findCover
+  * @param name
+  * @param RequiredFields
+  * @return object
+  */
+  public async findCover (id: string, RequiredFields: Array<String> = this.db.RequiredFields): Promise<any> {
+    const find = await this.findId(id)
+    find.url = 'covers/' + find.url
+    return find
   }
 }
 
