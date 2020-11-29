@@ -105,6 +105,29 @@ class UserController {
     }
     return res.status(201).json(objectData)
   }
+
+  /**
+   * Realiza o login
+   * @param req Request
+   * @param res Response
+   * @return Response
+   */
+  async login (req: Request, res: Response): Promise<Response> {
+    const user = new User()
+    const findUser = await user.findEmail(req.body.email)
+    let result
+
+    if (findUser[0] == null) {
+      user.make(req.body)
+      result = await user.save()
+    } else {
+      result = findUser
+    }
+    if (user.error.Status()) {
+      return res.status(user.error.code).send(user.error.info)
+    }
+    return res.status(201).json(result)
+  }
 }
 
 export default UserController
