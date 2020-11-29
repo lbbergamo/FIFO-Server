@@ -22,6 +22,7 @@ module.exports = {
         '@core': './src/core',
         '@routes': './src/routes',
         '@docs': './src/docs',
+              '@covers': './src/covers',
       }
     }]
   ],

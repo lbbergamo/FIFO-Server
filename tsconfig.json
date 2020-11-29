@@ -27,7 +27,8 @@
       "@helpers/*": ["src/helpers/*"],
       "@core/*": ["./src/core/*"],
       "@routes/*": ["./src/routes/*"],
-      "@docs/*": ["./src/docs/*"]
+      "@docs/*": ["./src/docs/*"],
+      "@covers/*": ["./src/covers/*"]
     }
   },
   "include": [
