@@ -15,15 +15,6 @@ export async function up (knex: Knex) {
     table.string('status')
 
     table
-      .integer('category_id')
-      .references('id')
-      .inTable('category')
-      .notNullable()
-      .unsigned()
-      .onUpdate('CASCADE')
-      .onDelete('CASCADE')
-
-    table
       .timestamp('created_at')
       .defaultTo(knex.fn.now())
 
