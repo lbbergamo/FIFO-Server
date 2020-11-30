@@ -12,7 +12,7 @@ class QueueController {
   * @param res Response
   * @return Response
   */
-  async save (req: Request, res: Response): Promise<Response> {
+  async saveQueue (req: Request, res: Response): Promise<Response> {
     if (req.body.id != null) return res.status(401).send({ message: 'Favor utilizar a rota de update' })
     const queue = new Queue()
     // queue.make(req.body)
@@ -32,7 +32,7 @@ class QueueController {
    * @param res Response
    * @return Response
    */
-  async get (req: Request, res: Response): Promise<Response> {
+  async getQueue (req: Request, res: Response): Promise<Response> {
     const queue = new Queue()
     const findQueue = await queue.get()
     if (queue.error.Status()) {
@@ -72,7 +72,7 @@ class QueueController {
   * @param res Response
   * @return Response
   */
-  async find (req: Request, res: Response): Promise<Response> {
+  async findQueue (req: Request, res: Response): Promise<Response> {
     const queue = new Queue()
     const findQueue = await queue.findId(req.params.id)
     if (queue.error.Status()) {
@@ -112,7 +112,7 @@ class QueueController {
   * @param res Response
   * @return Response
   */
-  async update (req: Request, res: Response): Promise<Response> {
+  async updateQueue (req: Request, res: Response): Promise<Response> {
     if (req.body.id == null) return res.status(401).send({ message: 'Falta o id' })
     const queue = new Queue()
     queue.make(req.body)
@@ -129,7 +129,7 @@ class QueueController {
   * @param res Response
   * @return Response
   */
-  async delete (req: Request, res: Response): Promise<Response> {
+  async deleteQueue (req: Request, res: Response): Promise<Response> {
     if (req.body.id == null) return res.status(401).send({ message: 'Falta o id' })
     const queue = new Queue()
     queue.make(req.body)

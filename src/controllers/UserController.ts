@@ -26,7 +26,7 @@ class UserController {
    * @param res Response
    * @return Response
    */
-  async get (req: Request, res: Response): Promise<Response> {
+  async getUser (req: Request, res: Response): Promise<Response> {
     const user = new User()
     const findUser = await user.get()
     if (user.error.Status()) {
@@ -52,7 +52,7 @@ class UserController {
   * @param res Response
   * @return Response
   */
-  async find (req: Request, res: Response): Promise<Response> {
+  async findUser (req: Request, res: Response): Promise<Response> {
     const user = new User()
     const findUser = await user.findId(req.params.id)
     if (user.error.Status()) {
@@ -78,7 +78,7 @@ class UserController {
   * @param res Response
   * @return Response
   */
-  async update (req: Request, res: Response): Promise<Response> {
+  async updateUser (req: Request, res: Response): Promise<Response> {
     if (req.body.id == null) return res.status(401).send({ message: 'Falta o id' })
     const user = new User()
     user.make(req.body)
@@ -95,7 +95,7 @@ class UserController {
   * @param res Response
   * @return Response
   */
-  async delete (req: Request, res: Response): Promise<Response> {
+  async deleteUser (req: Request, res: Response): Promise<Response> {
     if (req.body.id == null) return res.status(401).send({ message: 'Falta o id' })
     const user = new User()
     user.make(req.body)
@@ -112,7 +112,7 @@ class UserController {
    * @param res Response
    * @return Response
    */
-  async login (req: Request, res: Response): Promise<Response> {
+  async loginUser (req: Request, res: Response): Promise<Response> {
     let user = new User()
     const findUser = await user.findEmail(req.body.email)
     let result

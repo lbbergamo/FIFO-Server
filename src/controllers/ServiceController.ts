@@ -8,7 +8,7 @@ class ServiceController {
   * @param res Response
   * @return Response
   */
-  async save (req: Request, res: Response): Promise<Response> {
+  async saveService (req: Request, res: Response): Promise<Response> {
     if (req.body.id != null) return res.status(401).send({ message: 'Favor utilizar a rota de update' })
     const service = new Service()
     service.make(req.body)
@@ -25,7 +25,7 @@ class ServiceController {
    * @param res Response
    * @return Response
    */
-  async get (req: Request, res: Response): Promise<Response> {
+  async getService (req: Request, res: Response): Promise<Response> {
     const service = new Service()
     const findService = await service.get()
     if (service.error.Status()) {
@@ -40,7 +40,7 @@ class ServiceController {
   * @param res Response
   * @return Response
   */
-  async find (req: Request, res: Response): Promise<Response> {
+  async findService (req: Request, res: Response): Promise<Response> {
     const service = new Service()
     const findService = await service.findId(req.params.id)
     if (service.error.Status()) {
@@ -55,7 +55,7 @@ class ServiceController {
   * @param res Response
   * @return Response
   */
-  async update (req: Request, res: Response): Promise<Response> {
+  async updateService (req: Request, res: Response): Promise<Response> {
     if (req.body.id == null) return res.status(401).send({ message: 'Falta o id' })
     const service = new Service()
     service.make(req.body)
@@ -72,7 +72,7 @@ class ServiceController {
   * @param res Response
   * @return Response
   */
-  async delete (req: Request, res: Response): Promise<Response> {
+  async deleteService (req: Request, res: Response): Promise<Response> {
     if (req.body.id == null) return res.status(401).send({ message: 'Falta o id' })
     const service = new Service()
     service.make(req.body)

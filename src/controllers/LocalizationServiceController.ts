@@ -11,7 +11,7 @@ class LocalizationServiceController {
   * @param res Response
   * @return Response
   */
-  async save (req: Request, res: Response): Promise<Response> {
+  async saveLocService (req: Request, res: Response): Promise<Response> {
     if (req.body.id != null) return res.status(401).send({ message: 'Favor utilizar a rota de update' })
 
     const localizationService = new LocalizationService()
@@ -29,7 +29,7 @@ class LocalizationServiceController {
    * @param res Response
    * @return Response
    */
-  async get (req: Request, res: Response): Promise<Response> {
+  async getLocService (req: Request, res: Response): Promise<Response> {
     const localizationService = new LocalizationService()
     const findLocalizationService = await localizationService.get()
     if (localizationService.error.Status()) {
@@ -66,7 +66,7 @@ class LocalizationServiceController {
   * @param res Response
   * @return Response
   */
-  async update (req: Request, res: Response): Promise<Response> {
+  async updateLocService (req: Request, res: Response): Promise<Response> {
     if (req.body.id == null) return res.status(401).send({ message: 'Falta o id' })
     const localizationService = new LocalizationService()
     localizationService.make(req.body)
@@ -83,7 +83,7 @@ class LocalizationServiceController {
   * @param res Response
   * @return Response
   */
-  async delete (req: Request, res: Response): Promise<Response> {
+  async deleteLocService (req: Request, res: Response): Promise<Response> {
     if (req.body.id == null) return res.status(401).send({ message: 'Falta o id' })
     const localizationService = new LocalizationService()
     localizationService.make(req.body)
@@ -100,7 +100,7 @@ class LocalizationServiceController {
   * @param res Response
   * @return Response
   */
-  async findLocalization (req: Request, res: Response): Promise<Response> {
+  async findLocService (req: Request, res: Response): Promise<Response> {
     const localizationService = new LocalizationService()
     const findLocalizationService = await localizationService.findLocalization(req.params.localization)
     if (localizationService.error.Status()) {
