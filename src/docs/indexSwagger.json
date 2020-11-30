@@ -31,7 +31,7 @@
       "name": "Usuario"
     }
   ],
-  "host": "localhost:3333",
+  "host": "fifo-server.herokuapp.com",
   "basePath": "/",
   "schemes": [
     "http",
