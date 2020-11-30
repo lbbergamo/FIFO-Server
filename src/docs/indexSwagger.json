@@ -1095,7 +1095,7 @@
         "tags": [
           "Rotas Publicas"
         ],
-        "summary": "Salva uam fila.",
+        "summary": "Entrar em uma fila.",
         "description": "Esta Operacao tem por objetivo salvar uma fila.",
         "operationId": "saveQueue1",
         "parameters": [
@@ -1138,7 +1138,7 @@
         "tags": [
           "Rotas Publicas"
         ],
-        "summary": "Salva uam fila.",
+        "summary": "Status da fila.",
         "description": "Esta Operacao tem por objetivo salvar uma fila.",
         "operationId": "statusQueue",
         "parameters": [
@@ -1181,7 +1181,7 @@
         "tags": [
           "Rotas Publicas"
         ],
-        "summary": "Salva uam fila.",
+        "summary": "Sair da fila.",
         "description": "Esta Operacao tem por objetivo salvar uma fila.",
         "operationId": "exitQueue",
         "parameters": [
