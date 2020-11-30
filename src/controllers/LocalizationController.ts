@@ -8,7 +8,7 @@ class LocalizationController {
    * @param res Response
    * @return Response
    */
-  async save (req: Request, res: Response): Promise<Response> {
+  async saveLocalization (req: Request, res: Response): Promise<Response> {
     if (req.body.id != null) return res.status(401).send({ message: 'Favor utilizar a rota de update' })
     const localization = new Localization()
     localization.make(req.body)
@@ -25,7 +25,7 @@ class LocalizationController {
   * @param res Response
   * @return Response
   */
-  async get (req: Request, res: Response): Promise<Response> {
+  async getLocalization (req: Request, res: Response): Promise<Response> {
     const localization = new Localization()
     const localizationData = await localization.get()
     if (localization.error.Status()) {
@@ -41,7 +41,7 @@ class LocalizationController {
   * @param res Response
   * @return Response
   */
-  async find (req: Request, res: Response): Promise<Response> {
+  async findLocalization (req: Request, res: Response): Promise<Response> {
     const localization = new Localization()
     const localizationData = await localization.findId(req.params.id)
     if (localization.error.Status()) {
@@ -57,7 +57,7 @@ class LocalizationController {
   * @param res Response
   * @return Response
   */
-  async update (req: Request, res: Response): Promise<Response> {
+  async updateLocalization (req: Request, res: Response): Promise<Response> {
     if (req.body.id == null) return res.status(401).send({ message: 'Falta o id' })
     const localization = new Localization()
     localization.make(req.body)
@@ -74,7 +74,7 @@ class LocalizationController {
   * @param res Response
   * @return Response
   */
-  async delete (req: Request, res: Response): Promise<Response> {
+  async deleteLocalization (req: Request, res: Response): Promise<Response> {
     if (req.body.id == null) return res.status(401).send({ message: 'Falta o id' })
     const localization = new Localization()
     localization.make(req.body)

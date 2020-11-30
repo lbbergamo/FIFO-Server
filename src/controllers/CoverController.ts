@@ -8,7 +8,7 @@ class CoverController {
    * @param res Response
    * @return Response
    */
-  async save (req: Request, res: Response): Promise<Response> {
+  async saveCover (req: Request, res: Response): Promise<Response> {
     if (req.body.id != null) return res.status(401).send({ message: 'Favor utilizar a rota de update' })
     const cover = new Cover()
     cover.make(req.body)
@@ -25,7 +25,7 @@ class CoverController {
   * @param res Response
   * @return Response
   */
-  async find (req: Request, res: Response): Promise<Response> {
+  async findCover (req: Request, res: Response): Promise<Response> {
     const cover = new Cover()
     if (req.params.id == null) return res.status(401).send({ message: 'Falta o id' })
     const coverData = await cover.findCover(req.params.id)
@@ -43,7 +43,7 @@ class CoverController {
   * @param res Response
   * @return Response
   */
-  async get (req: Request, res: Response): Promise<Response> {
+  async getCover (req: Request, res: Response): Promise<Response> {
     const cover = new Cover()
     const coverData = await cover.get()
     if (cover.error.Status()) {
@@ -58,7 +58,7 @@ class CoverController {
   * @param res Response
   * @return Response
   */
-  async update (req: Request, res: Response): Promise<Response> {
+  async updateCover (req: Request, res: Response): Promise<Response> {
     if (req.body.id == null) return res.status(401).send({ message: 'Falta o id' })
     const cover = new Cover()
     cover.make(req.body)
@@ -75,7 +75,7 @@ class CoverController {
   * @param res Response
   * @return Response
   */
-  async delete (req: Request, res: Response): Promise<Response> {
+  async deleteCover (req: Request, res: Response): Promise<Response> {
     if (req.body.id == null) return res.status(401).send({ message: 'Falta o id' })
     const cover = new Cover()
     cover.make(req.body)
