@@ -186,7 +186,6 @@ class QueueController {
   async exitQueue (req: Request, res: Response): Promise<Response> {
     if (req.body.id == null) return res.status(401).send({ message: 'Falta o id' })
     req.body.status = 'closed'
-    console.log(req.body)
     const queue = new Queue()
     queue.make(req.body)
     const objectData = await queue.save()
