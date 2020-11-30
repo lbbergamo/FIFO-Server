@@ -6,6 +6,7 @@ export async function up (knex: Knex) {
     table
       .string('url')
       .notNullable()
+    table.string('category').notNullable()
   })
 }
 
