@@ -32,6 +32,7 @@
     },
     {
       "name": "Cover"
+
     }
   ],
   "host": "fifo-server.herokuapp.com",
@@ -43,6 +44,7 @@
   "paths": {
     "/admin/localization": {
       "post": {
+
         "tags": [
           "Localizacao"
         ],
@@ -90,11 +92,14 @@
         "summary": "Atualiza uma localizacao",
         "description": "Esta operacao tem por objetivo atualizar uma localizacao",
         "operationId": "update",
+
         "parameters": [
           {
             "in": "body",
             "name": "localization",
+
             "description": "",
+
             "required": true,
             "schema": {
               "$ref": "#/definitions/Localization"
@@ -102,6 +107,7 @@
           }
         ],
         "responses": {
+
           "400": {
             "description": "Id fornecido inválido."
           },
@@ -127,6 +133,7 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/Localization"
+
             }
           }
         ],
@@ -141,6 +148,7 @@
             "description": "Erro interno ao tentar deletar."
           }
         }
+
       }
     },
     "/admin/localization/{id}": {
@@ -195,6 +203,7 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/Service"
+
             }
           }
         ],
@@ -222,9 +231,11 @@
           }
         }
       },
-      "get": {
+      "delete": {
         "tags": [
+
           "Servico"
+
         ],
         "summary": "Consulta todos os servicos.",
         "operationId": "get",
@@ -244,9 +255,10 @@
           },
           "404": {
             "description": "Nenhum cliente encontrado para a consulta."
+
           },
           "500": {
-            "description": "Erro interno ao tentar realizar consulta."
+            "description": "Erro interno ao tentar deletar."
           }
         }
       },
@@ -318,6 +330,7 @@
         "summary": "Recupera uma Servico por id.",
         "description": "Esta operacao tem por objetivo realizar consulta de servico por id.",
         "operationId": "findService",
+
         "parameters": [
           {
             "in": "path",
@@ -363,16 +376,13 @@
             }
           },
           "400": {
-            "description": "Consulta inválida."
-          },
-          "401": {
-            "description": "Consulta não autorizada."
+            "description": "Id fornecido invalido."
           },
           "404": {
-            "description": "Nenhum usuario encontrado para a consulta."
+            "description": "Objeto não encontrado."
           },
           "500": {
-            "description": "Erro interno ao tentar realizar consulta."
+            "description": "Erro interno ao tentar deletar."
           }
         }
       },
@@ -540,6 +550,7 @@
           "404": {
             "description": "Objeto não encontrado."
           },
+
           "405": {
             "description": "Erro de validacao."
           }
@@ -644,16 +655,20 @@
             "description": "Erro interno ao tentar realizar cadastro."
           }
         }
-      },
-      "get": {
+      }
+    },
+    "/admin/localization_service": {
+      "post": {
         "tags": [
-          "Fila"
+       "Fila"
+
         ],
         "summary": "Consulta todas as filas.",
         "operationId": "getQueue",
         "description": "Esta operação tem por objetivo consultar todas as filas.",
         "responses": {
           "201": {
+
             "description": "Sucesso ao consultar todos os filas.",
             "schema": {
               "$ref": "#/definitions/Queues"
@@ -667,9 +682,10 @@
           },
           "404": {
             "description": "Nenhuma fila encontrada para a consulta."
+
           },
           "500": {
-            "description": "Erro interno ao tentar realizar consulta."
+            "description": "Erro interno ao tentar realizar cadastro."
           }
         }
       },
@@ -736,7 +752,7 @@
     "/admin/queue/{id}": {
       "get": {
         "tags": [
-          "Fila"
+          "Localizacao Servico"
         ],
         "summary": "Recupera uma cover por id.",
         "description": "Esta operacao tem por objetivo realizar consulta de um cover por id.",
@@ -771,10 +787,12 @@
       }
     },
     "/admin/cover": {
+
       "post": {
         "tags": [
           "Cover"
         ],
+
         "summary": "Salva uma cover.",
         "description": "Esta Operacao tem por objetivo salvar uma cover.",
         "operationId": "saveCover",
@@ -851,6 +869,7 @@
           {
             "in": "body",
             "name": "cover",
+
             "description": "",
             "required": true,
             "schema": {
