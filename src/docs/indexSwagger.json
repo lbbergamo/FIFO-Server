@@ -43,7 +43,6 @@
   "paths": {
     "/admin/localization": {
       "post": {
-
         "tags": [
           "Localizacao"
         ],
@@ -91,14 +90,11 @@
         "summary": "Atualiza uma localizacao",
         "description": "Esta operacao tem por objetivo atualizar uma localizacao",
         "operationId": "update",
-
         "parameters": [
           {
             "in": "body",
             "name": "localization",
-
             "description": "",
-
             "required": true,
             "schema": {
               "$ref": "#/definitions/Localization"
@@ -106,7 +102,6 @@
           }
         ],
         "responses": {
-
           "400": {
             "description": "Id fornecido inválido."
           },
@@ -132,7 +127,6 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/Localization"
-
             }
           }
         ],
@@ -147,7 +141,6 @@
             "description": "Erro interno ao tentar deletar."
           }
         }
-
       }
     },
     "/admin/localization/{id}": {
@@ -202,7 +195,6 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/Service"
-
             }
           }
         ],
@@ -230,11 +222,9 @@
           }
         }
       },
-      "delete": {
+      "get": {
         "tags": [
-
           "Servico"
-
         ],
         "summary": "Consulta todos os servicos.",
         "operationId": "get",
@@ -254,10 +244,9 @@
           },
           "404": {
             "description": "Nenhum cliente encontrado para a consulta."
-
           },
           "500": {
-            "description": "Erro interno ao tentar deletar."
+            "description": "Erro interno ao tentar realizar consulta."
           }
         }
       },
@@ -329,7 +318,6 @@
         "summary": "Recupera uma Servico por id.",
         "description": "Esta operacao tem por objetivo realizar consulta de servico por id.",
         "operationId": "findService",
-
         "parameters": [
           {
             "in": "path",
@@ -375,13 +363,16 @@
             }
           },
           "400": {
-            "description": "Id fornecido invalido."
+            "description": "Consulta inválida."
+          },
+          "401": {
+            "description": "Consulta não autorizada."
           },
           "404": {
-            "description": "Objeto não encontrado."
+            "description": "Nenhum usuario encontrado para a consulta."
           },
           "500": {
-            "description": "Erro interno ao tentar deletar."
+            "description": "Erro interno ao tentar realizar consulta."
           }
         }
       },
@@ -549,7 +540,6 @@
           "404": {
             "description": "Objeto não encontrado."
           },
-
           "405": {
             "description": "Erro de validacao."
           }
@@ -654,20 +644,16 @@
             "description": "Erro interno ao tentar realizar cadastro."
           }
         }
-      }
-    },
-    "/admin/localization_service": {
-      "post": {
+      },
+      "get": {
         "tags": [
-       "Fila"
-
+          "Fila"
         ],
         "summary": "Consulta todas as filas.",
         "operationId": "getQueue",
         "description": "Esta operação tem por objetivo consultar todas as filas.",
         "responses": {
           "201": {
-
             "description": "Sucesso ao consultar todos os filas.",
             "schema": {
               "$ref": "#/definitions/Queues"
@@ -681,10 +667,9 @@
           },
           "404": {
             "description": "Nenhuma fila encontrada para a consulta."
-
           },
           "500": {
-            "description": "Erro interno ao tentar realizar cadastro."
+            "description": "Erro interno ao tentar realizar consulta."
           }
         }
       },
@@ -751,177 +736,7 @@
     "/admin/queue/{id}": {
       "get": {
         "tags": [
-          "Localizacao Servico"
-        ],
-        "summary": "Recupera uma cover por id.",
-        "description": "Esta operacao tem por objetivo realizar consulta de um cover por id.",
-        "operationId": "findcover",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "type": "integer",
-            "format": "int32",
-            "required": true,
-            "description": "Numero do id do cover"
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Sucesso ao consultar uma cover existente por id.",
-            "schema": {
-              "$ref": "#/definitions/Cover"
-            }
-          },
-          "400": {
-            "description": "Id fornecido invalido."
-          },
-          "404": {
-            "description": "Objeto não encontrado."
-          },
-          "500": {
-            "description": "Erro interno ao tentar deletar."
-          }
-        }
-      }
-    },
-    "/admin/cover": {
-
-      "post": {
-        "tags": [
-          "Cover"
-        ],
-
-        "summary": "Salva uma cover.",
-        "description": "Esta Operacao tem por objetivo salvar uma cover.",
-        "operationId": "saveCover",
-        "parameters": [
-          {
-            "in": "body",
-            "name": "cover",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Cover"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Sucesso ao cadastrar nova cover.",
-            "schema": {
-              "$ref": "#/definitions/Cover"
-            },
-            "headers": {
-              "Location": {
-                "type": "string",
-                "description": "URI da nova cover cadastrada."
-              }
-            }
-          },
-          "400": {
-            "description": "Cadastro inválido."
-          },
-          "401": {
-            "description": "Cadastro não autorizado."
-          },
-          "500": {
-            "description": "Erro interno ao tentar realizar cadastro."
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "Cover"
-        ],
-        "summary": "Consulta todas as covers.",
-        "operationId": "getCover",
-        "description": "Esta operação tem por objetivo consultar todas as covers.",
-        "responses": {
-          "201": {
-            "description": "Sucesso ao consultar todos os covers.",
-            "schema": {
-              "$ref": "#/definitions/Covers"
-            }
-          },
-          "400": {
-            "description": "Consulta inválida."
-          },
-          "401": {
-            "description": "Consulta não autorizada."
-          },
-          "404": {
-            "description": "Nenhuma cover encontrada para a consulta."
-          },
-          "500": {
-            "description": "Erro interno ao tentar realizar consulta."
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Cover"
-        ],
-        "summary": "Atualiza uma Cover",
-        "description": "Esta operacao tem por objetivo atualizar uma fila.",
-        "operationId": "updateCover",
-        "parameters": [
-          {
-            "in": "body",
-            "name": "cover",
-
-            "description": "",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Cover"
-            }
-          }
-        ],
-        "responses": {
-          "400": {
-            "description": "Id fornecido inválido."
-          },
-          "404": {
-            "description": "Objeto não encontrado."
-          },
-          "405": {
-            "description": "Erro de validacao."
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Cover"
-        ],
-        "summary": "Deleta a Cover",
-        "description": "Esta operacao tem por objetivo deletar a fila",
-        "parameters": [
-          {
-            "in": "body",
-            "name": "cover",
-            "description": "",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Cover"
-            }
-          }
-        ],
-        "responses": {
-          "400": {
-            "description": "Id fornecido invalido."
-          },
-          "404": {
-            "description": "Objeto não encontrado."
-          },
-          "500": {
-            "description": "Erro interno ao tentar deletar."
-          }
-        }
-      }
-    },
-    "/admin/cover/{id}": {
-      "get": {
-        "tags": [
-          "Cover"
+          "Fila"
         ],
         "summary": "Recupera uma cover por id.",
         "description": "Esta operacao tem por objetivo realizar consulta de um cover por id.",
